@@ -6,7 +6,7 @@ async function scrape(email, password) {
         headless: true
     });
 
-    return await getSecVir(browser, email, password)
+    return await getSecretariaVirtual(browser, email, password)
         .then(async page => {
             console.log("Welcome to Secretaria Virtual");
             await page.waitForSelector("#template_menu");
@@ -19,7 +19,7 @@ async function scrape(email, password) {
         });
 }
 
-async function getSecVir (browser, email, pwd) {
+async function getSecretariaVirtual (browser, email, pwd) {
     const page = await browser.newPage();
     const url = "https://paco.ua.pt/secvirtual";
     
