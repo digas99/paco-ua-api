@@ -2,7 +2,7 @@
   "name": "paco-ua-api",
   "version": "1.0.0",
   "description": "API for Portal Académico - Universidade de Aveiro",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
