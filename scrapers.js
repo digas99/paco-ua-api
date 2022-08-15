@@ -25,6 +25,18 @@ async function secretariaVirtual (email, password, headless=true) {
     return page;
 }
 
+async function standardScrape(response, secretariaVirtual, section_title, scraper, success, error) {
+    // go to section within Secretaria Virtual
+    await secretariaVirtual.waitForSelector("#template_menu");
+    await secretariaVirtual.click(`td[title="${section_title}"] > a`);
+    await secretariaVirtual.waitForSelector("#template_main");
+    
+    // run the scraper for that section
+    scraper(secretariaVirtual)
+        .then(result => response.status(200).json(success(result)))
+        .catch(err => response.status(500).json(error(err)));
+}
+
 // Dados Pessoais
 // https://paco.ua.pt/secvirtual/c_dadospess.asp
 async function personalData(page) {
@@ -178,4 +190,4 @@ async function schedule(page) {
     });
 }
 
-module.exports = { secretariaVirtual, personalData, classesHistory, classesCurrent, schedule }
+module.exports = { secretariaVirtual, standardScrape, personalData, classesHistory, classesCurrent, schedule }

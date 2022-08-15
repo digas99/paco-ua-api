@@ -1,9 +1,11 @@
 const express = require('express')
 const app = express()
 const paco = require('./scrapers');
+const static = require('./static');
 
 // login and put secretaria virtual in req
 function login(req, res, next) {
+    const now = new Date().toISOString();
     if (req.method == "POST") {
         let body = [];
         req.on('data', chunk => body.push(chunk))
@@ -21,14 +23,14 @@ function login(req, res, next) {
                     else {
                         res.status(400).json({
                             "error": "Email or Password missing!",
-                            "timestamp": new Date().toISOString()
+                            "timestamp": now
                         });
                     }
                 } catch (e) {
                     if (e instanceof SyntaxError) {
                         res.status(400).json({
                             "error": "JSON missing or bad format!",
-                            "timestamp": new Date().toISOString()
+                            "timestamp": now
                         });
                     }
                 }
@@ -37,7 +39,7 @@ function login(req, res, next) {
     else {
         res.status(400).json({
             "error": "This API only works over POST Requests",
-            "timestamp": new Date().toISOString()
+            "timestamp": now
         });
     }
 }
@@ -52,9 +54,9 @@ app.post("/", (req, res) => {
     });
 });
 
-app.use("/personal", require('./routers/personal'))
-app.use("/classes", require('./routers/classes'))
-app.use("/schedule", require('./routers/schedule'))
+app.use("/personal", require('./routers/personal'));
+app.use("/classes", require('./routers/classes'));
+app.use("/schedule", require('./routers/schedule'));
 
-app.listen(3001);
-console.log('Node server running on port 3001');
+app.listen(static.PORT);
+console.log('Node server running on port '+static.PORT);

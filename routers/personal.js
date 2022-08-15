@@ -1,28 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const paco = require('../scrapers')
-
-const URL = "https://paco.ua.pt/secvirtual/c_dadospess.asp";
-const TITLE = "Dados Pessoais";
+const paco = require('../scrapers');
+const static = require('../static');
 
 router.post("/", async (req, res) => {
-    const secVirtual = req.page;
-    await secVirtual.waitForSelector("#template_menu");
-    await secVirtual.click(`td[title="${TITLE}"] > a`);
-    await secVirtual.waitForSelector("#template_main");
-    paco.personalData(secVirtual)
-        .then(result => res.status(200).json({
-            "data": result,
-            "url": URL,
-            "title": TITLE,
-            "timestamp": new Date().toISOString()
-        }))
-        .catch(error => res.status(500).json({
-            "error":"Server error",
-            "url": URL,
-            "title": TITLE,
-            "timestamp": new Date().toISOString()
-        }));
+    const now = new Date().toISOString();
+    paco.standardScrape(res, req.page, static.PERSONAL_TITLE, paco.personalData, result => ({
+        "data": result,
+        "url": static.PERSONAL_URL,
+        "title": static.PERSONAL_TITLE,
+        "timestamp": now
+    }), error => ({
+        "error":"Server error",
+        "url": static.PERSONAL_URL,
+        "title": static.PERSONAL_TITLE,
+        "timestamp": now
+    }));
 });
 
 module.exports = router;

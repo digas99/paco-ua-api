@@ -22,7 +22,7 @@ The server will be running at http://127.0.0.1:8000
 ## Usage
 Every endpoint has to be accessed through a POST HTTP Request, with your institutional email credentials in the request body.
 
-```POST /personal```
+```POST /schedule```
 ```json5
 // POST REQUEST BODY
 {
@@ -35,40 +35,89 @@ If everything is correct, this should be the response:
 // RESPONSE
 {
     "data": {
-        "personal_data": {
-            "nmec": "...",
-            "name": "...",
-            "picture": "...",
-            "father": "...",
-            "mother": "...",
-            "cc": " ...",
-            "birth": " ...",
-            "country": "...",
-            "gender": "..."
+        "schedule": {
+            "Segunda": [
+                {
+                    "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                    "begin": "9h",
+                    "duration": "2h",
+                    "capacity": "24",
+                    "class-group": "P8",
+                    "room": "04.2.03"
+                },
+                {
+                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "begin": "14h",
+                    "duration": "1h",
+                    "capacity": "98",
+                    "class-group": "TP1",
+                    "room": "ANF. V"
+                },
+                {
+                    "class": "REDES DE COMUNICAÇÕES I",
+                    "begin": "16h",
+                    "duration": "2h",
+                    "capacity": "19",
+                    "class-group": "P8",
+                    "room": "04.3.30"
+                }
+            ],
+            "Terça": [
+                {
+                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "begin": "9h",
+                    "duration": "2h",
+                    "capacity": "18",
+                    "class-group": "P07",
+                    "room": "04.2.17"
+                },
+                {
+                    "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                    "begin": "11h",
+                    "duration": "2h",
+                    "capacity": "120",
+                    "class-group": "TP2",
+                    "room": "ANF. IV"
+                }
+            ],
+            "Quarta": [
+                {
+                    "class": "REDES DE COMUNICAÇÕES I",
+                    "begin": "11h",
+                    "duration": "1,5h",
+                    "capacity": "112",
+                    "class-group": "TP1",
+                    "room": "ANF. V"
+                }
+            ],
+            "Quinta": [
+                {
+                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "begin": "12h",
+                    "duration": "1h",
+                    "capacity": "98",
+                    "class-group": "TP1",
+                    "room": "ANF. V"
+                }
+            ],
+            "Sexta": [
+                {
+                    "class": "PROJETO EM ENGENHARIA DE COMPUTADORES E INFORMÁTICA",
+                    "begin": "11h",
+                    "duration": "2h",
+                    "capacity": "80",
+                    "class-group": "TP1",
+                    "room": "04.1.02"
+                }
+            ],
+            "Sábado": []
         },
-        "contact_data": {
-            "telephone": "...",
-            "mobile": "...",
-            "email": "..."
-        },
-        "school_address": {
-            "address": "...",
-            "place": "...",
-            "postal_code": "..."
-        },
-        "permanent_address": {
-            "address": "...",
-            "place": "...",
-            "postal_code": "..."
-        },
-        "other": {
-            "NIF": "...",
-            "NIB": "..."
-        }
+        "school-year": "2021/2022",
+        "semester": "1"
     },
-    "url": "https://paco.ua.pt/secvirtual/c_dadospess.asp",
-    "title": "Dados Pessoais",
-    "timestamp": "2022-08-15T01:08:59.884Z"
+    "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
+    "title": "Horário",
+    "timestamp": "2022-08-15T20:24:42.741Z"
 }
 ```
 The same applies for all the other endpoints.
