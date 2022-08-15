@@ -8,9 +8,10 @@ async function secretariaVirtual (email, password, headless=true) {
     });
     
     const page = await browser.newPage();
-    const url = "https://paco.ua.pt/secvirtual";
     
-    await page.goto(url);
+    console.log("New Page");
+    await htmlOnly(page);
+    await page.goto("https://paco.ua.pt/secvirtual");
 
     // wait for idp login page to load
     await page.waitForSelector("#loginForm");
@@ -22,13 +23,20 @@ async function secretariaVirtual (email, password, headless=true) {
     // submit
     await page.click("#btnLogin");
 
+    await page.waitForNavigation({waitUntil: 'networkidle2'});
+    console.log("Welcome to Secretaria Virtual");
+
     return page;
 }
 
-async function standardScrape(response, secretariaVirtual, section_title, scraper, success, error) {
+async function htmlOnly(page) {
+    await page.setRequestInterception(true); // enable request interception
+    return page.on('request', req => !["document", "xhr", "fetch", "script"].includes(req.resourceType()) ? req.abort() : req.continue());
+}
+
+async function standardScrape(response, secretariaVirtual, section_url, scraper, success, error) {
     // go to section within Secretaria Virtual
-    await secretariaVirtual.waitForSelector("#template_menu");
-    await secretariaVirtual.click(`td[title="${section_title}"] > a`);
+    await secretariaVirtual.goto(section_url);
     await secretariaVirtual.waitForSelector("#template_main");
     
     // run the scraper for that section
@@ -177,7 +185,7 @@ async function schedule(page) {
                 const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
                 weekday.push({
                     "class": titleData[0],
-                    "begin": titleData[2].split("INÍCIO: ")[1],
+                    "start": titleData[2].split("INÍCIO: ")[1],
                     "duration": titleData[3].split("DURAÇÃO: ")[1],
                     "capacity": titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0],
                     "class-group": elem.childNodes[0].wholeText.split(" ")[2],

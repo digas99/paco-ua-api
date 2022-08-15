@@ -16,7 +16,6 @@ function login(req, res, next) {
                         paco.secretariaVirtual(body["email"], body["password"])
                             .then(async page => {
                                 req.page = page;
-                                console.log("Welcome to Secretaria Virtual");
                                 next();
                             });
                     }

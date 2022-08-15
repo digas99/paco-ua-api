@@ -1,7 +1,7 @@
 # paco-ua-api
 ## API for Portal Académico - Universidade de Aveiro
 
-This API uses [Puppeteer](https://github.com/puppeteer/puppeteer) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
+This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
 
 ## Setup
 
@@ -18,6 +18,8 @@ $ npm run devStart
 ```
 
 The server will be running at http://127.0.0.1:8000
+
+(To run on a different port, change the value of **PORT** in the file static.js)
 
 ## Usage
 Every endpoint has to be accessed through a POST HTTP Request, with your institutional email credentials in the request body.
@@ -39,7 +41,7 @@ If everything is correct, this should be the response:
             "Segunda": [
                 {
                     "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
-                    "begin": "9h",
+                    "start": "9h",
                     "duration": "2h",
                     "capacity": "24",
                     "class-group": "P8",
@@ -47,7 +49,7 @@ If everything is correct, this should be the response:
                 },
                 {
                     "class": "ARQUITETURA DE COMPUTADORES I",
-                    "begin": "14h",
+                    "start": "14h",
                     "duration": "1h",
                     "capacity": "98",
                     "class-group": "TP1",
@@ -55,7 +57,7 @@ If everything is correct, this should be the response:
                 },
                 {
                     "class": "REDES DE COMUNICAÇÕES I",
-                    "begin": "16h",
+                    "start": "16h",
                     "duration": "2h",
                     "capacity": "19",
                     "class-group": "P8",
@@ -65,7 +67,7 @@ If everything is correct, this should be the response:
             "Terça": [
                 {
                     "class": "ARQUITETURA DE COMPUTADORES I",
-                    "begin": "9h",
+                    "start": "9h",
                     "duration": "2h",
                     "capacity": "18",
                     "class-group": "P07",
@@ -73,7 +75,7 @@ If everything is correct, this should be the response:
                 },
                 {
                     "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
-                    "begin": "11h",
+                    "start": "11h",
                     "duration": "2h",
                     "capacity": "120",
                     "class-group": "TP2",
@@ -83,7 +85,7 @@ If everything is correct, this should be the response:
             "Quarta": [
                 {
                     "class": "REDES DE COMUNICAÇÕES I",
-                    "begin": "11h",
+                    "start": "11h",
                     "duration": "1,5h",
                     "capacity": "112",
                     "class-group": "TP1",
@@ -93,7 +95,7 @@ If everything is correct, this should be the response:
             "Quinta": [
                 {
                     "class": "ARQUITETURA DE COMPUTADORES I",
-                    "begin": "12h",
+                    "start": "12h",
                     "duration": "1h",
                     "capacity": "98",
                     "class-group": "TP1",
@@ -103,7 +105,7 @@ If everything is correct, this should be the response:
             "Sexta": [
                 {
                     "class": "PROJETO EM ENGENHARIA DE COMPUTADORES E INFORMÁTICA",
-                    "begin": "11h",
+                    "start": "11h",
                     "duration": "2h",
                     "capacity": "80",
                     "class-group": "TP1",

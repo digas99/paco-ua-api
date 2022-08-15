@@ -5,7 +5,7 @@ const static = require('../static');
 
 router.post("/history", async (req, res) => {
     const now = new Date().toISOString();
-    paco.standardScrape(res, req.page, static.HISTORY_TITLE, paco.classesHistory, result => ({
+    paco.standardScrape(res, req.page, static.HISTORY_URL, paco.classesHistory, result => ({
         "data": result,
         "size": result["classes"].length,
         "url": static.HISTORY_URL,
@@ -21,7 +21,7 @@ router.post("/history", async (req, res) => {
 
 router.post("/current", async (req, res) => {
     const now = new Date().toISOString();
-    paco.standardScrape(res, req.page, static.CURRENT_TITLE, paco.classesCurrent, result => ({
+    paco.standardScrape(res, req.page, static.CURRENT_URL, paco.classesCurrent, result => ({
         "data": result,
         "size": result["classes"].length,
         "url": static.CURRENT_URL,

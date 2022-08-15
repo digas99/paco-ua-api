@@ -1,7 +1,7 @@
 module.exports = {
     // port for development
     PORT: 3001,
-    
+
     // /personal
     PERSONAL_URL: "https://paco.ua.pt/secvirtual/c_dadospess.asp",
     PERSONAL_TITLE: "Dados Pessoais",

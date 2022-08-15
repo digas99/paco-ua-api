@@ -5,7 +5,7 @@ const static = require('../static');
 
 router.post("/", async (req, res) => {  
     const now = new Date().toISOString();
-    paco.standardScrape(res, req.page, static.SCHEDULE_TITLE, paco.schedule, result => ({
+    paco.standardScrape(res, req.page, static.SCHEDULE_URL, paco.schedule, result => ({
         "data": result,
         "url": static.SCHEDULE_URL,
         "title": static.SCHEDULE_TITLE,
