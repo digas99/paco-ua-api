@@ -21,6 +21,7 @@ The server will be running at http://127.0.0.1:8000
 
 ## Usage
 Every endpoint has to be accessed through a POST HTTP Request, with your institutional email credentials in the request body.
+
 ```POST /personal```
 ```json5
 // POST REQUEST BODY
