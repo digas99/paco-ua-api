@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const paco = require('../paco-scrapers')
+const paco = require('../scrapers')
 
 const URL = "https://paco.ua.pt/secvirtual/c_dadospess.asp";
 const TITLE = "Dados Pessoais";

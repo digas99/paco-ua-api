@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const scrape = require('./scrape');
+const paco = require('./scrapers');
 
 // login and put secretaria virtual in req
 function login(req, res, next) {
@@ -8,23 +8,37 @@ function login(req, res, next) {
         let body = [];
         req.on('data', chunk => body.push(chunk))
             .on('end', () => {
-                body = JSON.parse(Buffer.concat(body).toString());
-                if (body["email"] && body["password"]) {
-                    scrape.getSecretariaVirtual(body["email"], body["password"])
-                        .then(async page => {
-                            req.page = page;
-                            console.log("Welcome to Secretaria Virtual");
-                            next();
+                try {
+                    body = JSON.parse(Buffer.concat(body).toString());
+                    if (body["email"] && body["password"]) {
+                        paco.secretariaVirtual(body["email"], body["password"])
+                            .then(async page => {
+                                req.page = page;
+                                console.log("Welcome to Secretaria Virtual");
+                                next();
+                            });
+                    }
+                    else {
+                        res.status(400).json({
+                            "error": "Email or Password missing!",
+                            "timestamp": new Date().toISOString()
                         });
+                    }
+                } catch (e) {
+                    if (e instanceof SyntaxError) {
+                        res.status(400).json({
+                            "error": "JSON missing or bad format!",
+                            "timestamp": new Date().toISOString()
+                        });
+                    }
                 }
             });
     }
     else {
         res.status(400).json({
-            "error":"This API only works over POST Requests",
+            "error": "This API only works over POST Requests",
             "timestamp": new Date().toISOString()
         });
-        next();
     }
 }
 
@@ -38,7 +52,8 @@ app.post("/", (req, res) => {
     });
 });
 
-app.use("/personal-data", require('./routers/personal-data'))
+app.use("/personal", require('./routers/personal'))
+app.use("/classes", require('./routers/classes'))
 
 app.listen(3001);
 console.log('Node server running on port 3001');
