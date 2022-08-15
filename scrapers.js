@@ -105,13 +105,13 @@ async function classesHistory(page) {
     return await page.$eval('#historico', table => {
         if (table) {
             const lines = Array.from(table.querySelectorAll("tbody > tr"));
-            return lines.filter(line => line.classList.length > 0)
+            return {"classes" :lines.filter(line => line.classList.length > 0)
                 .map(line => ({
                     "code": line.children[0].innerText,
                     "class": line.children[1].innerText,
                     "completed-date": line.children[2].innerText,
                     "grade": line.children[3].innerText
-                }));
+                }))};
         }
     });
 }
@@ -142,9 +142,40 @@ async function classesCurrent(page) {
                 }); 
             });
 
+            return {"classes": data};
+        }
+    });
+}
+
+async function schedule(page) {
+    return await page.$eval('#template_main > table', table => {
+        if (table) {
+            const data = {
+                "schedule": {
+                    "Segunda": [],"Terça": [],"Quarta": [],"Quinta": [],"Sexta": [],"Sábado": []
+                }
+            };
+            // info
+            const scheduleInfo = table.querySelector("tr").children[0].childNodes[2].wholeText;
+            data["school-year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
+            data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+            // classes
+            Array.from(table.querySelectorAll(".horario_turma")).forEach(elem => {
+                const titleData = elem.title.split("\n");
+                const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
+                weekday.push({
+                    "class": titleData[0],
+                    "begin": titleData[2].split("INÍCIO: ")[1],
+                    "duration": titleData[3].split("DURAÇÃO: ")[1],
+                    "capacity": titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0],
+                    "class-group": elem.childNodes[0].wholeText.split(" ")[2],
+                    "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
+                });
+            });
+
             return data;
         }
     });
 }
 
-module.exports = { secretariaVirtual, personalData, classesHistory, classesCurrent }
+module.exports = { secretariaVirtual, personalData, classesHistory, classesCurrent, schedule }

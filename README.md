@@ -83,6 +83,6 @@ The same applies for all the other endpoints.
 - [ ] Calendário de Exames do Aluno
 - [ ] Calendário de Exames por Disciplina
 - [ ] Apoio às Aulas
-- [ ] Horário
+- [x] Horário &nbsp;&nbsp;```POST /schedule```
 - [ ] Avisos
 - [ ] Requerimentos
