@@ -76,7 +76,7 @@ The same applies for all the other endpoints.
 - [x] Dados Pessoais &nbsp;&nbsp;```POST /personal```  
 - [ ] Situação de prescrição
 - [x] Histórico Notas &nbsp;&nbsp;```POST /classes/history```
-- [ ] Disciplinas Inscritas
+- [x] Disciplinas Inscritas &nbsp;&nbsp;```POST /classes/current```
 - [ ] Estados das Propinas
 - [ ] Plano Curricular 
 - [ ] Calendário de Exames do Aluno

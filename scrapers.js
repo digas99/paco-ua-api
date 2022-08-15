@@ -109,11 +109,42 @@ async function classesHistory(page) {
                 .map(line => ({
                     "code": line.children[0].innerText,
                     "class": line.children[1].innerText,
-                    "completed": line.children[2].innerText,
+                    "completed-date": line.children[2].innerText,
                     "grade": line.children[3].innerText
                 }));
         }
     });
 }
 
-module.exports = { secretariaVirtual, personalData, classesHistory }
+// Disciplinas Inscritas
+// https://paco.ua.pt/secvirtual/c_examesInscr.asp
+async function classesCurrent(page) {
+    return await page.$eval('#template_main > table', table => {
+        if (table) {
+            const lines = Array.from(table.querySelectorAll("tbody > tr"));
+            const data = lines.filter(line => line.children[6].innerText == "Normal")
+                .map(line => ({
+                    "code": line.children[0].innerText,
+                    "class": line.children[1].innerText,
+                    "year": line.children[2].innerText,
+                    "semester": line.children[3].innerText,
+                    "ects": line.children[4].innerText,
+                    "new": line.children[5].innerText == "Sim",
+                    "started-date": line.children[7].innerText
+                }));
+
+            // add recurso and especial
+            ["Recurso", "Especial"].forEach(type => {
+                const exams = lines.filter(line => line.children[6].innerText == type);
+                exams.forEach(exam => {
+                    const normal = data.filter(line => line["code"] == exam.children[0].innerText)[0];
+                    if (normal) normal[type.toLowerCase()] = exam.children[7].innerText;
+                }); 
+            });
+
+            return data;
+        }
+    });
+}
+
+module.exports = { secretariaVirtual, personalData, classesHistory, classesCurrent }
