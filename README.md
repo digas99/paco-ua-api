@@ -40,86 +40,110 @@ If everything is correct, this should be the response:
         "schedule": {
             "Segunda": [
                 {
-                    "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                    "class": {
+                        "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                        "abbrev": "SIO"
+                    },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "24",
-                    "class-group": "P8",
+                    "class_group": "P8",
                     "room": "04.2.03"
                 },
                 {
-                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "class": {
+                        "name": "ARQUITETURA DE COMPUTADORES I",
+                        "abbrev": "AC-I"
+                    },
                     "start": "14h",
                     "duration": "1h",
                     "capacity": "98",
-                    "class-group": "TP1",
+                    "class_group": "TP1",
                     "room": "ANF. V"
                 },
                 {
-                    "class": "REDES DE COMUNICAÇÕES I",
+                    "class": {
+                        "name": "REDES DE COMUNICAÇÕES I",
+                        "abbrev": "RC-I"
+                    },
                     "start": "16h",
                     "duration": "2h",
                     "capacity": "19",
-                    "class-group": "P8",
+                    "class_group": "P8",
                     "room": "04.3.30"
                 }
             ],
             "Terça": [
                 {
-                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "class": {
+                        "name": "ARQUITETURA DE COMPUTADORES I",
+                        "abbrev": "AC-I"
+                    },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "18",
-                    "class-group": "P07",
+                    "class_group": "P07",
                     "room": "04.2.17"
                 },
                 {
-                    "class": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                    "class": {
+                        "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
+                        "abbrev": "SIO"
+                    },
                     "start": "11h",
                     "duration": "2h",
                     "capacity": "120",
-                    "class-group": "TP2",
+                    "class_group": "TP2",
                     "room": "ANF. IV"
                 }
             ],
             "Quarta": [
                 {
-                    "class": "REDES DE COMUNICAÇÕES I",
+                    "class": {
+                        "name": "REDES DE COMUNICAÇÕES I",
+                        "abbrev": "RC-I"
+                    },
                     "start": "11h",
                     "duration": "1,5h",
                     "capacity": "112",
-                    "class-group": "TP1",
+                    "class_group": "TP1",
                     "room": "ANF. V"
                 }
             ],
             "Quinta": [
                 {
-                    "class": "ARQUITETURA DE COMPUTADORES I",
+                    "class": {
+                        "name": "ARQUITETURA DE COMPUTADORES I",
+                        "abbrev": "AC-I"
+                    },
                     "start": "12h",
                     "duration": "1h",
                     "capacity": "98",
-                    "class-group": "TP1",
+                    "class_group": "TP1",
                     "room": "ANF. V"
                 }
             ],
             "Sexta": [
                 {
-                    "class": "PROJETO EM ENGENHARIA DE COMPUTADORES E INFORMÁTICA",
+                    "class": {
+                        "name": "PROJETO EM ENGENHARIA DE COMPUTADORES E INFORMÁTICA",
+                        "abbrev": "PECI"
+                    },
                     "start": "11h",
                     "duration": "2h",
                     "capacity": "80",
-                    "class-group": "TP1",
+                    "class_group": "TP1",
                     "room": "04.1.02"
                 }
             ],
             "Sábado": []
         },
-        "school-year": "2021/2022",
+        "school_year": "2021/2022",
         "semester": "1"
     },
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
-    "timestamp": "2022-08-15T20:24:42.741Z"
+    "timestamp": "2022-08-15T23:45:28.021Z"
 }
 ```
 The same applies for all the other endpoints.
@@ -129,7 +153,7 @@ The same applies for all the other endpoints.
 - [ ] Situação de prescrição
 - [x] Histórico Notas &nbsp;&nbsp;```POST /classes/history```
 - [x] Disciplinas Inscritas &nbsp;&nbsp;```POST /classes/current```
-- [ ] Estados das Propinas
+- [x] Estados das Propinas &nbsp;&nbsp;```POST /tuition_fees```
 - [ ] Plano Curricular 
 - [ ] Calendário de Exames do Aluno
 - [ ] Calendário de Exames por Disciplina

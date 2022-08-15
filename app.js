@@ -55,6 +55,7 @@ app.post("/", (req, res) => {
 
 app.use("/personal", require('./routers/personal'));
 app.use("/classes", require('./routers/classes'));
+app.use("/tuition_fees", require('./routers/tuition-fees'));
 app.use("/schedule", require('./routers/schedule'));
 
 app.listen(static.PORT);

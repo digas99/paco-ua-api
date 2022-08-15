@@ -12,6 +12,10 @@ module.exports = {
     HISTORY_URL: "https://paco.ua.pt/secvirtual/c_historiconotas.asp",
     HISTORY_TITLE: "Histórico Notas",
 
+    // /tuition-fees
+    TUITION_FEES_URL: "https://paco.ua.pt/secvirtual/c_estadoDasProprinas.asp",
+    TUITION_FEES_TITLE: "Estados das Propinas",
+
     // /schedule
     SCHEDULE_URL: "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     SCHEDULE_TITLE: "Horário",

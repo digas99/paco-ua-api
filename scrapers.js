@@ -129,7 +129,7 @@ async function classesHistory(page) {
                 .map(line => ({
                     "code": line.children[0].innerText,
                     "class": line.children[1].innerText,
-                    "completed-date": line.children[2].innerText,
+                    "completed_date": line.children[2].innerText,
                     "grade": line.children[3].innerText
                 }))};
         }
@@ -150,7 +150,7 @@ async function classesCurrent(page) {
                     "semester": line.children[3].innerText,
                     "ects": line.children[4].innerText,
                     "new": line.children[5].innerText == "Sim",
-                    "started-date": line.children[7].innerText
+                    "started_date": line.children[7].innerText
                 }));
 
             // add recurso and especial
@@ -177,18 +177,21 @@ async function schedule(page) {
             };
             // info
             const scheduleInfo = table.querySelector("tr").children[0].childNodes[2].wholeText;
-            data["school-year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
+            data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
             data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
             // classes
             Array.from(table.querySelectorAll(".horario_turma")).forEach(elem => {
                 const titleData = elem.title.split("\n");
                 const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
                 weekday.push({
-                    "class": titleData[0],
+                    "class": {
+                        "name": titleData[0],
+                        "abbrev": elem.childNodes[0].wholeText.split(" ")[0].replace("\n", "")
+                    },
                     "start": titleData[2].split("INÍCIO: ")[1],
                     "duration": titleData[3].split("DURAÇÃO: ")[1],
                     "capacity": titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0],
-                    "class-group": elem.childNodes[0].wholeText.split(" ")[2],
+                    "class_group": elem.childNodes[0].wholeText.split(" ")[2],
                     "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
                 });
             });
@@ -198,4 +201,41 @@ async function schedule(page) {
     });
 }
 
-module.exports = { secretariaVirtual, standardScrape, personalData, classesHistory, classesCurrent, schedule }
+async function tuitionFees(page) {
+    return await page.$$eval('#template_main .table_line:not(:nth-child(2))', lines => {
+        if (lines) {
+            const data = {};
+            
+            // get years offset
+            const lastFeeYear = Number(lines[0].children[2].innerText);
+            const firstFeeYear = Number(lines[lines.length-4].children[2].innerText);
+            console.log(lastFeeYear, firstFeeYear);
+            for (let i=0; i<=(lastFeeYear-firstFeeYear); i++) {
+                data[[firstFeeYear+i]] = [];
+            }
+
+            Array.from(lines).filter(line => line.children.length > 1)
+                .sort((a, b) => Number(a.children[0].innerText.split("ª")[0]) - Number(b.children[0].innerText.split("ª")[0]))
+                .forEach(line => {
+                    const year = data[line.children[2].innerText];
+                    year.push({
+                        "instalment": line.children[0].innerText.split("ª")[0],
+                        "value": line.children[1].innerText.split(" Euros")[0],
+                        "course-code": line.children[3].innerText,
+                        "payment": {
+                            "deadline": line.children[4].innerText,
+                            "paid": line.children[5].innerText,
+                            "status": line.children[6].innerText
+                        }
+                    });
+                });
+            
+            return {
+                "fees":data,
+                "last_updated": lines[lines.length-1].innerText.split("Última actualização: ")[1].replace("\n", "")
+            };
+        }
+    });
+}
+
+module.exports = { secretariaVirtual, standardScrape, personalData, classesHistory, classesCurrent, schedule, tuitionFees }
