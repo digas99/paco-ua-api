@@ -6,7 +6,7 @@ const static = require('../static');
 router.post("/", async (req, res) => {
     const now = new Date().toISOString();
     if (!req.query["classes"]) {
-        paco.standardScrape(res, req.page, static.EXAMS_URL, paco.exams, "#template_main > form tr", result => ({
+        paco.standardScrape(res, req.page, static.EXAMS_URL, paco.exams, result => ({
             "data": result,
             "size": result["exams"].length,
             "url": static.EXAMS_URL,
@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
             "url": static.EXAMS_URL,
             "title": static.EXAMS_TITLE,
             "timestamp": now
-        }));
+        }), "#template_main > form tr");
     }
     else {
         paco.standardScrape(res, req.page, static.EXAMS_CLASSES_URL, async page => {
@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
             // fetch the search result
             await page.waitForSelector("#form2");
             return paco.exams(page, "#form2 tr");
-        }, null, result => ({
+        }, result => ({
             "data": result,
             "size": result["exams"].length,
             "url": static.EXAMS_CLASSES_URL,

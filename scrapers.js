@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 module.exports = {
-    standardScrape: async (response, secretaria_virtual, section_url, scraper, selector, success, error) => {
+    standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error, selector) => {
         // go to section within Secretaria Virtual
         await secretaria_virtual.goto(section_url);
         await secretaria_virtual.waitForSelector("#template_main");

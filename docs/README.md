@@ -20,7 +20,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
 1. ~~Plano Curricular~~
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
-1. [Calendário de Exames por Disciplina](#calendário-de-exames-port-disciplina) &nbsp;&nbsp;```POST /exams?classes=...```
+1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?classes=...```
 1. ~~Apoio às Aulas~~
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. ~~Avisos~~
