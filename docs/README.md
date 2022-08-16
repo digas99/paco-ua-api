@@ -9,19 +9,22 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 
 ## API Documentation
 
-1. [Make a HTTP Rrquest](#make-a-http-request) 
-2. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
-3. ~~Situação de prescrição~~
-4. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
-5. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
-6. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
-7. ~~Plano Curricular~~
-8. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
-9. ~~Calendário de Exames por Disciplina~~
-10. ~~Apoio às Aulas~~
-11. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
-12. ~~Avisos~~
-13. ~~Requerimentos~~
+1. [Make a HTTP Rrquest](#make-a-http-request)
+1. [Best Practices](#best-practices)
+    1. [Cache](#cache)
+    1. [Selective Fetching](#selective-fetching)
+1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
+1. ~~Situação de prescrição~~
+1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
+1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
+1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
+1. ~~Plano Curricular~~
+1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
+1. ~~Calendário de Exames por Disciplina~~
+1. ~~Apoio às Aulas~~
+1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
+1. ~~Avisos~~
+1. ~~Requerimentos~~
 
 ## Make a HTTP Request
 
@@ -71,6 +74,23 @@ If the Request fails (400 / 500), then the result will have the following struct
 | **title** | string | Section of PACO-UA from where the data was extracted |
 | **timestamp** | ISO-8061 | Timestamp of the time of the Response |
 
+---
+
+## Best Practices
+
+The Requests to the API have an inherent unavoidable delay, from both the PACO website and the headless browser from Puppeteer. This causes an average delay response of 3.5s for most of the endpoints.
+
+### Cache
+
+When building your app, the best way to compensate for the delay is to initially fetch all the data and save it in some sort of local storage, **cache** it.  
+Then, the next time the user enters the app, you can show the cached outdated data immediately while fetching the updated data in the background.
+
+### Selective Fetching
+
+Fetching everything at once might not always be the best approach. When everything is already cached, might be better to make use of the various endpoints to only fetch certain data that the user might need updated for that specific section of your app.
+
+---
+
 ## Dados Pessoais
 
 ```POST /personal```
@@ -117,6 +137,8 @@ If the Request fails (400 / 500), then the result will have the following struct
 // sensitive information hidden with "..."
 ```
 
+---
+
 ## Histórico Notas
 
 ```POST /classes/history```
@@ -154,6 +176,9 @@ If the Request fails (400 / 500), then the result will have the following struct
 
 // sensitive information hidden with "..."
 ```
+
+---
+
 
 ## Disciplinas Inscritas
 
@@ -202,6 +227,9 @@ If the Request fails (400 / 500), then the result will have the following struct
 
 // sensitive information hidden with "..."
 ```
+
+---
+
 
 ## Estado das Propinas
 
@@ -258,6 +286,9 @@ If the Request fails (400 / 500), then the result will have the following struct
 
 // sensitive information hidden with "..."
 ```
+
+---
+
 
 ## Calendário de Exames do Aluno
 
@@ -316,6 +347,9 @@ If the Request fails (400 / 500), then the result will have the following struct
     "timestamp": "2022-08-16T12:58:34.994Z"
 }
 ```
+
+---
+
 
 ## Horário
 
