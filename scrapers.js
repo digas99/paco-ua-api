@@ -15,7 +15,11 @@ module.exports = {
     // https://paco.ua.pt/secvirtual
     secretariaVirtual: async (email, password, headless=true) => {
         const browser = await puppeteer.launch({
-            headless: headless
+            headless: headless,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
         });
         
         const page = await browser.newPage();
