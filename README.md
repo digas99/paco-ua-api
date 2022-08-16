@@ -120,4 +120,4 @@ The same applies for all the other endpoints.
 - [ ] Apoio às Aulas
 - [x] Horário &nbsp;&nbsp;`POST /schedule`
 - [ ] Avisos
-- [ ] Requerimentos
+- [x] Requerimentos &nbsp;&nbsp;```POST /requests```

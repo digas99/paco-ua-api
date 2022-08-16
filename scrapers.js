@@ -272,7 +272,22 @@ module.exports = {
                 "last_updated": lines[lines.length-2].innerText.split("Data última actualização: ")[1]
             };
         });
-    }
+    },
+    // Requerimentos
+    // https://paco.ua.pt/secvirtual/pedidos_requerimentos_consultas_new.asp
+    requests: async page => {
+        return await page.$eval("iframe", iframe => {          
+            const doc = iframe.contentWindow.document;
+            const data = {};
+            data["requests"] = Array.from(doc.querySelectorAll("#gvRequerimentos tr:not(:nth-child(1))"))
+                .map(line => ({
+                    "date": line.children[0].innerText,
+                    "state": line.children[1].innerText
+                }));
+                
+            return data;
+        });
+    },
 }
 
 async function htmlOnly(page) {

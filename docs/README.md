@@ -24,7 +24,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. ~~Apoio às Aulas~~
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. ~~Avisos~~
-1. ~~Requerimentos~~
+1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
 ---
 
@@ -458,5 +458,28 @@ In the example below, the query is ```/exams?classes=40292,42000```.
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
     "timestamp": "2022-08-16T01:51:09.193Z"
+}
+```
+
+---
+
+## Requerimentos
+
+```POST /requests```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "requests": [
+            {
+                "date": "2021-10-04 10:48:10",
+                "state": "Despachado"
+            }
+        ]
+    },
+    "size": 1,
+    "url": "https://paco.ua.pt/secvirtual/pedidos_requerimentos_consultas_new.asp",
+    "title": "Requerimentos",
+    "timestamp": "2022-08-16T22:35:55.883Z"
 }
 ```
