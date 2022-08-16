@@ -1,6 +1,5 @@
-# PACO UA API
+# PACO UA API ![logo](/images/paco-api-logo.png)
 
-![logo](/images/paco-api-logo.png)
 
 API for Portal Académico Online - Universidade de Aveiro.
 

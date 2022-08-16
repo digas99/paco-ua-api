@@ -1,4 +1,6 @@
-# paco-ua-api
+# paco-ua-api ![logo](/images/paco-api-logo.png)
+
+
 ## API for Portal Académico Online - Universidade de Aveiro
 
 This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
