@@ -7,6 +7,7 @@ router.post("/", async (req, res) => {
     const now = new Date().toISOString();
     paco.standardScrape(res, req.page, static.EXAMS_URL, paco.exams, result => ({
         "data": result,
+        "size": result["exams"].length,
         "url": static.EXAMS_URL,
         "title": static.EXAMS_TITLE,
         "timestamp": now

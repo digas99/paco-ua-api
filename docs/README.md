@@ -16,7 +16,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 5. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
 6. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
 7. ~~Plano Curricular~~
-8. ~~Calendário de Exames do Aluno~~
+8. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 9. ~~Calendário de Exames por Disciplina~~
 10. ~~Apoio às Aulas~~
 11. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
@@ -257,6 +257,64 @@ If the Request fails (400 / 500), then the result will have the following struct
 }
 
 // sensitive information hidden with "..."
+```
+
+## Calendário de Exames do Aluno
+
+```POST /exams```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "exams": [
+            {
+                "class": {
+                    "code": "41948",
+                    "name": "ARQUITETURA DE COMPUTADORES I"
+                },
+                "date": "02/09/2022",
+                "time": "9:00",
+                "room": "",
+                "type": "NM",
+                "season": "Especial",
+                "notes": "",
+                "changes": ""
+            },
+            {
+                "class": {
+                    "code": "41950",
+                    "name": "REDES DE COMUNICAÇÕES I"
+                },
+                "date": "05/09/2022",
+                "time": "10:00",
+                "room": "",
+                "type": "NM",
+                "season": "Especial",
+                "notes": "",
+                "changes": ""
+            },
+            {
+                "class": {
+                    "code": "42299",
+                    "name": "INTERAÇÃO HUMANO-COMPUTADOR"
+                },
+                "date": "06/09/2022",
+                "time": "16:00",
+                "room": "",
+                "type": "NM",
+                "season": "Especial",
+                "notes": "MÓDULO DE 41994 COMPETÊNCIAS TRANSFERÍVEIS II",
+                "changes": ""
+            },
+            ...
+        ],
+        "last_updated": "29-07-2022"
+    },
+    "size": 10,
+    "url": "https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp",
+    "title": "Calendário de Exames do Aluno",
+    "timestamp": "2022-08-16T12:58:34.994Z"
+}
 ```
 
 ## Horário

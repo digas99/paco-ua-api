@@ -41,7 +41,7 @@ module.exports = {
     },
     // Dados Pessoais
     // https://paco.ua.pt/secvirtual/c_dadospess.asp
-    personalData: async (page) => {
+    personalData: async page => {
         return await page.$$eval('#template_main > div', tables => {
             let lines;
         
@@ -114,7 +114,7 @@ module.exports = {
     },
     // Histórico Notas
     // https://paco.ua.pt/secvirtual/c_historiconotas.asp
-    classesHistory: async (page) => {
+    classesHistory: async page => {
         return await page.$eval('#historico', table => {
             if (table) {
                 const lines = Array.from(table.querySelectorAll("tbody > tr"));
@@ -130,7 +130,7 @@ module.exports = {
     },
     // Disciplinas Inscritas
     // https://paco.ua.pt/secvirtual/c_examesInscr.asp
-    classesCurrent: async (page) => {
+    classesCurrent: async page => {
         return await page.$eval('#template_main > table', table => {
             if (table) {
                 const lines = Array.from(table.querySelectorAll("tbody > tr"));
@@ -160,7 +160,7 @@ module.exports = {
     },
     // Horário
     // https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp
-    schedule: async (page) => {
+    schedule: async page => {
         return await page.$eval('#template_main > table', table => {
             if (table) {
                 const data = {
@@ -195,7 +195,7 @@ module.exports = {
     },
     // Estado das Propinas
     // https://paco.ua.pt/secvirtual/c_estadoDasProprinas.asp
-    tuitionFees: async (page) => {
+    tuitionFees: async page => {
         return await page.$$eval('#template_main .table_line:not(:nth-child(2))', lines => {
             if (lines) {
                 const data = {};
@@ -225,10 +225,41 @@ module.exports = {
                     });
                 
                 return {
-                    "fees":data,
+                    "fees": data,
                     "last_updated": lines[lines.length-1].innerText.split("Última actualização: ")[1].replace("\n", "")
                 };
             }
+        });
+    },
+    // Calendário de Exames do Aluno
+    // https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp
+    exams: async page => {
+        return await page.$$eval('#template_main > form tr', lines => {                
+            const keys = {
+                "FN": "Final",
+                "RE": "Recurso",
+                "DZ": "Especial"
+            }
+
+            const data = lines.filter(line => line.classList[0]?.includes("table_cell"))
+                .map(line => ({
+                    "class": {
+                        "code": line.children[1].innerText,
+                        "name": line.children[2].innerText
+                    },
+                    "date": line.children[0].innerText,
+                    "time": line.children[3].innerText,
+                    "room": line.children[4].innerText,
+                    "type": line.children[5].innerText,
+                    "season": keys[line.children[6].innerText.trim()],
+                    "notes": line.children[7].innerText,
+                    "changes": line.children[8].innerText
+                }));
+
+            return {
+                "exams": data,
+                "last_updated": lines[lines.length-2].innerText.split("Data última actualização: ")[1]
+            };
         });
     }
 }
