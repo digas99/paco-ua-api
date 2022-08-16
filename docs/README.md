@@ -1,9 +1,11 @@
-# PACO UA API ![logo](/images/paco-api-logo.png)
+# PACO UA API
 
 
 API for Portal Académico Online - Universidade de Aveiro.
 
 This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself.
+
+![logo](/images/paco-api-logo.png)
 
 ## API Documentation
 
