@@ -1,7 +1,14 @@
 # paco-ua-api
-## API for Portal Académico - Universidade de Aveiro
+## API for Portal Académico Online - Universidade de Aveiro
 
 This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
+
+### [API Documentation]("docs/README.md")
+
+### Table of Contents
+1. [Setup](#setup)
+2. [Usage](#usage)
+3. [Progress](#progress)
 
 ## Setup
 
@@ -155,8 +162,8 @@ The same applies for all the other endpoints.
 - [x] Disciplinas Inscritas &nbsp;&nbsp;```POST /classes/current```
 - [x] Estados das Propinas &nbsp;&nbsp;```POST /tuition_fees```
 - [ ] Plano Curricular 
-- [ ] Calendário de Exames do Aluno
-- [ ] Calendário de Exames por Disciplina
+- [ ] Calendário de Exames do Aluno &nbsp;&nbsp;```POST /exams```
+- [ ] Calendário de Exames por Disciplina &nbsp;&nbsp;```POST /exams?classes=...```
 - [ ] Apoio às Aulas
 - [x] Horário &nbsp;&nbsp;```POST /schedule```
 - [ ] Avisos

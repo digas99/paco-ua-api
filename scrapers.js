@@ -64,8 +64,8 @@ async function personalData(page) {
                     "picture": lines[0].querySelector("img").src,
                     "father": lines[1].children[1].innerText.trim(),
                     "mother": lines[2].children[1].innerText.trim(),
-                    "cc": lines[3].children[1].innerText,
-                    "birth": lines[4].children[1].innerText,
+                    "cc": lines[3].children[1].innerText.trim(),
+                    "birth": lines[4].children[1].innerText.trim(),
                     "country": lines[4].children[2].querySelector("img").alt,
                     "gender": lines[4].children[3].innerText
                 }    
