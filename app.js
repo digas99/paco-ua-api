@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const paco = require('./scrapers');
 const static = require('./static');
+const fs = require('fs');
 
 // login and put secretaria virtual in req
 function login(req, res, next) {
@@ -53,10 +54,8 @@ app.post("/", (req, res) => {
     });
 });
 
-app.use("/personal", require('./routers/personal'));
-app.use("/classes", require('./routers/classes'));
-app.use("/tuition_fees", require('./routers/tuition-fees'));
-app.use("/schedule", require('./routers/schedule'));
+//setup routes
+fs.readdir(static.ROUTERS_DIR, (err, files) => files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTERS_DIR+file.replace(".js", "")))));
 
 app.listen(static.PORT);
 console.log('Node server running on port '+static.PORT);

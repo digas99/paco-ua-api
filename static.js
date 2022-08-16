@@ -19,4 +19,11 @@ module.exports = {
     // /schedule
     SCHEDULE_URL: "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     SCHEDULE_TITLE: "Horário",
+
+    // exams
+    EXAMS_URL: "https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp",
+    EXAMS_TITLE: "Calendário de Exames do Aluno",
+
+    // directories
+    ROUTERS_DIR: "./routers/"
 }
