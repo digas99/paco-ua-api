@@ -20,11 +20,13 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
 1. ~~Plano Curricular~~
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
-1. ~~Calendário de Exames por Disciplina~~
+1. [Calendário de Exames por Disciplina](#calendário-de-exames-port-disciplina) &nbsp;&nbsp;```POST /exams?classes=...```
 1. ~~Apoio às Aulas~~
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. ~~Avisos~~
 1. ~~Requerimentos~~
+
+---
 
 ## Make a HTTP Request
 
@@ -350,6 +352,56 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ---
 
+## Calendário de Exames por Disciplina
+
+This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any classes can be passed in the URL Parameter **classes**, and the exams from that class will be returned. To specify multiple classes at once, separate the code of the classes with a comma. If an invalid class code is provided, it will be ignored.
+In the example below, the query is ```/exams?classes=40292,42000```.
+
+```POST /exams?classes=...```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "exams": [
+            {
+                "class": {
+                    "code": "40292",
+                    "name": "ALEMÃO II - PRÁTICAS AVANÇADAS DE TRADUÇÃO"
+                },
+                "date": "08/07/2022",
+                "time": "10:00",
+                "room": "2.1.15",
+                "type": "NM",
+                "season": "Final",
+                "department": "DLC",
+                "notes": "C/ ALEMÃO – PRÁTICAS AVANÇADAS DE TRADUÇÃO",
+                "changes": ""
+            },
+            {
+                "class": {
+                    "code": "42000",
+                    "name": "DISPOSITIVOS BIOMECÂNICOS"
+                },
+                "date": "13/09/2022",
+                "time": "14:00",
+                "room": "",
+                "type": "NM",
+                "season": "Especial",
+                "department": "MEC",
+                "notes": "",
+                "changes": ""
+            }
+        ],
+        "last_updated": "18-07-2022"
+    },
+    "size": 2,
+    "url": "https://paco.ua.pt/secvirtual/c_calendarioDeExamesPorDisciplina.asp",
+    "title": "Calendário de Exames por Disciplina",
+    "timestamp": "2022-08-16T18:19:47.998Z"
+}
+```
+
+---
 
 ## Horário
 

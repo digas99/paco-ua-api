@@ -1,13 +1,13 @@
 const puppeteer = require('puppeteer');
 
 module.exports = {
-    standardScrape: async (response, secretariaVirtual, section_url, scraper, success, error) => {
+    standardScrape: async (response, secretaria_virtual, section_url, scraper, selector, success, error) => {
         // go to section within Secretaria Virtual
-        await secretariaVirtual.goto(section_url);
-        await secretariaVirtual.waitForSelector("#template_main");
+        await secretaria_virtual.goto(section_url);
+        await secretaria_virtual.waitForSelector("#template_main");
         
         // run the scraper for that section
-        scraper(secretariaVirtual)
+        (selector ? scraper(secretaria_virtual, selector) : scraper(secretaria_virtual))
             .then(result => response.status(200).json(success(result)))
             .catch(err => response.status(500).json(error(err)));
     },
@@ -237,16 +237,20 @@ module.exports = {
     },
     // Calendário de Exames do Aluno
     // https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp
-    exams: async page => {
-        return await page.$$eval('#template_main > form tr', lines => {                
+    exams: async (page, selector) => {
+        return await page.$$eval(selector, lines => {                
             const keys = {
                 "FN": "Final",
                 "RE": "Recurso",
                 "DZ": "Especial"
             }
 
-            const data = lines.filter(line => line.classList[0]?.includes("table_cell"))
-                .map(line => ({
+            const classes_lines = lines.filter(line => line.classList[0]?.includes("table_cell"))
+
+            // check for table type
+            const userExams = classes_lines[0].children.length == 9 ? true : false;
+
+            const data = classes_lines.map(line => ({
                     "class": {
                         "code": line.children[1].innerText,
                         "name": line.children[2].innerText
@@ -256,9 +260,12 @@ module.exports = {
                     "room": line.children[4].innerText,
                     "type": line.children[5].innerText,
                     "season": keys[line.children[6].innerText.trim()],
-                    "notes": line.children[7].innerText,
-                    "changes": line.children[8].innerText
+                    "department" : !userExams ? line.children[7].innerText : '',
+                    "notes": line.children[userExams ? 7 : 8].innerText,
+                    "changes": line.children[userExams ? 8 : 9].innerText
                 }));
+            
+            console.log(data, lines[lines.length-2].innerText.split("Data última actualização: ")[1]);
 
             return {
                 "exams": data,

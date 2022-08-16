@@ -23,6 +23,8 @@ module.exports = {
     // exams
     EXAMS_URL: "https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp",
     EXAMS_TITLE: "Calendário de Exames do Aluno",
+    EXAMS_CLASSES_URL: "https://paco.ua.pt/secvirtual/c_calendarioDeExamesPorDisciplina.asp",
+    EXAMS_CLASSES_TITLE: "Calendário de Exames por Disciplina",
 
     // directories
     ROUTERS_DIR: "./routers/"
