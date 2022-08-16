@@ -1,5 +1,7 @@
 # PACO UA API
 
+![logo](/images/paco-api-logo.png)
+
 API for Portal Académico Online - Universidade de Aveiro.
 
 This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself.
@@ -9,7 +11,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Make a HTTP Rrquest](#make-a-http-request) 
 2. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
 3. ~~Situação de prescrição~~
-4. [Histórico Notas](#histórico-de-notas) &nbsp;&nbsp;```POST /classes/history```
+4. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
 5. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
 6. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
 7. ~~Plano Curricular~~

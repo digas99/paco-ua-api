@@ -68,17 +68,7 @@ If everything is correct, this should be the response:
                     "class_group": "TP1",
                     "room": "ANF. V"
                 },
-                {
-                    "class": {
-                        "name": "REDES DE COMUNICAÇÕES I",
-                        "abbrev": "RC-I"
-                    },
-                    "start": "16h",
-                    "duration": "2h",
-                    "capacity": "19",
-                    "class_group": "P8",
-                    "room": "04.3.30"
-                }
+                ...
             ],
             "Terça": [
                 {
@@ -92,65 +82,16 @@ If everything is correct, this should be the response:
                     "class_group": "P07",
                     "room": "04.2.17"
                 },
-                {
-                    "class": {
-                        "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
-                        "abbrev": "SIO"
-                    },
-                    "start": "11h",
-                    "duration": "2h",
-                    "capacity": "120",
-                    "class_group": "TP2",
-                    "room": "ANF. IV"
-                }
+                ...
             ],
-            "Quarta": [
-                {
-                    "class": {
-                        "name": "REDES DE COMUNICAÇÕES I",
-                        "abbrev": "RC-I"
-                    },
-                    "start": "11h",
-                    "duration": "1,5h",
-                    "capacity": "112",
-                    "class_group": "TP1",
-                    "room": "ANF. V"
-                }
-            ],
-            "Quinta": [
-                {
-                    "class": {
-                        "name": "ARQUITETURA DE COMPUTADORES I",
-                        "abbrev": "AC-I"
-                    },
-                    "start": "12h",
-                    "duration": "1h",
-                    "capacity": "98",
-                    "class_group": "TP1",
-                    "room": "ANF. V"
-                }
-            ],
-            "Sexta": [
-                {
-                    "class": {
-                        "name": "PROJETO EM ENGENHARIA DE COMPUTADORES E INFORMÁTICA",
-                        "abbrev": "PECI"
-                    },
-                    "start": "11h",
-                    "duration": "2h",
-                    "capacity": "80",
-                    "class_group": "TP1",
-                    "room": "04.1.02"
-                }
-            ],
-            "Sábado": []
+            ...
         },
         "school_year": "2021/2022",
         "semester": "1"
     },
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
-    "timestamp": "2022-08-15T23:45:28.021Z"
+    "timestamp": "2022-08-16T01:51:09.193Z"
 }
 ```
 The same applies for all the other endpoints.
