@@ -4,6 +4,8 @@ const paco = require('./scrapers');
 const static = require('./static');
 const fs = require('fs');
 
+let port = process.env.PORT || static.PORT;
+
 // login and put secretaria virtual in req
 function login(req, res, next) {
     const now = new Date().toISOString();
@@ -57,5 +59,4 @@ app.post("/", (req, res) => {
 //setup routes
 fs.readdir(static.ROUTERS_DIR, (err, files) => files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTERS_DIR+file.replace(".js", "")))));
 
-app.listen(static.PORT);
-console.log('Node server running on port '+static.PORT);
+app.listen(port, () => console.log('Node server running on port '+port));

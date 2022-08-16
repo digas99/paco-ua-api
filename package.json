@@ -4,14 +4,15 @@
   "description": "API for Portal Académico - Universidade de Aveiro",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "devStart": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digas99/paco-ua-api.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Diogo Correia",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/digas99/paco-ua-api/issues"
   },
@@ -23,5 +24,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "engines": {
+    "node": "18.2.0"
   }
 }
