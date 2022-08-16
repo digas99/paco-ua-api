@@ -30,6 +30,10 @@ module.exports = {
     REQUESTS_URL: "https://paco.ua.pt/secvirtual/pedidos_requerimentos_consultas_new.asp",
     REQUESTS_TITLE: "Requerimentos",
 
+    // /expiration
+    EXPIRATION_URL: "https://paco.ua.pt/secvirtual/c_situacaoprescricao.asp",
+    EXPIRATION_TITLE: "Situação de prescrição",
+
     // directories
     ROUTERS_DIR: "./routers/"
 }

@@ -246,7 +246,6 @@ module.exports = {
             }
 
             const classes_lines = lines.filter(line => line.classList[0]?.includes("table_cell"))
-
             // check for table type
             const userExams = classes_lines[0].children.length == 9 ? true : false;
 
@@ -265,8 +264,6 @@ module.exports = {
                     "changes": line.children[userExams ? 8 : 9].innerText
                 }));
             
-            console.log(data, lines[lines.length-2].innerText.split("Data última actualização: ")[1]);
-
             return {
                 "exams": data,
                 "last_updated": lines[lines.length-2].innerText.split("Data última actualização: ")[1]
@@ -284,10 +281,36 @@ module.exports = {
                     "date": line.children[0].innerText,
                     "state": line.children[1].innerText
                 }));
-                
+
             return data;
         });
     },
+    // Situação de prescrição
+    // https://paco.ua.pt/secvirtual/c_situacaoprescricao.asp
+    expiration: async page => {
+        return await page.$eval("iframe", iframe => {          
+            const doc = iframe.contentWindow.document;
+            const data = {};
+            data["expiration"] = Array.from(doc.querySelectorAll("#gvListaResumoPrescricao tr:not(:nth-child(1))"))
+                .map(line => ({
+                    "school_year": line.children[0].innerText.trim(),
+                    "ects": {
+                        "cumulative": Number(line.children[1].innerText),
+                        "done": Number(line.children[2].innerText),
+                        "missing": Number(line.children[6].innerText),
+                        "total": Number(line.children[7].innerText) 
+                    },
+                    "enrollment_cumulative": Number(line.children[3].innerText),
+                    "coefficient": Number(line.children[4].innerText),
+                    "type": line.children[5].innerText,
+                    "state": line.children[8].innerText
+                }));
+
+            data["info"] = Array.from(doc.querySelectorAll(".prescricaoInfo > p")).map(p => p.innerText);
+            
+            return data;
+        });
+    }
 }
 
 async function htmlOnly(page) {

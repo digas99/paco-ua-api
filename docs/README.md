@@ -14,7 +14,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
     1. [Cache](#cache)
     1. [Selective Fetching](#selective-fetching)
 1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
-1. ~~Situação de prescrição~~
+1. [Situação de prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
 1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
 1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
 1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
@@ -134,6 +134,59 @@ Fetching everything at once might not always be the best approach. When everythi
     "url": "https://paco.ua.pt/secvirtual/c_dadospess.asp",
     "title": "Dados Pessoais",
     "timestamp": "2022-08-16T01:19:28.099Z"
+}
+
+// sensitive information hidden with "..."
+```
+
+---
+
+## Situação de Prescrição
+
+```POST /expiration```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "expiration": [
+            {
+                "school_year": "2021/2022",
+                "ects": {
+                    "cumulative": ...,
+                    "done": ...,
+                    "missing": 0,
+                    "total": 60
+                },
+                "enrollment_cumulative": 3,
+                "coefficient": 1,
+                "type": "Freq. Normal",
+                "state": "Não Prescrito"
+            },
+            {
+                "school_year": "2020/2021",
+                "ects": {
+                    "cumulative": ...,
+                    "done": ...,
+                    "missing": 0,
+                    "total": 58
+                },
+                "enrollment_cumulative": 2,
+                "coefficient": 0,
+                "type": "Situação Especial",
+                "state": "Não Prescrito"
+            },
+            ...
+        ],
+        "info": [
+            "Regulamento de prescrições da UA ...",
+            "Aplicação do conceito de prescrição – alunos...",
+            ...
+        ]
+    },
+    "size": 5,
+    "url": "https://paco.ua.pt/secvirtual/c_situacaoprescricao.asp",
+    "title": "Situação de prescrição",
+    "timestamp": "2022-08-16T23:26:01.623Z"
 }
 
 // sensitive information hidden with "..."

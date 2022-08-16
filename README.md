@@ -110,7 +110,7 @@ The same applies for all the other endpoints.
 ## Progress
 
 - [x] Dados Pessoais &nbsp;&nbsp;`POST /personal`
-- [ ] Situação de prescrição
+- [x] Situação de prescrição &nbsp;&nbsp;`POST /expiration`
 - [x] Histórico Notas &nbsp;&nbsp;`POST /classes/history`
 - [x] Disciplinas Inscritas &nbsp;&nbsp;`POST /classes/current`
 - [x] Estados das Propinas &nbsp;&nbsp;`POST /tuition_fees`
