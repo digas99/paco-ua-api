@@ -5,7 +5,7 @@ const static = require('../static');
 
 router.post("/", async (req, res) => {
     const now = new Date().toISOString();
-    if (!req.query["classes"]) {
+    if (!req.query["subjects"]) {
         paco.standardScrape(res, req.page, static.EXAMS_URL, paco.exams, result => ({
             "data": result,
             "size": result["exams"].length,
@@ -20,10 +20,10 @@ router.post("/", async (req, res) => {
         }), "#template_main > form tr");
     }
     else {
-        paco.standardScrape(res, req.page, static.EXAMS_CLASSES_URL, async page => {
-            // search for classes
+        paco.standardScrape(res, req.page, static.EXAMS_SUBJECTS_URL, async page => {
+            // search for subjects
             await page.waitForSelector("#listaDisciplinas");
-            await page.type("#listaDisciplinas", req.query["classes"]);
+            await page.type("#listaDisciplinas", req.query["subjects"]);
             await page.click("input[value='Pesquisar']");
 
             // fetch the search result
@@ -32,13 +32,13 @@ router.post("/", async (req, res) => {
         }, result => ({
             "data": result,
             "size": result["exams"].length,
-            "url": static.EXAMS_CLASSES_URL,
-            "title": static.EXAMS_CLASSES_TITLE,
+            "url": static.EXAMS_SUBJECTS_URL,
+            "title": static.EXAMS_SUBJECTS_TITLE,
             "timestamp": now
         }), error => ({
             "error":"Server error",
-            "url": static.EXAMS_CLASSES_URL,
-            "title": static.EXAMS_CLASSES_TITLE,
+            "url": static.EXAMS_SUBJECTS_URL,
+            "title": static.EXAMS_SUBJECTS_TITLE,
             "timestamp": now
         }));
     }

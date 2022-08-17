@@ -57,39 +57,39 @@ If everything is correct, this should be the response:
         "schedule": {
             "Segunda": [
                 {
-                    "class": {
+                    "subject": {
                         "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
                         "abbrev": "SIO"
                     },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "24",
-                    "class_group": "P8",
+                    "class": "P8",
                     "room": "04.2.03"
                 },
                 {
-                    "class": {
+                    "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
                         "abbrev": "AC-I"
                     },
                     "start": "14h",
                     "duration": "1h",
                     "capacity": "98",
-                    "class_group": "TP1",
+                    "class": "TP1",
                     "room": "ANF. V"
                 },
                 ...
             ],
             "Terça": [
                 {
-                    "class": {
+                    "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
                         "abbrev": "AC-I"
                     },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "18",
-                    "class_group": "P07",
+                    "class": "P07",
                     "room": "04.2.17"
                 },
                 ...
@@ -111,12 +111,12 @@ The same applies for all the other endpoints.
 
 - [x] Dados Pessoais &nbsp;&nbsp;`POST /personal`
 - [x] Situação de prescrição &nbsp;&nbsp;`POST /expiration`
-- [x] Histórico Notas &nbsp;&nbsp;`POST /classes/history`
-- [x] Disciplinas Inscritas &nbsp;&nbsp;`POST /classes/current`
+- [x] Histórico Notas &nbsp;&nbsp;`POST /subjects/history`
+- [x] Disciplinas Inscritas &nbsp;&nbsp;`POST /subjects/current`
 - [x] Estados das Propinas &nbsp;&nbsp;`POST /tuition_fees`
-- [x] Plano Curricular &nbsp;&nbsp;`POST /classes`
+- [x] Plano Curricular &nbsp;&nbsp;`POST /subjects`
 - [x] Calendário de Exames do Aluno &nbsp;&nbsp;`POST /exams`
-- [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`POST /exams?classes=...`
+- [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`POST /exams?subjects=...`
 - [ ] Apoio às Aulas
 - [x] Horário &nbsp;&nbsp;`POST /schedule`
 - [x] Requerimentos &nbsp;&nbsp;```POST /requests```

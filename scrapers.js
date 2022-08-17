@@ -119,14 +119,14 @@ module.exports = {
     },
     // Histórico Notas
     // https://paco.ua.pt/secvirtual/c_historiconotas.asp
-    classesHistory: async page => {
+    subjectsHistory: async page => {
         return await page.$eval('#historico', table => {
             if (table) {
                 const lines = Array.from(table.querySelectorAll("tbody > tr"));
-                return {"classes" :lines.filter(line => line.classList.length > 0)
+                return {"subjects" :lines.filter(line => line.classList.length > 0)
                     .map(line => ({
                         "code": line.children[0].innerText,
-                        "class": line.children[1].innerText,
+                        "name": line.children[1].innerText,
                         "completed_date": line.children[2].innerText,
                         "grade": line.children[3].innerText
                     }))};
@@ -135,14 +135,14 @@ module.exports = {
     },
     // Disciplinas Inscritas
     // https://paco.ua.pt/secvirtual/c_examesInscr.asp
-    classesCurrent: async page => {
+    subjectsCurrent: async page => {
         return await page.$eval('#template_main > table', table => {
             if (table) {
                 const lines = Array.from(table.querySelectorAll("tbody > tr"));
                 const data = lines.filter(line => line.children[6].innerText == "Normal")
                     .map(line => ({
                         "code": line.children[0].innerText,
-                        "class": line.children[1].innerText,
+                        "name": line.children[1].innerText,
                         "year": line.children[2].innerText,
                         "semester": line.children[3].innerText,
                         "ects": line.children[4].innerText,
@@ -159,7 +159,7 @@ module.exports = {
                     }); 
                 });
 
-                return {"classes": data};
+                return {"subjects": data};
             }
         });
     },
@@ -177,19 +177,19 @@ module.exports = {
                 const scheduleInfo = table.querySelector("tr").children[0].childNodes[2].wholeText;
                 data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
                 data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
-                // classes
+                // subjects
                 Array.from(table.querySelectorAll(".horario_turma")).forEach(elem => {
                     const titleData = elem.title.split("\n");
                     const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
                     weekday.push({
-                        "class": {
+                        "subject": {
                             "name": titleData[0],
                             "abbrev": elem.childNodes[0].wholeText.split(" ")[0].replace("\n", "")
                         },
                         "start": titleData[2].split("INÍCIO: ")[1],
                         "duration": titleData[3].split("DURAÇÃO: ")[1],
                         "capacity": titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0],
-                        "class_group": elem.childNodes[0].wholeText.split(" ")[2],
+                        "class": elem.childNodes[0].wholeText.split(" ")[2],
                         "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
                     });
                 });
@@ -246,12 +246,12 @@ module.exports = {
                 "DZ": "Especial"
             }
 
-            const classes_lines = lines.filter(line => line.classList[0]?.includes("table_cell"))
+            const subjects_lines = lines.filter(line => line.classList[0]?.includes("table_cell"))
             // check for table type
-            const userExams = classes_lines[0].children.length == 9 ? true : false;
+            const userExams = subjects_lines[0].children.length == 9 ? true : false;
 
-            const data = classes_lines.map(line => ({
-                    "class": {
+            const data = subjects_lines.map(line => ({
+                    "subject": {
                         "code": line.children[1].innerText,
                         "name": line.children[2].innerText
                     },
@@ -318,7 +318,7 @@ module.exports = {
         return await page.$$eval("#template_main > table:nth-of-type(1) > tbody > .table_cell_impar, #template_main > table:nth-of-type(1) > tbody > .table_cell_par", (lines, months) => {
             const data = {};
             if (lines) {
-                const fetchClass = elem => ({
+                const fetchSubject = elem => ({
                     "code": elem.children[1].innerText.replaceAll(/[\n\t]/g, ""),
                     "name": elem.children[2].innerText.replaceAll(/[\n\t]/g, ""),
                     "year": elem.children[3].innerText.replaceAll(/[\n\t]/g, ""),
@@ -328,13 +328,13 @@ module.exports = {
                     "grade": Number(elem.children[7].innerText.replaceAll(/[\n\t]/g, ""))
                 });
 
-                data["classes"] = Array.from(lines).map(line => {
-                    const values = fetchClass(line);
+                data["subjects"] = Array.from(lines).map(line => {
+                    const values = fetchSubject(line);
 
-                    // if it is a class with options
+                    // if it is a subject with options
                     if (line.children[0].children.length > 1)
                         values["options"] = Array.from(line.nextElementSibling.querySelectorAll(".table_cell_impar, .table_cell_par"))
-                            .map(option => fetchClass(option));
+                            .map(option => fetchSubject(option));
 
                     return values;
                 });
@@ -344,15 +344,15 @@ module.exports = {
             data["overview"] =  {
                 "done": {
                     "ects": parseInt(overview[0].innerText),
-                    "classes": Number(overview[3].innerText)
+                    "subjects": Number(overview[3].innerText)
                 },
                 "left": {
                     "ects": parseInt(overview[1].innerText),
-                    "classes": Number(overview[5].innerText)
+                    "subjects": Number(overview[5].innerText)
                 },
                 "credited": {
                     "ects": parseInt(overview[2].innerText),
-                    "classes": Number(overview[4].innerText) 
+                    "subjects": Number(overview[4].innerText) 
                 }
             }
             
@@ -362,7 +362,7 @@ module.exports = {
 
             // Σ(grade*ect)
             let grades = [];
-            const sumGradeXECTs = data["classes"].reduce((acc, cur, i) => {
+            const sumGradeXECTs = data["subjects"].reduce((acc, cur, i) => {
                 let grade = cur["grade"] ? cur["grade"] : 0;
                 const ects = cur["ects"] ? cur["ects"] : 0;
 
@@ -390,9 +390,9 @@ module.exports = {
             // weighted mean = Σ(grade*ects)/Σ(ects)
             data["overview"]["weigted_mean"] = Number((sumGradeXECTs/data["overview"]["done"]["ects"]).toFixed(2));
             
-            // standard deviation = √((Σ(grade - mean)²)/n_classes)
+            // standard deviation = √((Σ(grade - mean)²)/n_subjects)
             const sumGradesMinusMeanSquared = grades.reduce((acc, cur) => acc + Math.pow(cur - data["overview"]["weigted_mean"], 2), 0);
-            data["overview"]["standard_deviation"] = Number(Math.sqrt(sumGradesMinusMeanSquared/data["overview"]["done"]["classes"]).toFixed(2));
+            data["overview"]["standard_deviation"] = Number(Math.sqrt(sumGradesMinusMeanSquared/data["overview"]["done"]["subjects"]).toFixed(2));
 
             const dateValues = document.querySelector("#template_main > table:nth-of-type(3) tr:nth-of-type(2)").innerText.split("Última actualização: ")[1].split(" às")[0].split(" de ");
             data["last_updated"] = `${dateValues[0]}-${months[dateValues[1]]}-${dateValues[2]}`; 

@@ -15,12 +15,12 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
     1. [Selective Fetching](#selective-fetching)
 1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
 1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
-1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
-1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
+1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /subjects/history```
+1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /subjects/current```
 1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
-1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```POST /classes```
+1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```POST /subjects```
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
-1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?classes=...```
+1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
 1. ~~Apoio às Aulas~~
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
@@ -195,27 +195,27 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ## Histórico Notas
 
-```POST /classes/history```
+```POST /subjects/history```
 ```json5
 // RESPONSE example
 {
     "data": {
-        "classes": [
+        "subjects": [
             {
                 "code": "40332",
-                "class": "INTRODUÇÃO AOS SISTEMAS DIGITAIS",
+                "name": "INTRODUÇÃO AOS SISTEMAS DIGITAIS",
                 "completed_date": "...",
                 "grade": "..."
             },
             {
                 "code": "40333",
-                "class": "LABORATÓRIO DE SISTEMAS DIGITAIS",
+                "name": "LABORATÓRIO DE SISTEMAS DIGITAIS",
                 "completed_date": "...",
                 "grade": "..."
             },
             {
                 "code": "40337",
-                "class": "MÉTODOS PROBABILÍSTICOS PARA ENGENHARIA INFORMÁTICA",
+                "name": "MÉTODOS PROBABILÍSTICOS PARA ENGENHARIA INFORMÁTICA",
                 "completed_date": "...",
                 "grade": "..."
             },
@@ -236,15 +236,15 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ## Disciplinas Inscritas
 
-```POST /classes/current```
+```POST /subjects/current```
 ```json5
 // RESPONSE example
 {
     "data": {
-        "classes": [
+        "subjects": [
             {
                 "code": "41951",
-                "class": "ANÁLISE DE SISTEMAS",
+                "name": "ANÁLISE DE SISTEMAS",
                 "year": "2",
                 "semester": "2",
                 "ects": "6",
@@ -253,7 +253,7 @@ Fetching everything at once might not always be the best approach. When everythi
             },
             {
                 "code": "41948",
-                "class": "ARQUITETURA DE COMPUTADORES I",
+                "name": "ARQUITETURA DE COMPUTADORES I",
                 "year": "2",
                 "semester": "1",
                 "ects": "6",
@@ -263,7 +263,7 @@ Fetching everything at once might not always be the best approach. When everythi
             },
             {
                 "code": "41952",
-                "class": "ARQUITETURA DE COMPUTADORES II",
+                "name": "ARQUITETURA DE COMPUTADORES II",
                 "year": "2",
                 "semester": "2",
                 "ects": "6",
@@ -344,18 +344,18 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ## Plano Curricular
 
-The classes represented here either have grade 0 or a value greater than 10.  
-If the grade is 0, then it doesn't apply to that class or the class hasn't been completed yet.
+The subjects represented here either have grade 0 or a value greater than 10.  
+If the grade is 0, then it doesn't apply to that subject or the subject hasn't been completed yet.
 
-Classes with *options* will have grade 0 (as in "it doesn't apply") and will show all options. The options the student **didn't** take will have grade 0 as well (as in "it doesn't apply").  
-This classes with options are considered in the calculation of the **weighted mean**, but since they don't have a grade, the mean of the grades of their options weigh in instead.
+Subjects with *options* will have grade 0 (as in "it doesn't apply") and will show all options. The options the student **didn't** take will have grade 0 as well (as in "it doesn't apply").  
+This subjects with options are considered in the calculation of the **weighted mean**, but since they don't have a grade, the mean of the grades of their options weigh in instead.
 
-```POST /classes```
+```POST /subjects```
 ```json5
 // RESPONSE example
 {
     "data": {
-        "classes": [
+        "subjects": [
             {
                 "code": "40338",
                 "name": "LABORATÓRIOS DE INFORMÁTICA",
@@ -410,15 +410,15 @@ This classes with options are considered in the calculation of the **weighted me
         "overview": {
             "done": {
                 "ects": "...",
-                "classes": "..."
+                "subjects": "..."
             },
             "left": {
                 "ects": "...",
-                "classes": "..."
+                "subjects": "..."
             },
             "credited": {
                 "ects": 0,
-                "classes": 0
+                "subjects": 0
             },
             "lowest_grade": "...",
             "highest_grade": "...",
@@ -447,7 +447,7 @@ This classes with options are considered in the calculation of the **weighted me
     "data": {
         "exams": [
             {
-                "class": {
+                "subject": {
                     "code": "41948",
                     "name": "ARQUITETURA DE COMPUTADORES I"
                 },
@@ -460,7 +460,7 @@ This classes with options are considered in the calculation of the **weighted me
                 "changes": ""
             },
             {
-                "class": {
+                "subject": {
                     "code": "41950",
                     "name": "REDES DE COMUNICAÇÕES I"
                 },
@@ -473,7 +473,7 @@ This classes with options are considered in the calculation of the **weighted me
                 "changes": ""
             },
             {
-                "class": {
+                "subject": {
                     "code": "42299",
                     "name": "INTERAÇÃO HUMANO-COMPUTADOR"
                 },
@@ -500,17 +500,17 @@ This classes with options are considered in the calculation of the **weighted me
 
 ## Calendário de Exames por Disciplina
 
-This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any classes can be passed in the URL Parameter **classes**, and the exams from that class will be returned. To specify multiple classes at once, separate the code of the classes with a comma. If an invalid class code is provided, it will be ignored.
-In the example below, the query is ```/exams?classes=40292,42000```.
+This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any subjects can be passed in the URL Parameter **subjects**, and the exams from that subject will be returned. To specify multiple subjects at once, separate the code of the subjects with a comma. If an invalid subject code is provided, it will be ignored.
+In the example below, the query is ```/exams?subjects=40292,42000```.
 
-```POST /exams?classes=...```
+```POST /exams?subjects=...```
 ```json5
 // RESPONSE example
 {
     "data": {
         "exams": [
             {
-                "class": {
+                "subject": {
                     "code": "40292",
                     "name": "ALEMÃO II - PRÁTICAS AVANÇADAS DE TRADUÇÃO"
                 },
@@ -524,7 +524,7 @@ In the example below, the query is ```/exams?classes=40292,42000```.
                 "changes": ""
             },
             {
-                "class": {
+                "subject": {
                     "code": "42000",
                     "name": "DISPOSITIVOS BIOMECÂNICOS"
                 },
@@ -559,39 +559,39 @@ In the example below, the query is ```/exams?classes=40292,42000```.
         "schedule": {
             "Segunda": [
                 {
-                    "class": {
+                    "subject": {
                         "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
                         "abbrev": "SIO"
                     },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "24",
-                    "class_group": "P8",
+                    "class": "P8",
                     "room": "04.2.03"
                 },
                 {
-                    "class": {
+                    "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
                         "abbrev": "AC-I"
                     },
                     "start": "14h",
                     "duration": "1h",
                     "capacity": "98",
-                    "class_group": "TP1",
+                    "class": "TP1",
                     "room": "ANF. V"
                 },
                 ...
             ],
             "Terça": [
                 {
-                    "class": {
+                    "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
                         "abbrev": "AC-I"
                     },
                     "start": "9h",
                     "duration": "2h",
                     "capacity": "18",
-                    "class_group": "P07",
+                    "class": "P07",
                     "room": "04.2.17"
                 },
                 ...
