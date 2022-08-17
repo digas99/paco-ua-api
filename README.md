@@ -114,10 +114,9 @@ The same applies for all the other endpoints.
 - [x] Histórico Notas &nbsp;&nbsp;`POST /classes/history`
 - [x] Disciplinas Inscritas &nbsp;&nbsp;`POST /classes/current`
 - [x] Estados das Propinas &nbsp;&nbsp;`POST /tuition_fees`
-- [ ] Plano Curricular
+- [x] Plano Curricular &nbsp;&nbsp;`POST /classes`
 - [x] Calendário de Exames do Aluno &nbsp;&nbsp;`POST /exams`
 - [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`POST /exams?classes=...`
 - [ ] Apoio às Aulas
 - [x] Horário &nbsp;&nbsp;`POST /schedule`
-- [ ] Avisos
 - [x] Requerimentos &nbsp;&nbsp;```POST /requests```

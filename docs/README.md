@@ -14,16 +14,15 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
     1. [Cache](#cache)
     1. [Selective Fetching](#selective-fetching)
 1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
-1. [Situação de prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
+1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
 1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /classes/history```
 1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /classes/current```
 1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
-1. ~~Plano Curricular~~
+1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```POST /classes```
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?classes=...```
 1. ~~Apoio às Aulas~~
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
-1. ~~Avisos~~
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
 ---
@@ -285,7 +284,6 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ---
 
-
 ## Estado das Propinas
 
 ```POST /tuition_fees```
@@ -344,6 +342,101 @@ Fetching everything at once might not always be the best approach. When everythi
 
 ---
 
+## Plano Curricular
+
+The classes represented here either have grade 0 or a value greater than 10.  
+If the grade is 0, then it doesn't apply to that class or the class hasn't been completed yet.
+
+Classes with *options* will have grade 0 (as in "it doesn't apply") and will show all options. The options the student **didn't** take will have grade 0 as well (as in "it doesn't apply").  
+This classes with options are considered in the calculation of the **weighted mean**, but since they don't have a grade, the mean of the grades of their options weigh in instead.
+
+```POST /classes```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "classes": [
+            {
+                "code": "40338",
+                "name": "LABORATÓRIOS DE INFORMÁTICA",
+                "year": "1",
+                "semester": "0",
+                "credits": 5,
+                "ects": 8,
+                "grade": "..."
+            },
+            {
+                "code": "40332",
+                "name": "INTRODUÇÃO AOS SISTEMAS DIGITAIS",
+                "year": "1",
+                "semester": "1",
+                "credits": 3,
+                "ects": 6,
+                "grade": "..."
+            },
+            ...
+            {
+                "code": "41994",
+                "name": "COMPETÊNCIAS TRANSFERÍVEIS II",
+                "year": "2",
+                "semester": "2",
+                "credits": 3,
+                "ects": 6,
+                "grade": 0,
+                "options": [
+                    {
+                        "code": "42294",
+                        "name": "MICROCONTROLOLADORES E INTERAÇÃO COM SENSORES E ATUADORES",
+                        "year": "2",
+                        "semester": "2",
+                        "credits": 0,
+                        "ects": 0,
+                        "grade": 0
+                    },
+                    {
+                        "code": "42296",
+                        "name": "VISUALIZAÇÃO DE DADOS",
+                        "year": "2",
+                        "semester": "2",
+                        "credits": 0,
+                        "ects": 0,
+                        "grade": "..."
+                    },
+                    ...
+                ]
+            },
+            ...
+        ],
+        "overview": {
+            "done": {
+                "ects": "...",
+                "classes": "..."
+            },
+            "left": {
+                "ects": "...",
+                "classes": "..."
+            },
+            "credited": {
+                "ects": 0,
+                "classes": 0
+            },
+            "lowest_grade": "...",
+            "highest_grade": "...",
+            "weigted_mean": "...",
+            "standard_deviation": "..."
+        },
+        "last_updated": "17-08-2022"
+    },
+    "size": 41,
+    "url": "https://paco.ua.pt/secvirtual/c_planocurr.asp",
+    "title": "Plano Curricular",
+    "timestamp": "2022-08-17T14:16:24.983Z"
+}
+
+// sensitive information hidden with "..."
+```
+
+---
 
 ## Calendário de Exames do Aluno
 

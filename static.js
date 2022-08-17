@@ -11,6 +11,8 @@ module.exports = {
     CURRENT_TITLE: "Disciplinas Inscritas",
     HISTORY_URL: "https://paco.ua.pt/secvirtual/c_historiconotas.asp",
     HISTORY_TITLE: "Histórico Notas",
+    CURRICULUM_URL: "https://paco.ua.pt/secvirtual/c_planocurr.asp",
+    CURRICULUM_TITLE: "Plano Curricular",
 
     // /tuition-fees
     TUITION_FEES_URL: "https://paco.ua.pt/secvirtual/c_estadoDasProprinas.asp",
@@ -35,5 +37,21 @@ module.exports = {
     EXPIRATION_TITLE: "Situação de prescrição",
 
     // directories
-    ROUTERS_DIR: "./routers/"
+    ROUTERS_DIR: "./routers/",
+
+    // miscelaneous
+    MONTHS: {
+        "janeiro": "01",
+        "fevereiro": "02",
+        "março": "03",
+        "abril": "04",
+        "maio": "05",
+        "junho": "06",
+        "julho": "07",
+        "agosto": "08",
+        "setembro": "09",
+        "outubro": "10",
+        "novembro": "11",
+        "dezembro": "12",
+    }
 }

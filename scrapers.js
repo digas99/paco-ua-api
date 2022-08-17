@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const static = require('./static');
 
 module.exports = {
     standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error, selector) => {
@@ -310,6 +311,93 @@ module.exports = {
             
             return data;
         });
+    },
+    // Plano Curricular
+    // https://paco.ua.pt/secvirtual/c_planocurr.asp
+    curriculum: async page => {
+        return await page.$$eval("#template_main > table:nth-of-type(1) > tbody > .table_cell_impar, #template_main > table:nth-of-type(1) > tbody > .table_cell_par", (lines, months) => {
+            const data = {};
+            if (lines) {
+                const fetchClass = elem => ({
+                    "code": elem.children[1].innerText.replaceAll(/[\n\t]/g, ""),
+                    "name": elem.children[2].innerText.replaceAll(/[\n\t]/g, ""),
+                    "year": elem.children[3].innerText.replaceAll(/[\n\t]/g, ""),
+                    "semester": elem.children[4].innerText.replaceAll(/[\n\t]/g, ""),
+                    "credits": parseInt(elem.children[5].innerText.replaceAll(/[\n\t]/g, "")),
+                    "ects": parseInt(elem.children[6].innerText.replaceAll(/[\n\t]/g, "")),
+                    "grade": Number(elem.children[7].innerText.replaceAll(/[\n\t]/g, ""))
+                });
+
+                data["classes"] = Array.from(lines).map(line => {
+                    const values = fetchClass(line);
+
+                    // if it is a class with options
+                    if (line.children[0].children.length > 1)
+                        values["options"] = Array.from(line.nextElementSibling.querySelectorAll(".table_cell_impar, .table_cell_par"))
+                            .map(option => fetchClass(option));
+
+                    return values;
+                });
+            }
+
+            const overview = document.querySelectorAll("#template_main > table:nth-of-type(2) .table_cell_impar > td[align='right'], #template_main > table:nth-of-type(2) .table_cell_par > td[align='right']");
+            data["overview"] =  {
+                "done": {
+                    "ects": parseInt(overview[0].innerText),
+                    "classes": Number(overview[3].innerText)
+                },
+                "left": {
+                    "ects": parseInt(overview[1].innerText),
+                    "classes": Number(overview[5].innerText)
+                },
+                "credited": {
+                    "ects": parseInt(overview[2].innerText),
+                    "classes": Number(overview[4].innerText) 
+                }
+            }
+            
+            // highest and lowest grade
+            data["overview"]["lowest_grade"] = 0;
+            data["overview"]["highest_grade"] = 0;
+
+            // Σ(grade*ect)
+            let grades = [];
+            const sumGradeXECTs = data["classes"].reduce((acc, cur, i) => {
+                let grade = cur["grade"] ? cur["grade"] : 0;
+                const ects = cur["ects"] ? cur["ects"] : 0;
+
+                // consider options
+                const options = cur["options"];
+                if (options) {
+                    // mean of grade from options
+                    const optionsGradesSum = options.reduce((opt_acc, opt_cur) => opt_acc + (opt_cur["grade"] ? opt_cur["grade"] : 0), 0);
+                    const numberCompletedOptions = options.filter(option => option["grade"] > 0).length;
+                    grade = Math.round(optionsGradesSum/numberCompletedOptions);
+                }
+
+                // highest grade
+                if (grade > data["overview"]["highest_grade"]) data["overview"]["highest_grade"] = grade;
+                // lowest grade
+                if (grade > 0) {
+                    if (i == 0) data["overview"]["lowest_grade"] = grade;
+                    else if (grade < data["overview"]["lowest_grade"]) data["overview"]["lowest_grade"] = grade;
+                }
+
+                grades.push(grade);
+                return acc + (grade * ects);
+            }, 0);
+            
+            // weighted mean = Σ(grade*ects)/Σ(ects)
+            data["overview"]["weigted_mean"] = Number((sumGradeXECTs/data["overview"]["done"]["ects"]).toFixed(2));
+            
+            // standard deviation = √((Σ(grade - mean)²)/n_classes)
+            const sumGradesMinusMeanSquared = grades.reduce((acc, cur) => acc + Math.pow(cur - data["overview"]["weigted_mean"], 2), 0);
+            data["overview"]["standard_deviation"] = Number(Math.sqrt(sumGradesMinusMeanSquared/data["overview"]["done"]["classes"]).toFixed(2));
+
+            const dateValues = document.querySelector("#template_main > table:nth-of-type(3) tr:nth-of-type(2)").innerText.split("Última actualização: ")[1].split(" às")[0].split(" de ");
+            data["last_updated"] = `${dateValues[0]}-${months[dateValues[1]]}-${dateValues[2]}`; 
+            return data;
+        }, static.MONTHS);
     }
 }
 
