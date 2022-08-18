@@ -13,6 +13,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Best Practices](#best-practices)
     1. [Cache](#cache)
     1. [Selective Fetching](#selective-fetching)
+1. [Response Times](#response-times)
 1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
 1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
 1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /subjects/history```
@@ -21,7 +22,8 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```POST /subjects```
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
-1. ~~Apoio às Aulas~~
+1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
+    1. [Include Teachers](#include-teachers)
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
@@ -89,6 +91,19 @@ Then, the next time the user enters the app, you can show the cached outdated da
 ### Selective Fetching
 
 Fetching everything at once might not always be the best approach. When everything is already cached, might be better to make use of the various endpoints to only fetch certain data that the user might need updated for that specific section of your app.
+
+---
+
+## Response Times
+
+Because the web scraping is done with a headless browser, some data might be fetched by navigating through **several** web pages, which increases the response time significantly.  
+With this in mind, the endpoints throughout this document will have an estimate time, in seconds, for its response, accompanied by a color key.
+
+**Key:**
+🟢 &nbsp; Normal response (> 3s)
+🟡 &nbsp; Slow response (> 5s)
+🟠 &nbsp; Turtle response (> 8s)
+🔴 &nbsp; Sloth response (> 12s)
 
 ---
 
@@ -544,6 +559,149 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
     "url": "https://paco.ua.pt/secvirtual/c_calendarioDeExamesPorDisciplina.asp",
     "title": "Calendário de Exames por Disciplina",
     "timestamp": "2022-08-16T18:19:47.998Z"
+}
+```
+
+---
+
+## Apoio às Aulas
+
+```POST /classes```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "subjects": [
+            {
+                "code": "41951",
+                "name": "ANÁLISE DE SISTEMAS",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=41951-AS",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-209420212"
+                },
+                "classes": [
+                    {
+                        "name": "P1",
+                        "type": "Prática",
+                        "summaries": 10
+                    },
+                    {
+                        "name": "TP1",
+                        "type": "Teórico-Prática",
+                        "summaries": 0
+                    }
+                ]
+            },
+            {
+                "code": "41952",
+                "name": "ARQUITETURA DE COMPUTADORES II",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=41952-AC-II",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-209520212"
+                },
+                "classes": [
+                    {
+                        "name": "P1",
+                        "type": "Prática",
+                        "summaries": 13
+                    },
+                    {
+                        "name": "TP2",
+                        "type": "Teórico-Prática",
+                        "summaries": 26
+                    }
+                ]
+            },
+            ...
+        ]
+    },
+    "size": 8,
+    "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
+    "title": "Apoio às Aulas",
+    "timestamp": "2022-08-18T00:07:09.458Z"
+}
+```
+
+### Include Teachers
+
+
+```POST /classes?include=teachers```
+```json5
+// RESPONSE example
+{
+    "data": {
+        "subjects": [
+            {
+                "code": "41951",
+                "name": "ANÁLISE DE SISTEMAS",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=41951-AS",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-209420212"
+                },
+                "classes": [
+                    {
+                        "name": "P1",
+                        "type": "Prática",
+                        "summaries": 10,
+                        "teacher": [
+                            {
+                                "name": "ILÍDIO FERNANDO DE CASTRO OLIVEIRA",
+                                "department": "DET"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "TP1",
+                        "type": "Teórico-Prática",
+                        "summaries": 0,
+                        "teacher": [
+                            {
+                                "name": "ILÍDIO FERNANDO DE CASTRO OLIVEIRA",
+                                "department": "DET"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "41952",
+                "name": "ARQUITETURA DE COMPUTADORES II",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=41952-AC-II",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-209520212"
+                },
+                "classes": [
+                    {
+                        "name": "P1",
+                        "type": "Prática",
+                        "summaries": 13,
+                        "teacher": [
+                            {
+                                "name": "ANTÓNIO JOSÉ NUNES NAVARRO RODRIGUES",
+                                "department": "DET"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "TP2",
+                        "type": "Teórico-Prática",
+                        "summaries": 26,
+                        "teacher": [
+                            {
+                                "name": "TOMÁS ANTÓNIO MENDES OLIVEIRA E SILVA",
+                                "department": "DET"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ...
+        ]
+    },
+    "size": 8,
+    "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
+    "title": "Apoio às Aulas",
+    "timestamp": "2022-08-18T00:14:41.418Z"
 }
 ```
 

@@ -2,13 +2,13 @@ const puppeteer = require('puppeteer');
 const static = require('./static');
 
 module.exports = {
-    standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error, selector) => {
+    standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error) => {
         // go to section within Secretaria Virtual
         await secretaria_virtual.goto(section_url);
         await secretaria_virtual.waitForSelector("#template_main");
         
         // run the scraper for that section
-        (selector ? scraper(secretaria_virtual, selector) : scraper(secretaria_virtual))
+        scraper(secretaria_virtual)
             .then(result => response.status(200).json(success(result)))
             .catch(err => response.status(500).json(error(err)));
     },
@@ -398,6 +398,78 @@ module.exports = {
             data["last_updated"] = `${dateValues[0]}-${months[dateValues[1]]}-${dateValues[2]}`; 
             return data;
         }, static.MONTHS);
+    },
+    // Apoio às Aulas
+    // https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp
+    classes: async (page, fetchTeachers=false) => {
+        const data = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", lines => {
+            const subjects = [];
+            if (lines) {
+                Array.from(lines).forEach(line => {
+                    const name = line.children[3].innerText.trim();
+                    let subject;
+                    for (let s of subjects) {
+                        if (s["name"] === name) {
+                            subject = s;
+                            break;
+                        }
+                    }
+
+                    if (!subject) {
+                        subjects.push({
+                            "code": line.children[3].children[0].href.split(/[,(]/g)[1],
+                            "name": name,
+                            "urls": {
+                                "elearning": line.children[0].children[0].href,
+                                "schedule": line.children[1].children[0].href
+                            },
+                            "classes": [
+                                {
+                                    "name": line.children[2].innerText,
+                                    "type": line.children[4].innerText.trim(),
+                                    "summaries": Number(line.children[5].innerText)
+                                }
+                            ]
+                        });
+                    }
+                    else {
+                        subject["classes"].push({
+                            "name": line.children[2].innerText,
+                            "type": line.children[4].innerText.trim(),
+                            "summaries": Number(line.children[5].innerText)
+                        });
+                    }
+                });
+            }
+
+            return {"subjects": subjects, "size": lines.length};
+        });
+
+        // fetch teachers
+        if (fetchTeachers) {
+            const teachers = [];
+            for (let i = 2; i <= data["size"]+1; i++) {
+                await page.click(`#template_main table > tbody > tr:nth-of-type(${i}) > :last-child > a:first-child`);
+                await page.waitForSelector("#template_main");
+                teachers.push(await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", lines => {
+                    if (lines) {
+                        return Array.from(lines).map(line => ({
+                            "name": line.children[1].innerText,
+                            "department": line.children[2].innerText
+                        }));
+                    }
+                }));
+                await page.goBack();
+            }
+    
+            let counter = 0;
+            // assign teachers to classes
+            data["subjects"].forEach(subject => subject["classes"].forEach(result => result["teacher"] = teachers[counter++]));    
+        }
+
+        delete data["size"];
+
+        return data;
     }
 }
 

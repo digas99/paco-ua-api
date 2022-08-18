@@ -39,6 +39,10 @@ module.exports = {
     // directories
     ROUTERS_DIR: "./routers/",
 
+    // classes
+    CLASSES_URL: "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
+    CLASSES_TITLE: "Apoio às Aulas",
+
     // miscelaneous
     MONTHS: {
         "janeiro": "01",

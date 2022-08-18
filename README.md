@@ -117,6 +117,6 @@ The same applies for all the other endpoints.
 - [x] Plano Curricular &nbsp;&nbsp;`POST /subjects`
 - [x] Calendário de Exames do Aluno &nbsp;&nbsp;`POST /exams`
 - [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`POST /exams?subjects=...`
-- [ ] Apoio às Aulas
+- [x] Apoio às Aulas &nbsp;&nbsp;`POST /classes`
 - [x] Horário &nbsp;&nbsp;`POST /schedule`
 - [x] Requerimentos &nbsp;&nbsp;```POST /requests```
