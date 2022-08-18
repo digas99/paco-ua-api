@@ -2,13 +2,15 @@ const puppeteer = require('puppeteer');
 const static = require('./static');
 
 module.exports = {
-    standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error) => {
+    standardScrape: async (response, secretariaVirtual, sectionUrl, scraper, success, error) => {
         // go to section within Secretaria Virtual
-        await secretaria_virtual.goto(section_url);
-        await secretaria_virtual.waitForSelector("body");
+        if (sectionUrl) {
+            await secretariaVirtual.goto(sectionUrl);
+            await secretariaVirtual.waitForSelector("body");
+        }
         
         // run the scraper for that section
-        scraper(secretaria_virtual)
+        scraper(secretariaVirtual)
             .then(result => {
                 if (result["size"] && result["size"] == null)
                     delete result["size"];
@@ -505,6 +507,33 @@ module.exports = {
         delete data["targets"];
 
         return data;
+    },
+    //
+    //
+    classProgram: async (page, section) => {
+        return await page.$$eval("#formulario > table > tbody > tr", (lines, section) => {
+            if (lines) {
+                const data = {};
+
+                // get the lines with content
+                lines = Array.from(lines).filter(line => line.innerText && line.style.display !== "none");
+
+                let index = 0;
+                ["learning_objectives", "program", "teaching_methods", "grading_method", "bibliography"].forEach(type => {
+                    data[type] = {
+                        "title": lines[index].innerText.trim(),
+                        "text": {
+                            "plain": lines[index+1].innerText,
+                            "html": lines[index+1].innerHTML,
+                            "lines": lines[index+1].innerText.split("\n").filter(line => line !== "")
+                        }
+                    }
+                    index+=2;
+                });
+
+                return !section ? data : {[section] : data[section]};
+            }
+        }, section);
     }
 }
 

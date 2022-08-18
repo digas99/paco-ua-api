@@ -24,10 +24,11 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
 1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
-    1. [Specify Classes by Subject](#specify-classes-by-subject)
+    1. [Classes by Subject](#classes-by-subject)
     1. [Include Teachers](#include-teachers)
+    1. [Subject Program](#subject-program)
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
-    1. [Specify a Subject Schedule](#specify-a-subject-schedule)
+    1. [Subject Schedule](#subject-schedule)
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
 ---
@@ -668,7 +669,7 @@ RESPONSE: 3.5s 🟢
 }
 ```
 
-### Specify Classes by Subject
+### Classes by Subject
 
 RESPONSE: 3.5s 🟢  
 
@@ -802,6 +803,52 @@ RESPONSE: 4.5s 🟢
 }
 ```
 
+### Subject Program
+
+RESPONSE: 4.5s 🟢
+
+```POST /classes/<subject_code>/program```
+
+```POST /classes/<subject_code>/program/<section>```
+
+```json5
+// /classes/41949/program
+
+// RESPONSE example
+{
+    "data": {
+        "learning_objectives": {
+            "title": "Objetivos de aprendizagem",
+            "text": {
+                "plain": "Pretende-se que no fim da cadeira, os alu...",
+                "html": "\n\t\t<td class=\"table_line_value\" colspan=\"4\" align=\...",
+                "lines": [
+                    "Pretende-se que no fim da cadeira, os alunos:",
+                    "Tenham uma compreensão dos fundamentos subjacentes a redes de comunicação.",
+                    ...
+                ]
+            }
+        },
+        "program": {
+            "title": "Conteúdos programáticos",
+            "text": {
+                "plain": "* Redes Locais (LAN)\n   - LAN...",
+                "html": "\n\t\t<td class=\"table_line_value\" colspan=\"4\" align...",
+                "lines": [
+                    "* Redes Locais (LAN)",
+                    "   - LAN Virtual: finalidade, implementação, modelos...",
+                    ...
+                ]
+            }
+        },
+        ...
+    },
+    "url": null,
+    "title": "Apoio às Aulas",
+    "timestamp": "2022-08-18T20:28:37.053Z"
+}
+```
+
 ---
 
 ## Horário
@@ -864,7 +911,7 @@ RESPONSE: 5s 🟡
 }
 ```
 
-## Specify a Subject Schedule
+## Subject Schedule
 
 RESPONSE: 4.5s 🟢
 

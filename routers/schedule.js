@@ -14,6 +14,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/subject/:subject", async (req, res) => {
+    // go to classes page
     const secretariaVirtual = req.page;
     await secretariaVirtual.goto(static.CLASSES_URL);
     await secretariaVirtual.waitForSelector("body");
@@ -33,7 +34,7 @@ router.post("/subject/:subject", async (req, res) => {
     }, req.params.subject);
 
     if (subjectData["url"]) {
-        await handleResponse(req, res, async page => paco.schedule(page, "table"), {
+        handleResponse(req, res, async page => paco.schedule(page, "table"), {
             "url": subjectData["url"],
             "title": static.SCHEDULE_TITLE+" de "+subjectData["name"]
         });
