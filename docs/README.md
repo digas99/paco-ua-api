@@ -97,17 +97,18 @@ Fetching everything at once might not always be the best approach. When everythi
 ## Response Times
 
 Because the web scraping is done with a headless browser, some data might be fetched by navigating through **several** web pages, which increases the response time significantly.  
-With this in mind, the endpoints throughout this document will have an estimate time, in seconds, for its response, accompanied by a color key.
+With this in mind, the endpoints throughout this document will have an estimate time, in seconds, for its response, accompanied by a color key (this values are a very rough estimate, and are better seen as comparative terms).
 
-**Key:**
-🟢 &nbsp; Normal response (> 3s)
-🟡 &nbsp; Slow response (> 5s)
-🟠 &nbsp; Turtle response (> 8s)
-🔴 &nbsp; Sloth response (> 12s)
+🟢 &nbsp; Normal response (> 3s)  
+🟡 &nbsp; Slow response (> 5s)  
+🟠 &nbsp; Turtle response (> 8s)  
+🔴 &nbsp; Sloth response (> 12s)  
 
 ---
 
 ## Dados Pessoais
+
+Response times: 3.5s 🟢
 
 ```POST /personal```
 ```json5
@@ -156,6 +157,8 @@ With this in mind, the endpoints throughout this document will have an estimate 
 ---
 
 ## Situação de Prescrição
+
+Response times: 3.5s 🟢
 
 ```POST /expiration```
 ```json5
@@ -210,6 +213,8 @@ With this in mind, the endpoints throughout this document will have an estimate 
 
 ## Histórico Notas
 
+Response times: 3.5s 🟢
+
 ```POST /subjects/history```
 ```json5
 // RESPONSE example
@@ -250,6 +255,8 @@ With this in mind, the endpoints throughout this document will have an estimate 
 
 
 ## Disciplinas Inscritas
+
+Response times: 3.5s 🟢
 
 ```POST /subjects/current```
 ```json5
@@ -300,6 +307,8 @@ With this in mind, the endpoints throughout this document will have an estimate 
 ---
 
 ## Estado das Propinas
+
+Response times: 3.5s 🟢
 
 ```POST /tuition_fees```
 ```json5
@@ -358,6 +367,8 @@ With this in mind, the endpoints throughout this document will have an estimate 
 ---
 
 ## Plano Curricular
+
+Response times: 3.5s 🟢
 
 The subjects represented here either have grade 0 or a value greater than 10.  
 If the grade is 0, then it doesn't apply to that subject or the subject hasn't been completed yet.
@@ -455,6 +466,8 @@ This subjects with options are considered in the calculation of the **weighted m
 
 ## Calendário de Exames do Aluno
 
+Response times: 3.5s 🟢
+
 ```POST /exams```
 ```json5
 // RESPONSE example
@@ -515,6 +528,8 @@ This subjects with options are considered in the calculation of the **weighted m
 
 ## Calendário de Exames por Disciplina
 
+Response times: 4.5s 🟢
+
 This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any subjects can be passed in the URL Parameter **subjects**, and the exams from that subject will be returned. To specify multiple subjects at once, separate the code of the subjects with a comma. If an invalid subject code is provided, it will be ignored.
 In the example below, the query is ```/exams?subjects=40292,42000```.
 
@@ -565,6 +580,8 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
 ---
 
 ## Apoio às Aulas
+
+Response times: 3.5s 🟢
 
 ```POST /classes```
 ```json5
@@ -624,6 +641,7 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
 
 ### Include Teachers
 
+Response times: 15s 🔴
 
 ```POST /classes?include=teachers```
 ```json5
@@ -709,6 +727,8 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
 
 ## Horário
 
+Response times: 5s 🟡
+
 ```POST /schedule```
 ```json5
 // RESPONSE example
@@ -768,6 +788,8 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
 ---
 
 ## Requerimentos
+
+Response times: 3.8s 🟢
 
 ```POST /requests```
 ```json5
