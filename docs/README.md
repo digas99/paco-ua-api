@@ -15,6 +15,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
     1. [Selective Fetching](#selective-fetching)
 1. [Response Times](#response-times)
 1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
+    1. [Specify Section](#specify-section)
 1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
 1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /subjects/history```
 1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /subjects/current```
@@ -145,6 +146,31 @@ RESPONSE: 3.5s 🟢
         "other": {
             "NIF": "...",
             "NIB": "..."
+        }
+    },
+    "url": "https://paco.ua.pt/secvirtual/c_dadospess.asp",
+    "title": "Dados Pessoais",
+    "timestamp": "2022-08-16T01:19:28.099Z"
+}
+
+// sensitive information hidden with "..."
+```
+
+### Specify Section
+
+RESPONSE: 3.5s 🟢
+
+```POST /personal/<section>```
+```json5
+// POST /personal/contact_data
+
+// RESPONSE example
+{
+    "data": {
+        "contact_data": {
+            "telephone": "...",
+            "mobile": "...",
+            "email": "..."
         }
     },
     "url": "https://paco.ua.pt/secvirtual/c_dadospess.asp",
@@ -532,10 +558,11 @@ RESPONSE: 3.5s 🟢
 RESPONSE: 4.5s 🟢
 
 This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any subjects can be passed in the URL Parameter **subjects**, and the exams from that subject will be returned. To specify multiple subjects at once, separate the code of the subjects with a comma. If an invalid subject code is provided, it will be ignored.
-In the example below, the query is ```/exams?subjects=40292,42000```.
 
 ```POST /exams?subjects=...```
 ```json5
+// POST /exams?subjects=40292,42000
+
 // RESPONSE example
 {
     "data": {
@@ -647,6 +674,8 @@ RESPONSE: 3.5s 🟢
 ```POST /classes/<subject_code>```
 
 ```json5
+// POST /classes/42296
+
 // RESPONSE example
 {
     "data": {
