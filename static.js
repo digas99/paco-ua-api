@@ -57,5 +57,5 @@ module.exports = {
         "outubro": "10",
         "novembro": "11",
         "dezembro": "12",
-    }
+    } 
 }

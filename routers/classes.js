@@ -2,69 +2,26 @@ const express = require('express');
 const router = express.Router();
 const paco = require('../scrapers');
 const static = require('../static');
+const { handleResponse } = require('../responses');
+
+const setup = {
+    "url": static.CLASSES_URL,
+    "title": static.CLASSES_TITLE,
+    "key": "subjects"
+}
 
 router.post("/", async (req, res) => {
-    const now = new Date().toISOString();
-    if (!req.query["include"]) {
-        paco.standardScrape(res, req.page, static.CLASSES_URL, paco.classes, result => ({
-            "data": result,
-            "size": result["subjects"].length,
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }), error => ({
-            "error":"Server error",
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }));
-    }
-    else if (req.query["include"] === "teachers") {
-        paco.standardScrape(res, req.page, static.CLASSES_URL, async page => paco.classes(page, true), result => ({
-            "data": result,
-            "size": result["subjects"].length,
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }), error => ({
-            "error":"Server error",
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }));
-    }
+    if (!req.query["include"])
+        handleResponse(req, res, paco.classes, setup);
+    else if (req.query["include"] === "teachers")
+        handleResponse(req, res, async page => paco.classes(page, true), setup);
 });
 
-router.post("/:class_code", async (req, res) => {
-    const now = new Date().toISOString();
-    if (!req.query["include"]) {
-        paco.standardScrape(res, req.page, static.CLASSES_URL, async page => paco.classes(page, false, req.params.class_code), result => ({
-            "data": result,
-            "size": result["subjects"].length,
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }), error => ({
-            "error":"Server error",
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }));
-    }
-    else if (req.query["include"] === "teachers") {
-        paco.standardScrape(res, req.page, static.CLASSES_URL, async page => paco.classes(page, true, req.params.class_code), result => ({
-            "data": result,
-            "size": result["subjects"].length,
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }), error => ({
-            "error":"Server error",
-            "url": static.CLASSES_URL,
-            "title": static.CLASSES_TITLE,
-            "timestamp": now
-        }));
-    }
+router.post("/:subject_code", async (req, res) => {
+    if (!req.query["include"])
+        handleResponse(req, res, async page => paco.classes(page, false, req.params.subject_code), setup);
+    else if (req.query["include"] === "teachers")
+        handleResponse(req, res, async page => paco.classes(page, true, req.params.subject_code), setup);
 });
 
 module.exports = router;

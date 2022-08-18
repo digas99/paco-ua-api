@@ -23,8 +23,8 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
 1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
+    1. [Specify a Subject](#specify-a-subject)
     1. [Include Teachers](#include-teachers)
-    1. [Specify a Class](#specify-a-class)
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
@@ -109,7 +109,7 @@ With this in mind, the endpoints throughout this document will have an estimate 
 
 ## Dados Pessoais
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /personal```
 ```json5
@@ -159,7 +159,7 @@ Response times: 3.5s 🟢
 
 ## Situação de Prescrição
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /expiration```
 ```json5
@@ -214,7 +214,7 @@ Response times: 3.5s 🟢
 
 ## Histórico Notas
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /subjects/history```
 ```json5
@@ -257,7 +257,7 @@ Response times: 3.5s 🟢
 
 ## Disciplinas Inscritas
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /subjects/current```
 ```json5
@@ -309,7 +309,7 @@ Response times: 3.5s 🟢
 
 ## Estado das Propinas
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /tuition_fees```
 ```json5
@@ -369,7 +369,7 @@ Response times: 3.5s 🟢
 
 ## Plano Curricular
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 The subjects represented here either have grade 0 or a value greater than 10.  
 If the grade is 0, then it doesn't apply to that subject or the subject hasn't been completed yet.
@@ -467,7 +467,7 @@ This subjects with options are considered in the calculation of the **weighted m
 
 ## Calendário de Exames do Aluno
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /exams```
 ```json5
@@ -529,7 +529,7 @@ Response times: 3.5s 🟢
 
 ## Calendário de Exames por Disciplina
 
-Response times: 4.5s 🟢
+RESPONSE: 4.5s 🟢
 
 This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any subjects can be passed in the URL Parameter **subjects**, and the exams from that subject will be returned. To specify multiple subjects at once, separate the code of the subjects with a comma. If an invalid subject code is provided, it will be ignored.
 In the example below, the query is ```/exams?subjects=40292,42000```.
@@ -582,7 +582,7 @@ In the example below, the query is ```/exams?subjects=40292,42000```.
 
 ## Apoio às Aulas
 
-Response times: 3.5s 🟢
+RESPONSE: 3.5s 🟢
 
 ```POST /classes```
 ```json5
@@ -640,9 +640,45 @@ Response times: 3.5s 🟢
 }
 ```
 
+### Specify a Subject
+
+RESPONSE: 3.5s 🟢  
+
+```POST /classes/<subject_code>```
+
+```json5
+// RESPONSE example
+{
+    "data": {
+        "subjects": [
+            {
+                "code": "42296",
+                "name": "VISUALIZAÇÃO DE DADOS",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=42296-VD",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-208620212"
+                },
+                "classes": [
+                    {
+                        "name": "TP9-3",
+                        "type": "Teórico-Prática",
+                        "summaries": 9
+                    }
+                ]
+            }
+        ]
+    },
+    "size": 1,
+    "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
+    "title": "Apoio às Aulas",
+    "timestamp": "2022-08-18T01:53:03.351Z"
+}
+```
+
+
 ### Include Teachers
 
-Response times: * 🔴  
+RESPONSE: * 🔴  
 
 \* Highly dependent on the number of classes the student has:
 - 1 class: 5s,  
@@ -651,7 +687,13 @@ Response times: * 🔴
 - ...
 
 ```POST /classes?include=teachers```
+
+RESPONSE: 4.5s 🟢  
+
+```POST /classes/<subject_code>?include=teachers```
+
 ```json5
+
 // RESPONSE example
 {
     "data": {
@@ -730,60 +772,11 @@ Response times: * 🔴
 }
 ```
 
-### Specify a Class
-
-Response times: 3.5s 🟢  
-
-```POST /classes/<class_code>```
-
-Response times: 4.5s 🟢  
-
-```POST /classes/<class_code>?include=teachers```
-
-```json5
-// RESPONSE example
-{
-    "data": {
-        "subjects": [
-            {
-                "code": "42296",
-                "name": "VISUALIZAÇÃO DE DADOS",
-                "urls": {
-                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=42296-VD",
-                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-208620212"
-                },
-                "classes": [
-                    {
-                        "name": "TP9-3",
-                        "type": "Teórico-Prática",
-                        "summaries": 9,
-                        "teacher": [
-                            {
-                                "name": "MARIA BEATRIZ ALVES DE SOUSA SANTOS",
-                                "department": "DET"
-                            },
-                            {
-                                "name": "JOAQUIM JOÃO ESTRELA RIBEIRO SILVESTRE MADEIRA",
-                                "department": "DET"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    "size": 1,
-    "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
-    "title": "Apoio às Aulas",
-    "timestamp": "2022-08-18T01:53:03.351Z"
-}
-```
-
 ---
 
 ## Horário
 
-Response times: 5s 🟡
+RESPONSE: 5s 🟡
 
 ```POST /schedule```
 ```json5
@@ -845,7 +838,7 @@ Response times: 5s 🟡
 
 ## Requerimentos
 
-Response times: 3.8s 🟢
+RESPONSE: 3.8s 🟢
 
 ```POST /requests```
 ```json5

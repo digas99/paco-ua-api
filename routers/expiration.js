@@ -2,21 +2,16 @@ const express = require('express');
 const router = express.Router();
 const paco = require('../scrapers');
 const static = require('../static');
+const { handleResponse } = require('../responses');
+
+const setup = {
+    "url": static.EXPIRATION_URL,
+    "title": static.EXAMS_TITLE,
+    "key": "expiration"
+}
 
 router.post("/", async (req, res) => {
-    const now = new Date().toISOString();
-    paco.standardScrape(res, req.page, static.EXPIRATION_URL, paco.expiration, result => ({
-        "data": result,
-        "size": result["expiration"].length,
-        "url": static.EXPIRATION_URL,
-        "title": static.EXPIRATION_TITLE,
-        "timestamp": now
-    }), error => ({
-        "error":"Server error",
-        "url": static.EXPIRATION_URL,
-        "title": static.EXPIRATION_TITLE,
-        "timestamp": now
-    }));
+    handleResponse(req, res, paco.expiration, setup);
 });
 
 module.exports = router;

@@ -9,7 +9,11 @@ module.exports = {
         
         // run the scraper for that section
         scraper(secretaria_virtual)
-            .then(result => response.status(200).json(success(result)))
+            .then(result => {
+                if (result["size"] && result["size"] == null)
+                    delete result["size"];
+                response.status(200).json(success(result));
+            })
             .catch(err => response.status(500).json(error(err)));
     },
     // Secretaria Virtual (login)
@@ -401,16 +405,16 @@ module.exports = {
     },
     // Apoio às Aulas
     // https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp
-    classes: async (page, fetch_teachers=false, class_code) => {
-        const data = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", (lines, class_code) => {
+    classes: async (page, fetch_teachers=false, subject_code) => {
+        const data = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", (lines, subject_code) => {
             const subjects = [], line_targets = [];
             if (lines) {
                 Array.from(lines).forEach((line, i) => {
                     const name = line.children[3].innerText.trim();
                     const code = line.children[3].children[0].href.split(/[,(]/g)[1];
                     let subject;
-                    if (!class_code || (class_code && class_code == code)) {
-                        if (class_code && class_code == code) line_targets.push(i);
+                    if (!subject_code || (subject_code && subject_code == code)) {
+                        if (subject_code && subject_code == code) line_targets.push(i);
 
                         for (let s of subjects) {
                             if (s["name"] === name) {
@@ -448,7 +452,7 @@ module.exports = {
             }
 
             return {"subjects": subjects, "size": lines.length, "targets": line_targets};
-        }, class_code);
+        }, subject_code);
 
         if (fetch_teachers) {
             const teachers = [];
