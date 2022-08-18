@@ -24,6 +24,7 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
 1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
     1. [Include Teachers](#include-teachers)
+    1. [Specify a Class](#specify-a-class)
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
@@ -641,7 +642,13 @@ Response times: 3.5s 🟢
 
 ### Include Teachers
 
-Response times: 15s 🔴
+Response times: * 🔴  
+
+\* Highly dependent on the number of classes the student has:
+- 1 class: 5s,  
+- 4 classes: 7s,  
+- 12 classes: 15s,
+- ...
 
 ```POST /classes?include=teachers```
 ```json5
@@ -720,6 +727,55 @@ Response times: 15s 🔴
     "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
     "title": "Apoio às Aulas",
     "timestamp": "2022-08-18T00:14:41.418Z"
+}
+```
+
+### Specify a Class
+
+Response times: 3.5s 🟢  
+
+```POST /classes/<class_code>```
+
+Response times: 4.5s 🟢  
+
+```POST /classes/<class_code>?include=teachers```
+
+```json5
+// RESPONSE example
+{
+    "data": {
+        "subjects": [
+            {
+                "code": "42296",
+                "name": "VISUALIZAÇÃO DE DADOS",
+                "urls": {
+                    "elearning": "https://paco.ua.pt/secvirtual/aulas/moodle.asp?idnumber=42296-VD",
+                    "schedule": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-208620212"
+                },
+                "classes": [
+                    {
+                        "name": "TP9-3",
+                        "type": "Teórico-Prática",
+                        "summaries": 9,
+                        "teacher": [
+                            {
+                                "name": "MARIA BEATRIZ ALVES DE SOUSA SANTOS",
+                                "department": "DET"
+                            },
+                            {
+                                "name": "JOAQUIM JOÃO ESTRELA RIBEIRO SILVESTRE MADEIRA",
+                                "department": "DET"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "size": 1,
+    "url": "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",
+    "title": "Apoio às Aulas",
+    "timestamp": "2022-08-18T01:53:03.351Z"
 }
 ```
 

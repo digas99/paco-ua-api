@@ -401,66 +401,79 @@ module.exports = {
     },
     // Apoio às Aulas
     // https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp
-    classes: async (page, fetchTeachers=false) => {
-        const data = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", lines => {
-            const subjects = [];
+    classes: async (page, fetch_teachers=false, class_code) => {
+        const data = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", (lines, class_code) => {
+            const subjects = [], line_targets = [];
             if (lines) {
-                Array.from(lines).forEach(line => {
+                Array.from(lines).forEach((line, i) => {
                     const name = line.children[3].innerText.trim();
+                    const code = line.children[3].children[0].href.split(/[,(]/g)[1];
                     let subject;
-                    for (let s of subjects) {
-                        if (s["name"] === name) {
-                            subject = s;
-                            break;
-                        }
-                    }
+                    if (!class_code || (class_code && class_code == code)) {
+                        if (class_code && class_code == code) line_targets.push(i);
 
-                    if (!subject) {
-                        subjects.push({
-                            "code": line.children[3].children[0].href.split(/[,(]/g)[1],
-                            "name": name,
-                            "urls": {
-                                "elearning": line.children[0].children[0].href,
-                                "schedule": line.children[1].children[0].href
-                            },
-                            "classes": [
-                                {
-                                    "name": line.children[2].innerText,
-                                    "type": line.children[4].innerText.trim(),
-                                    "summaries": Number(line.children[5].innerText)
-                                }
-                            ]
-                        });
-                    }
-                    else {
-                        subject["classes"].push({
-                            "name": line.children[2].innerText,
-                            "type": line.children[4].innerText.trim(),
-                            "summaries": Number(line.children[5].innerText)
-                        });
+                        for (let s of subjects) {
+                            if (s["name"] === name) {
+                                subject = s;
+                                break;
+                            }
+                        }
+    
+                        if (!subject) {
+                            subjects.push({
+                                "code": code,
+                                "name": name,
+                                "urls": {
+                                    "elearning": line.children[0].children[0].href,
+                                    "schedule": line.children[1].children[0].href
+                                },
+                                "classes": [
+                                    {
+                                        "name": line.children[2].innerText,
+                                        "type": line.children[4].innerText.trim(),
+                                        "summaries": Number(line.children[5].innerText)
+                                    }
+                                ]
+                            });
+                        }
+                        else {
+                            subject["classes"].push({
+                                "name": line.children[2].innerText,
+                                "type": line.children[4].innerText.trim(),
+                                "summaries": Number(line.children[5].innerText)
+                            });
+                        }   
                     }
                 });
             }
 
-            return {"subjects": subjects, "size": lines.length};
-        });
+            return {"subjects": subjects, "size": lines.length, "targets": line_targets};
+        }, class_code);
 
-        // fetch teachers
-        if (fetchTeachers) {
+        if (fetch_teachers) {
             const teachers = [];
-            for (let i = 2; i <= data["size"]+1; i++) {
-                await page.click(`#template_main table > tbody > tr:nth-of-type(${i}) > :last-child > a:first-child`);
+
+            const fetchTeachers = async (page, index) => {
+                await page.click(`#template_main table > tbody > tr:nth-of-type(${index}) > :last-child > a:first-child`);
                 await page.waitForSelector("#template_main");
-                teachers.push(await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", lines => {
+                const teacher = await page.$$eval("#template_main table > tbody > .table_cell_impar, #template_main table > tbody > .table_cell_par", lines => {
                     if (lines) {
                         return Array.from(lines).map(line => ({
                             "name": line.children[1].innerText,
                             "department": line.children[2].innerText
                         }));
                     }
-                }));
+                });
                 await page.goBack();
+                return teacher;
             }
+            
+            if (data["targets"].length > 0)
+                for (let target of data["targets"])
+                    teachers.push(await fetchTeachers(page, target+2));
+            else
+                for (let i = 2; i <= data["size"]+1; i++)
+                    teachers.push(await fetchTeachers(page, i));
     
             let counter = 0;
             // assign teachers to classes
@@ -468,6 +481,7 @@ module.exports = {
         }
 
         delete data["size"];
+        delete data["targets"];
 
         return data;
     }
