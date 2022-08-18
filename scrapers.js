@@ -5,7 +5,7 @@ module.exports = {
     standardScrape: async (response, secretaria_virtual, section_url, scraper, success, error) => {
         // go to section within Secretaria Virtual
         await secretaria_virtual.goto(section_url);
-        await secretaria_virtual.waitForSelector("#template_main");
+        await secretaria_virtual.waitForSelector("body");
         
         // run the scraper for that section
         scraper(secretaria_virtual)
@@ -174,18 +174,30 @@ module.exports = {
     },
     // Horário
     // https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp
-    schedule: async page => {
-        return await page.$eval('#template_main > table', table => {
+    schedule: async (page, selector) => {
+        return await page.$eval(selector, table => {
+            const data = {
+                "schedule": {
+                    "Segunda": [],"Terça": [],"Quarta": [],"Quinta": [],"Sexta": [],"Sábado": []
+                }
+            };
+
             if (table) {
-                const data = {
-                    "schedule": {
-                        "Segunda": [],"Terça": [],"Quarta": [],"Quinta": [],"Sexta": [],"Sábado": []
-                    }
-                };
                 // info
-                const scheduleInfo = table.querySelector("tr").children[0].childNodes[2].wholeText;
-                data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
-                data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+                const scheduleInfoElem = table.querySelector("tr").children[0];
+                // subject schedule
+                if (scheduleInfoElem.childNodes.length == 1) {
+                    const scheduleInfo = scheduleInfoElem.childNodes[0].wholeText;
+                    data["school_year"] = scheduleInfo.split(" - ")[3],
+                    data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+                }
+                // student schedule
+                else {
+                    const scheduleInfo = scheduleInfoElem.childNodes[2].wholeText;
+                    data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
+                    data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+                }
+
                 // subjects
                 Array.from(table.querySelectorAll(".horario_turma")).forEach(elem => {
                     const titleData = elem.title.split("\n");
@@ -201,10 +213,10 @@ module.exports = {
                         "class": elem.childNodes[0].wholeText.split(" ")[2],
                         "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
                     });
-                });
-    
-                return data;
+                });    
             }
+
+            return data;
         });
     },
     // Estado das Propinas

@@ -24,9 +24,10 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
 1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
 1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
-    1. [Specify a Subject](#specify-a-subject)
+    1. [Specify Classes by Subject](#specify-classes-by-subject)
     1. [Include Teachers](#include-teachers)
 1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
+    1. [Specify a Subject Schedule](#specify-a-subject-schedule)
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
 
 ---
@@ -667,7 +668,7 @@ RESPONSE: 3.5s 🟢
 }
 ```
 
-### Specify a Subject
+### Specify Classes by Subject
 
 RESPONSE: 3.5s 🟢  
 
@@ -860,6 +861,65 @@ RESPONSE: 5s 🟡
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
     "timestamp": "2022-08-16T01:51:09.193Z"
+}
+```
+
+## Specify a Subject Schedule
+
+RESPONSE: 4.5s 🟢
+
+```POST /schedule/subject/<subject_code>```
+```json5
+// POST /schedule/subject/41949
+
+// RESPONSE example
+{
+    "data": {
+        "schedule": {
+            "Segunda": [
+                {
+                    "subject": {
+                        "name": "REDES DE COMUNICAÇÕES II",
+                        "abbrev": "T1"
+                    },
+                    "start": "12h",
+                    "duration": "1,5h",
+                    "capacity": "101",
+                    "room": "ANF. IV"
+                },
+                {
+                    "subject": {
+                        "name": "REDES DE COMUNICAÇÕES II",
+                        "abbrev": "P1"
+                    },
+                    "start": "14,5h",
+                    "duration": "2h",
+                    "capacity": "18",
+                    "room": "04.2.16"
+                },
+                ...
+            ],
+            "Terça": [],
+            "Quarta": [
+                {
+                    "subject": {
+                        "name": "REDES DE COMUNICAÇÕES II",
+                        "abbrev": "P5"
+                    },
+                    "start": "14h",
+                    "duration": "2h",
+                    "capacity": "19",
+                    "room": "04.3.30"
+                }
+            ],
+            ...
+        },
+        "school_year": "2021/2022",
+        "semester": "2"
+    },
+    "url": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-210320212",
+    "title": "Horário de REDES DE COMUNICAÇÕES II",
+    "timestamp": "2022-08-18T16:40:10.748Z"
 }
 ```
 
