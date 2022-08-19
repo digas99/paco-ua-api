@@ -16,7 +16,27 @@ This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log
 
 ## Setup
 
-To setup the server locally:
+### Setup the server locally with Docker:
+
+Make sure to have Docker running on your machine. [[How to here]](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
+
+- Build the image
+
+```
+docker build --tag pacoua-api .
+```
+
+- Run the container
+
+```
+docker run -p 8000:8000 --name pacoua-api pacoua-api
+```
+
+---
+
+(To run on a different port, change the value of the port on the left side (***8000***:8000) in the command above)
+
+### Setup the server locally manually:
 
 - Install the node modules
 
@@ -30,9 +50,9 @@ $ npm install
 $ npm run devStart
 ```
 
-The server will be running at http://127.0.0.1:8000
-
 (To run on a different port, change the value of **PORT** in the file static.js)
+
+After any of the two configurations, the server will be running at http://127.0.0.1:8000
 
 ## Usage
 
