@@ -28,7 +28,7 @@ const swagger_options = {
             }
         ]
     },
-    apis: ["./routs/*.js", "./docs/paco-ua-api.yml", `./docs/security-schema-${PROTOCOL}.yml`]
+    apis: ["./routes/*.js", "./docs/paco-ua-api.yml", `./docs/security-schema-${PROTOCOL}.yml`]
 }
 
 const swagger_specs = swaggerJsDoc(swagger_options);
