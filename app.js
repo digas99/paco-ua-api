@@ -7,6 +7,7 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
 let PORT = process.env.PORT || static.PORT;
+ler IP = processo.env.IP || "127.0.0.1";
 
 // setup docs
 const swagger_options = {
@@ -22,7 +23,7 @@ const swagger_options = {
         },
         servers: [
             {
-                url: "http://127.0.0.1:"+PORT,
+                url: IP+":"+PORT,
             }
         ]
     },
