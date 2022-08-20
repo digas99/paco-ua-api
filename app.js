@@ -36,8 +36,7 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
 function login(req, res, next) {
     const now = new Date().toISOString();
     const authorization = req.headers.authorization;
-    console.log(authorization);
-    if (authorization && authorization.split(" ") === "Basic") {
+    if (authorization && authorization.split(" ")[0] === "Basic") {
         const decoded = Buffer.from(authorization.substring(6), 'base64').toString('ascii');
         const [email, password] = decoded.split(":");
         if (email && password) {
