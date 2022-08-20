@@ -127,6 +127,38 @@ components:
         state:
           type: string
           description: State of the request
+    Expiration:
+      type: object
+      properties:
+        school_year:
+          type: string
+        ects:
+          type: object
+          properties:
+            cumulative:
+              type: number
+              description: Number of credits done so far, since the beginning
+            done:
+              type: number
+              description: Number of credits done this year
+            missing:
+              type: number
+              description: Number of credits not registered yet this year
+            total:
+              type: number
+              description: Total Number of credits taken this year by the student
+        enrollment_cumulative:
+          type: number
+          description: Number of years counting for the expiration, since the beginning
+        coefficient:
+          type: number
+          description: Number defining the value of this year to the expiration
+        type:
+          type: string
+          description: Type of year in terms of counting for the expiration or not
+        state:
+          type: string
+          description: State of the expiration
 
 tags:
   - name: PersonalData
@@ -137,6 +169,8 @@ tags:
     description: Schedule of subjects
   - name: Requests
     description: Requests to Reitoria - Universidade de Aveiro
+  - name: Expiration
+    description: Student's expiration situation
 
 security:
   - basicAuth: []
