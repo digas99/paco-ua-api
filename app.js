@@ -42,6 +42,19 @@ fs.readFile("./docs/paco-ua-api.yml", {encoding: 'utf8'}, (err,data) => {
 
         const swagger_specs = swaggerJsDoc(swagger_options);
         app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
+
+        // setup routes
+        app.use(login); // middleware to automatically login upon every request
+
+        app.post("/", (req, res) => {
+            res.status(200).json({
+                "message":"No data to show here!",
+                "timestamp": new Date().toISOString()
+            });
+        });
+
+        //setup routes
+        fs.readdir(static.ROUTES_DIR, (err, files) => files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTES_DIR+file.replace(".js", "")))));
     });
 });
 
@@ -49,10 +62,11 @@ fs.readFile("./docs/paco-ua-api.yml", {encoding: 'utf8'}, (err,data) => {
 function login(req, res, next) {
     const now = new Date().toISOString();
     const authorization = req.headers.authorization;
-    if ((authorization && authorization.split(" ")[0] === "Basic") || req.url === "/docs") {
+    if ((authorization && authorization.split(" ")[0] === "Basic")) {
         const decoded = Buffer.from(authorization.substring(6), 'base64').toString('ascii');
         const [email, password] = decoded.split(":");
         if (email && password) {
+            console.log(email, password);
             paco.secretariaVirtual(email, password)
                 .then(async page => {
                     req.page = page;
@@ -67,18 +81,5 @@ function login(req, res, next) {
         });
     }
 }
-
-// middleware to automatically login upon every request
-app.use(login);
-
-app.post("/", (req, res) => {
-    res.status(200).json({
-        "message":"No data to show here!",
-        "timestamp": new Date().toISOString()
-    });
-});
-
-//setup routes
-fs.readdir(static.ROUTES_DIR, (err, files) => files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTES_DIR+file.replace(".js", "")))));
 
 app.listen(PORT, () => console.log('Node server running on port '+PORT));
