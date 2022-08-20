@@ -83,7 +83,7 @@ If everything is correct, this should be the response:
                     },
                     "start": "9h",
                     "duration": "2h",
-                    "capacity": "24",
+                    "capacity": 24,
                     "class": "P8",
                     "room": "04.2.03"
                 },
@@ -94,7 +94,7 @@ If everything is correct, this should be the response:
                     },
                     "start": "14h",
                     "duration": "1h",
-                    "capacity": "98",
+                    "capacity": 98,
                     "class": "TP1",
                     "room": "ANF. V"
                 },
@@ -108,7 +108,7 @@ If everything is correct, this should be the response:
                     },
                     "start": "9h",
                     "duration": "2h",
-                    "capacity": "18",
+                    "capacity": 18,
                     "class": "P07",
                     "room": "04.2.17"
                 },

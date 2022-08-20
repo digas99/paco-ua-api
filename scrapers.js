@@ -212,7 +212,7 @@ module.exports = {
                         },
                         "start": titleData[2].split("INÍCIO: ")[1],
                         "duration": titleData[3].split("DURAÇÃO: ")[1],
-                        "capacity": titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0],
+                        "capacity": Number(titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0]),
                         "class": elem.childNodes[0].wholeText.split(" ")[2],
                         "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
                     });
@@ -242,7 +242,7 @@ module.exports = {
                     .forEach(line => {
                         const year = data[line.children[2].innerText];
                         year.push({
-                            "instalment": line.children[0].innerText.split("ª")[0],
+                            "instalment": Number(line.children[0].innerText.split("ª")[0]),
                             "value": line.children[1].innerText.split(" Euros")[0],
                             "course-code": line.children[3].innerText,
                             "payment": {

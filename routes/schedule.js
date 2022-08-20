@@ -9,9 +9,62 @@ const setup = {
     "title": static.SCHEDULE_TITLE
 }
 
+/**
+ * @swagger
+ * /schedule:
+ *  post:
+ *      summary: Returns a list of days of the week with the classes on that day
+ *      tags: [Schedule]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Credentials'
+ *      responses:
+ *          200:
+ *              description: List of days of the week with the classes on that day
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Schedule'
+ */
+
 router.post("/", async (req, res) => {  
     handleResponse(req, res, async page => paco.schedule(page, "#template_main > table"), setup);
 });
+
+/**
+ * @swagger
+ * /schedule/{subject}:
+ *  post:
+ *      summary: Returns the schedule for a specific subject
+ *      tags: [Schedule]
+ *      parameters:
+ *          - in: path
+ *            name: subject
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Code of the subject
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Credentials'
+ *      responses:
+ *          200:
+ *              description: List of days of the week with the classes on that day
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Schedule'
+ */
 
 router.post("/subject/:subject", async (req, res) => {
     // go to classes page

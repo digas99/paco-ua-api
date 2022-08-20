@@ -5,6 +5,8 @@ API for Portal Académico Online - Universidade de Aveiro.
 
 This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself.
 
+Try and explore it with Swagger in [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
 ![logo](/images/paco-api-logo.png)
 
 ## API Documentation
@@ -347,7 +349,7 @@ RESPONSE: 3.5s 🟢
         "fees": {
             "2017": [
                 {
-                    "instalment": "1",
+                    "instalment": 1,
                     "value": "...",
                     "course-code": "...",
                     "payment": {
@@ -357,7 +359,7 @@ RESPONSE: 3.5s 🟢
                     }
                 },
                 {
-                    "instalment": "2",
+                    "instalment": 2,
                     "value": "...",
                     "course-code": "...",
                     "payment": {
@@ -370,7 +372,7 @@ RESPONSE: 3.5s 🟢
             ],
             "2018": [
                 {
-                    "instalment": "1",
+                    "instalment": 1,
                     "value": "...",
                     "course-code": "...",
                     "payment": {
@@ -869,7 +871,7 @@ RESPONSE: 5s 🟡
                     },
                     "start": "9h",
                     "duration": "2h",
-                    "capacity": "24",
+                    "capacity": 24,
                     "class": "P8",
                     "room": "04.2.03"
                 },
@@ -880,7 +882,7 @@ RESPONSE: 5s 🟡
                     },
                     "start": "14h",
                     "duration": "1h",
-                    "capacity": "98",
+                    "capacity": 98,
                     "class": "TP1",
                     "room": "ANF. V"
                 },
@@ -894,7 +896,7 @@ RESPONSE: 5s 🟡
                     },
                     "start": "9h",
                     "duration": "2h",
-                    "capacity": "18",
+                    "capacity": 18,
                     "class": "P07",
                     "room": "04.2.17"
                 },

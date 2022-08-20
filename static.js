@@ -37,7 +37,7 @@ module.exports = {
     EXPIRATION_TITLE: "Situação de prescrição",
 
     // directories
-    ROUTERS_DIR: "./routers/",
+    ROUTES_DIR: "./routes/",
 
     // classes
     CLASSES_URL: "https://paco.ua.pt/secvirtual/aulas/lista_turmas_aluno.asp",

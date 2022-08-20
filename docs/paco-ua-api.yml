@@ -1,0 +1,144 @@
+components:
+  schemas:
+    Credentials:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Institutional email
+        password:
+          type: string
+          description: Respective password
+    PersonalData:
+      type: object
+      properties:
+        personal_data:
+          type: object
+          properties:
+            nmec:
+              type: string
+              description: Student's code (Número Mecanográfico)
+            name:
+              type: string
+              description: Student's name
+            picture:
+              type: string
+              description: Url to picture
+            father:
+              type: string
+              description: Name of the father
+            mother:
+              type: string
+              description: Name of the mother
+            cc:
+              type: string
+              description: National identification number (Cartão de Cidadão)
+            birth:
+              type: string
+              description: Date of birth
+            country:
+              type: string
+              description: Country Alpha‑3 code
+            gender:
+              type: string
+              description: Student's gender
+    ContactData:
+      type: object
+      properties:
+        contact_data:
+          type: object
+          properties:
+            telephone:
+              type: string
+              description: Telephone number
+            mobile:
+              type: string
+              description: Mobile phone number
+            email:
+              type: string
+              description: Email address
+    Address:
+      type: object
+      properties:
+        address:
+          type: string
+        place:
+          type: string
+        postal_code:
+          type: string
+    TuitionFee:
+      type: object
+      properties:
+          <year>:
+              type: object
+              properties:
+                  instalment:
+                      type: number
+                      description: Payment partition of the year
+                  value:
+                      type: string
+                      description: Value in Euros of the instalment
+                  course-code:
+                      type: string
+                      description: Code representing the student's course
+                  payment:
+                      type: object
+                      properties:
+                          deadline:
+                              type: string
+                              description: Max date to pay the instalment
+                          paid:
+                              type: string
+                              description: Date of the payment
+                          status:
+                              type: string
+                              description: Status on the payment
+    Schedule:
+      type: object
+      properties:
+        <day_of_week>:
+          type: object
+          properties:
+            subject:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the subject
+                abbrev:
+                  type: string
+                  description: Abbreviation of the name of the subject
+            start:
+              type: string
+              description: Hour of the beginning of the class
+            duration:
+              type: string
+              description: Duration of the class in hours
+            capacity:
+              type: number
+              description: Max number of students in the class
+            class:
+              type: string
+              description: Identifier of the class
+            room:
+              type: string
+              description: Room where the class takes place
+    Request:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date of when the request was submited
+        state:
+          type: string
+          description: State of the request
+
+tags:
+  - name: PersonalData
+    description: Student's personal data
+  - name: TuitionFees
+    description: University tuition fees information
+  - name: Schedule
+    description: Schedule of subjects
+  - name: Requests
+    description: Requests to Reitoria - Universidade de Aveiro
