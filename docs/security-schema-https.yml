@@ -1,5 +1,0 @@
-components:
-  securitySchemes:
-    basicAuth:
-      type: https
-      scheme: basic

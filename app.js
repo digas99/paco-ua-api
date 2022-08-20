@@ -5,6 +5,7 @@ const static = require('./static');
 const fs = require('fs');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const package = require('./package.json');
 
 let PORT = process.env.PORT || static.PORT;
 let IP = process.env.IP || "127.0.0.1";
@@ -15,9 +16,9 @@ const swagger_options = {
     definition: {
         openapi: "3.0.3",
         info: {
-            title: "PACO-UA API",
-            version: "0.0.1",
-            description: "API for Portal Académico Online - Universidade de Aveiro. This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself. To see the written down documentation go to [https://github.com/digas99/paco-ua-api/tree/main/docs](https://github.com/digas99/paco-ua-api/tree/main/docs).",
+            title: package["name"],
+            version: package["version"],
+            description: package["description"],
             contact: {
                 email: "diogo.correia99@ua.pt"
             }
@@ -28,7 +29,7 @@ const swagger_options = {
             }
         ]
     },
-    apis: ["./routes/*.js", "./docs/paco-ua-api.yml", `./docs/security-schema-http.yml`]
+    apis: ["./routes/*.js", "./docs/paco-ua-api.yml"]
 }
 
 const swagger_specs = swaggerJsDoc(swagger_options);

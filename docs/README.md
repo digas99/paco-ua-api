@@ -5,7 +5,15 @@ API for Portal Académico Online - Universidade de Aveiro.
 
 This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself.
 
-Try and explore it with Swagger in [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+Try and explore it with Swagger in **/docs**.  
+- [http://127.0.0.1:8000/docs](http://127.0.0.1/docs):  
+    - [x] Explore endpoints  
+    - [x] Make HTTP Requests to endpoints 
+
+- [https://pacoua-api.pt/docs](https://pacoua-api.pt/docs):  
+    - [x] Explore endpoints  
+    - [ ] Make HTTP Requests to endpoints
+
 
 ![logo](/images/paco-api-logo.png)
 

@@ -1,6 +1,6 @@
 module.exports = {
     // port for development
-    PORT: 8000,
+    PORT: 3001,
 
     // /personal
     PERSONAL_URL: "https://paco.ua.pt/secvirtual/c_dadospess.asp",
@@ -57,5 +57,5 @@ module.exports = {
         "outubro": "10",
         "novembro": "11",
         "dezembro": "12",
-    } 
+    },
 }

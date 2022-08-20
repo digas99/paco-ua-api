@@ -1,7 +1,7 @@
 {
   "name": "paco-ua-api",
   "version": "1.0.0",
-  "description": "API for Portal Académico - Universidade de Aveiro",
+  "description": "API for Portal Académico Online - Universidade de Aveiro. This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself. To see the written down documentation go to [https://github.com/digas99/paco-ua-api/tree/main/docs](https://github.com/digas99/paco-ua-api/tree/main/docs).",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
