@@ -16,7 +16,9 @@ module.exports = {
                     delete result["size"];
                 response.status(200).json(success(result));
             })
-            .catch(err => response.status(500).json(error(err)));
+            .catch(err => response.status(500).json(error(err)))
+            .finally(() => secretariaVirtual.browser().close()); // close browser when everything is done
+            
     },
     // Secretaria Virtual (login)
     // https://paco.ua.pt/secvirtual
