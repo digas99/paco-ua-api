@@ -28,7 +28,7 @@ const swagger_options = {
             }
         ]
     },
-    apis: ["./routes/*.js", "./docs/paco-ua-api.yml", `./docs/security-schema-${PROTOCOL}.yml`]
+    apis: ["./routes/*.js", "./docs/paco-ua-api.yml", `./docs/security-schema-http.yml`]
 }
 
 const swagger_specs = swaggerJsDoc(swagger_options);
@@ -38,13 +38,10 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
 function login(req, res, next) {
     const now = new Date().toISOString();
     const authorization = req.headers.authorization;
-    console.log(req.url.replaceAll("/", ""));
-    if (req.url.replaceAll("/", "") !== "docs") {
-        if ((authorization && authorization.split(" ")[0] === "Basic")) {
+    if (authorization && authorization.split(" ")[0] === "Basic") {
             const decoded = Buffer.from(authorization.substring(6), 'base64').toString('ascii');
             const [email, password] = decoded.split(":");
             if (email && password) {
-                console.log(email, password);
                 paco.secretariaVirtual(email, password)
                     .then(async page => {
                         req.page = page;
@@ -58,8 +55,6 @@ function login(req, res, next) {
                 "timestamp": now
             });
         }
-    }
-    else next();
 }
 
 // setup routes

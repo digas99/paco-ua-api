@@ -25,7 +25,7 @@ module.exports = {
     secretariaVirtual: async (email, password, headless=true) => {
         const browser = await puppeteer.launch({
             headless: headless,
-            executablePath: '/usr/bin/google-chrome',
+            //executablePath: '/usr/bin/google-chrome',
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',

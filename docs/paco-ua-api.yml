@@ -1,8 +1,4 @@
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
   schemas:
     PersonalData:
       type: object
