@@ -12,15 +12,11 @@ const setup = {
 /**
  * @swagger
  * /personal:
- *  post:
+ *  get:
  *      summary: Returns the student's personal data
  *      tags: [PersonalData]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
+ *      security:
+ *          - basicAuth: []
  *      responses:
  *          200:
  *              description: Student's personal data
@@ -47,16 +43,18 @@ const setup = {
  *                                              description: (Número de Identificação Bancária)
  */
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     handleResponse(req, res, paco.personalData, setup);
 });
 
 /**
  * @swagger
  * /personal/{section}:
- *  post:
+ *  get:
  *      summary: Returns a section of the student's personal data
  *      tags: [PersonalData]
+ *      security:
+ *          - basicAuth: []
  *      parameters:
  *          - in: path
  *            name: section
@@ -64,12 +62,6 @@ router.post("/", async (req, res) => {
  *              type: string
  *            required: true
  *            description: Section from personal data
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
  *      responses:
  *          200:
  *              description: Student's personal data
@@ -96,7 +88,7 @@ router.post("/", async (req, res) => {
  *                                              description: (Número de Identificação Bancária)
  */
 
-router.post("/:section", async (req, res) => {
+router.get("/:section", async (req, res) => {
     handleResponse(req, res, async page => paco.personalData(page, req.params.section), setup);
 });
 

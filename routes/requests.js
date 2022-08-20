@@ -13,15 +13,11 @@ const setup = {
 /**
  * @swagger
  * /requests:
- *  post:
+ *  get:
  *      summary: Returns the student's requests to Reitoria - Universidade de Aveiro
  *      tags: [Requests]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
+ *      security:
+ *          - basicAuth: []
  *      responses:
  *          200:
  *              description: Requests to Reitoria - Universidade de Aveiro
@@ -33,7 +29,7 @@ const setup = {
  *                              $ref: '#/components/schemas/Request'
  */
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     handleResponse(req, res, paco.requests, setup);
 });
 

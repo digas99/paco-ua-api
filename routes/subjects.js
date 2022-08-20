@@ -4,7 +4,7 @@ const paco = require('../scrapers');
 const static = require('../static');
 const { handleResponse } = require('../responses');
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     handleResponse(req, res, paco.curriculum, {
         "url": static.CURRICULUM_URL,
         "title": static.CURRICULUM_TITLE,
@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     });
 });
 
-router.post("/history", async (req, res) => {
+router.get("/history", async (req, res) => {
     handleResponse(req, res, paco.subjectsHistory, {
         "url": static.HISTORY_URL,
         "title": static.HISTORY_TITLE,
@@ -20,7 +20,7 @@ router.post("/history", async (req, res) => {
     });
 });
 
-router.post("/current", async (req, res) => {
+router.get("/current", async (req, res) => {
     handleResponse(req, res, paco.subjectsCurrent, {
         "url": static.CURRENT_URL,
         "title": static.CURRENT_TITLE,

@@ -56,16 +56,12 @@ After any of the two configurations, the server will be running at http://127.0.
 
 ## Usage
 
-Every endpoint has to be accessed through a POST HTTP Request, with your institutional email credentials in the request body.
+Every endpoint is accessed through a GET HTTP Request, with your institutional email credentials in the **Basic Authorization** Header (encrypted in base64). [More Information](https://en.wikipedia.org/wiki/Basic_access_authentication#:~:text=password%20(see%20below).-,Client%20side,-%5Bedit%5D)
 
-`POST /schedule`
-
-```json5
-// POST REQUEST BODY
-{
-  email: "student@ua.pt",
-  password: "your password",
-}
+```shell
+GET /schedule
+  -H 'accept: application/json'
+  -H 'Authorization: Basic {base64_encrypted_credentials}'
 ```
 
 If everything is correct, this should be the response:
@@ -129,14 +125,14 @@ The same applies for all the other endpoints.
 
 ## Progress
 
-- [x] Dados Pessoais &nbsp;&nbsp;`POST /personal`
-- [x] Situação de prescrição &nbsp;&nbsp;`POST /expiration`
-- [x] Histórico Notas &nbsp;&nbsp;`POST /subjects/history`
-- [x] Disciplinas Inscritas &nbsp;&nbsp;`POST /subjects/current`
-- [x] Estados das Propinas &nbsp;&nbsp;`POST /tuition_fees`
-- [x] Plano Curricular &nbsp;&nbsp;`POST /subjects`
-- [x] Calendário de Exames do Aluno &nbsp;&nbsp;`POST /exams`
-- [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`POST /exams?subjects=...`
-- [x] Apoio às Aulas &nbsp;&nbsp;`POST /classes`
-- [x] Horário &nbsp;&nbsp;`POST /schedule`
-- [x] Requerimentos &nbsp;&nbsp;```POST /requests```
+- [x] Dados Pessoais &nbsp;&nbsp;`GET /personal`
+- [x] Situação de prescrição &nbsp;&nbsp;`GET /expiration`
+- [x] Histórico Notas &nbsp;&nbsp;`GET /subjects/history`
+- [x] Disciplinas Inscritas &nbsp;&nbsp;`GET /subjects/current`
+- [x] Estados das Propinas &nbsp;&nbsp;`GET /tuition_fees`
+- [x] Plano Curricular &nbsp;&nbsp;`GET /subjects`
+- [x] Calendário de Exames do Aluno &nbsp;&nbsp;`GET /exams`
+- [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`GET /exams?subjects=...`
+- [x] Apoio às Aulas &nbsp;&nbsp;`GET /classes`
+- [x] Horário &nbsp;&nbsp;`GET /schedule`
+- [x] Requerimentos &nbsp;&nbsp;```GET /requests```

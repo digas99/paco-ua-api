@@ -16,41 +16,40 @@ Try and explore it with Swagger in [http://127.0.0.1:8000/docs](http://127.0.0.1
     1. [Cache](#cache)
     1. [Selective Fetching](#selective-fetching)
 1. [Response Times](#response-times)
-1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```POST /personal```
+1. [Dados Pessoais](#dados-pessoais) &nbsp;&nbsp;```GET /personal```
     1. [Specify Section](#specify-section)
-1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```POST /expiration```
-1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```POST /subjects/history```
-1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```POST /subjects/current```
-1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```POST /tuition_fees```
-1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```POST /subjects```
-1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```POST /exams```
-1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```POST /exams?subjects=...```
-1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```POST /classes```
+1. [Situação de Prescrição](#situação-de-prescrição) &nbsp;&nbsp;```GET /expiration```
+1. [Histórico Notas](#histórico-notas) &nbsp;&nbsp;```GET /subjects/history```
+1. [Disciplinas Inscritas](#disciplinas-inscritas) &nbsp;&nbsp;```GET /subjects/current```
+1. [Estado das Propinas](#estado-das-propinas) &nbsp;&nbsp;```GET /tuition_fees```
+1. [Plano Curricular](#plano-curricular) &nbsp;&nbsp;```GET /subjects```
+1. [Calendário de Exames do Aluno](#calendário-de-exames-do-aluno) &nbsp;&nbsp;```GET /exams```
+1. [Calendário de Exames por Disciplina](#calendário-de-exames-por-disciplina) &nbsp;&nbsp;```GET /exams?subjects=...```
+1. [Apoio às Aulas](#apoio-às-aulas) &nbsp;&nbsp;```GET /classes```
     1. [Classes by Subject](#classes-by-subject)
     1. [Include Teachers](#include-teachers)
     1. [Subject Program](#subject-program)
-1. [Horário](#horário) &nbsp;&nbsp;```POST /schedule```
+1. [Horário](#horário) &nbsp;&nbsp;```GET /schedule```
     1. [Subject Schedule](#subject-schedule)
-1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```POST /requests``` 
+1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```GET /requests``` 
 
 ---
 
 ## Make a HTTP Request
 
-Every endpoint has to be accessed through a POST HTTP Request, with your institutional email credentials in the request body.
+Every endpoint is accessed through a GET HTTP Request, with your institutional email credentials in the **Basic Authorization** Header (encrypted in base64). [More Information](https://en.wikipedia.org/wiki/Basic_access_authentication#:~:text=password%20(see%20below).-,Client%20side,-%5Bedit%5D)
 
-```POST /<endpoint>```
-```json5
-// POST REQUEST BODY
-{
-    "email": "student@ua.pt",
-    "password": "your password" 
-}
+```shell
+GET /schedule
+  -H 'accept: application/json'
+  -H 'Authorization: Basic {base64_encrypted_credentials}'
 ```
 
 The Responses to any Request is always a JSON.
 
-If the Request is successfull (200), then the result will have the following structure:
+The result will have the following structure:
+
+- If the Request is successfull (200): 
 ```json5
 // RESPONSE example
 {
@@ -62,13 +61,22 @@ If the Request is successfull (200), then the result will have the following str
 }
 ```
 
-If the Request fails (400 / 500), then the result will have the following structure:
+- If the Request fails (400 / 500):
 ```json5
 // RESPONSE example
 {
-    "error": "...",
+    "message": "...",
     "url": "...",
     "title": "...", // OPTIONAL
+    "timestamp": "..."
+}
+```
+
+- If the credentials are missing (401):
+```json5
+// RESPONSE example
+{
+    "message": "...",
     "timestamp": "..."
 }
 ```
@@ -77,7 +85,7 @@ If the Request fails (400 / 500), then the result will have the following struct
 | ID | Data Type | Description |
 |----|-----------|-------------|
 | **data** | object | Data extracted from the website | 
-| **error** | string | Message briefly explaining what went wrong |
+| **message** | string | Message briefly explaining what went wrong |
 | **size** | number | Size of data structure of interest from within data | 
 | **url** | string | URL of the web page from which the data was extracted |
 | **title** | string | Section of PACO-UA from where the data was extracted |
@@ -116,7 +124,7 @@ With this in mind, the endpoints throughout this document will have an estimate 
 
 RESPONSE: 3.5s 🟢
 
-```POST /personal```
+```GET /personal```
 ```json5
 // RESPONSE example
 {
@@ -164,9 +172,9 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢
 
-```POST /personal/<section>```
+```GET /personal/<section>```
 ```json5
-// POST /personal/contact_data
+// GET /personal/contact_data
 
 // RESPONSE example
 {
@@ -191,7 +199,7 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢
 
-```POST /expiration```
+```GET /expiration```
 ```json5
 // RESPONSE example
 {
@@ -246,7 +254,7 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢
 
-```POST /subjects/history```
+```GET /subjects/history```
 ```json5
 // RESPONSE example
 {
@@ -289,7 +297,7 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢
 
-```POST /subjects/current```
+```GET /subjects/current```
 ```json5
 // RESPONSE example
 {
@@ -341,7 +349,7 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢
 
-```POST /tuition_fees```
+```GET /tuition_fees```
 ```json5
 // RESPONSE example
 {
@@ -407,7 +415,7 @@ If the grade is 0, then it doesn't apply to that subject or the subject hasn't b
 Subjects with *options* will have grade 0 (as in "it doesn't apply") and will show all options. The options the student **didn't** take will have grade 0 as well (as in "it doesn't apply").  
 This subjects with options are considered in the calculation of the **weighted mean**, but since they don't have a grade, the mean of the grades of their options weigh in instead.
 
-```POST /subjects```
+```GET /subjects```
 ```json5
 // RESPONSE example
 {
@@ -499,7 +507,7 @@ This subjects with options are considered in the calculation of the **weighted m
 
 RESPONSE: 3.5s 🟢
 
-```POST /exams```
+```GET /exams```
 ```json5
 // RESPONSE example
 {
@@ -563,9 +571,9 @@ RESPONSE: 4.5s 🟢
 
 This endpoint is, in a way, a specification of the endpoint **/exams**. Instead of getting the exams of the user, the code of any subjects can be passed in the URL Parameter **subjects**, and the exams from that subject will be returned. To specify multiple subjects at once, separate the code of the subjects with a comma. If an invalid subject code is provided, it will be ignored.
 
-```POST /exams?subjects=...```
+```GET /exams?subjects=...```
 ```json5
-// POST /exams?subjects=40292,42000
+// GET /exams?subjects=40292,42000
 
 // RESPONSE example
 {
@@ -615,7 +623,7 @@ This endpoint is, in a way, a specification of the endpoint **/exams**. Instead 
 
 RESPONSE: 3.5s 🟢
 
-```POST /classes```
+```GET /classes```
 ```json5
 // RESPONSE example
 {
@@ -675,10 +683,10 @@ RESPONSE: 3.5s 🟢
 
 RESPONSE: 3.5s 🟢  
 
-```POST /classes/<subject_code>```
+```GET /classes/<subject_code>```
 
 ```json5
-// POST /classes/42296
+// GET /classes/42296
 
 // RESPONSE example
 {
@@ -719,11 +727,11 @@ RESPONSE: * 🔴
 - 12 classes: 15s,
 - ...
 
-```POST /classes?include=teachers```
+```GET /classes?include=teachers```
 
 RESPONSE: 4.5s 🟢  
 
-```POST /classes/<subject_code>?include=teachers```
+```GET /classes/<subject_code>?include=teachers```
 
 ```json5
 
@@ -809,9 +817,9 @@ RESPONSE: 4.5s 🟢
 
 RESPONSE: 4.5s 🟢
 
-```POST /classes/<subject_code>/program```
+```GET /classes/<subject_code>/program```
 
-```POST /classes/<subject_code>/program/<section>```
+```GET /classes/<subject_code>/program/<section>```
 
 ```json5
 // /classes/41949/program
@@ -857,7 +865,7 @@ RESPONSE: 4.5s 🟢
 
 RESPONSE: 5s 🟡
 
-```POST /schedule```
+```GET /schedule```
 ```json5
 // RESPONSE example
 {
@@ -917,9 +925,9 @@ RESPONSE: 5s 🟡
 
 RESPONSE: 4.5s 🟢
 
-```POST /schedule/subject/<subject_code>```
+```GET /schedule/subject/<subject_code>```
 ```json5
-// POST /schedule/subject/41949
+// GET /schedule/subject/41949
 
 // RESPONSE example
 {
@@ -978,7 +986,7 @@ RESPONSE: 4.5s 🟢
 
 RESPONSE: 3.8s 🟢
 
-```POST /requests```
+```GET /requests```
 ```json5
 // RESPONSE example
 {

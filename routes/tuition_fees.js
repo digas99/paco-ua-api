@@ -13,15 +13,11 @@ const setup = {
 /**
  * @swagger
  * /tuition_fees:
- *  post:
+ *  get:
  *      summary: Returns a list of all tuition fees instalments for each year
  *      tags: [TuitionFees]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
+ *      security:
+ *          - basicAuth: []
  *      responses:
  *          200:
  *              description: List of tuition fees instalments
@@ -33,7 +29,7 @@ const setup = {
  *                              $ref: '#/components/schemas/TuitionFee'
  */
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     handleResponse(req, res, paco.tuitionFees, setup);
 });
 

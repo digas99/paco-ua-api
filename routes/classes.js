@@ -10,22 +10,22 @@ const setup = {
     "key": "subjects"
 }
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     if (!req.query["include"])
         handleResponse(req, res, paco.classes, setup);
     else if (req.query["include"] === "teachers")
         handleResponse(req, res, async page => paco.classes(page, true), setup);
 });
 
-router.post("/:subject", async (req, res) => {
+router.get("/:subject", async (req, res) => {
     if (!req.query["include"])
         handleResponse(req, res, async page => paco.classes(page, false, req.params.subject), setup);
     else if (req.query["include"] === "teachers")
         handleResponse(req, res, async page => paco.classes(page, true, req.params.subject), setup);
 });
 
-router.post("/:subject/program", classesProgram);
-router.post("/:subject/program/:section", classesProgram);
+router.get("/:subject/program", classesProgram);
+router.get("/:subject/program/:section", classesProgram);
 
 async function classesProgram (req, res) {
     // go to classes
@@ -57,7 +57,7 @@ async function classesProgram (req, res) {
     }
     else {
         res.status(400).json({
-            "error":"Invalid subject code. Please provide a code from one of your current classes!",
+            "message": "Invalid subject code. Please provide a code from one of your current classes!",
             "url": static.CLASSES_URL,
             "title": setup["title"],
             "timestamp": new Date().toISOString()
@@ -65,11 +65,11 @@ async function classesProgram (req, res) {
     }
 }
 
-router.post("/:subject/absence", async (req, res) => {
+router.get("/:subject/absence", async (req, res) => {
 
 });
 
-router.post("/:subject/lessons", async (req, res) => {
+router.get("/:subject/lessons", async (req, res) => {
 
 });
 

@@ -12,15 +12,11 @@ const setup = {
 /**
  * @swagger
  * /schedule:
- *  post:
+ *  get:
  *      summary: Returns a list of days of the week with the classes on that day
  *      tags: [Schedule]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
+ *      security:
+ *          - basicAuth: []
  *      responses:
  *          200:
  *              description: List of days of the week with the classes on that day
@@ -32,16 +28,18 @@ const setup = {
  *                              $ref: '#/components/schemas/Schedule'
  */
 
-router.post("/", async (req, res) => {  
+router.get("/", async (req, res) => {  
     handleResponse(req, res, async page => paco.schedule(page, "#template_main > table"), setup);
 });
 
 /**
  * @swagger
- * /schedule/{subject}:
- *  post:
+ * /schedule/subject/{subject}:
+ *  get:
  *      summary: Returns the schedule for a specific subject
  *      tags: [Schedule]
+ *      security:
+ *          - basicAuth: []
  *      parameters:
  *          - in: path
  *            name: subject
@@ -49,12 +47,6 @@ router.post("/", async (req, res) => {
  *              type: string
  *            required: true
  *            description: Code of the subject
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Credentials'
  *      responses:
  *          200:
  *              description: List of days of the week with the classes on that day
@@ -66,7 +58,7 @@ router.post("/", async (req, res) => {
  *                              $ref: '#/components/schemas/Schedule'
  */
 
-router.post("/subject/:subject", async (req, res) => {
+router.get("/subject/:subject", async (req, res) => {
     // go to classes page
     const secretariaVirtual = req.page;
     await secretariaVirtual.goto(static.CLASSES_URL);
@@ -94,7 +86,7 @@ router.post("/subject/:subject", async (req, res) => {
     }
     else {
         res.status(400).json({
-            "error":"Invalid subject code. Please provide a code from one of your current classes!",
+            "message": "Invalid subject code. Please provide a code from one of your current classes!",
             "url": static.CLASSES_URL,
             "title": setup["title"],
             "timestamp": new Date().toISOString()

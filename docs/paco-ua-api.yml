@@ -1,14 +1,9 @@
 components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
   schemas:
-    Credentials:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Institutional email
-        password:
-          type: string
-          description: Respective password
     PersonalData:
       type: object
       properties:
@@ -142,3 +137,6 @@ tags:
     description: Schedule of subjects
   - name: Requests
     description: Requests to Reitoria - Universidade de Aveiro
+
+security:
+  - basicAuth: []

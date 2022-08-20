@@ -10,7 +10,7 @@ module.exports = {
             "title": setup["title"],
             "timestamp": now
         }), error => ({
-            "error":"Server error",
+            "message":"Server error",
             "url": setup["url"],
             "title": setup["title"],
             "timestamp": now

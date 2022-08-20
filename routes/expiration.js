@@ -10,7 +10,7 @@ const setup = {
     "key": "expiration"
 }
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     handleResponse(req, res, paco.expiration, setup);
 });
 

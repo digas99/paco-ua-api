@@ -35,43 +35,24 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
 // login and put secretaria virtual in req
 function login(req, res, next) {
     const now = new Date().toISOString();
-    if (req.method == "POST") {
-        let body = [];
-        req.on('data', chunk => body.push(chunk))
-            .on('end', () => {
-                try {
-                    body = JSON.parse(Buffer.concat(body).toString());
-                    if (body["email"] && body["password"]) {
-                        paco.secretariaVirtual(body["email"], body["password"])
-                            .then(async page => {
-                                req.page = page;
-                                next();
-                            });
-                    }
-                    else {
-                        res.status(400).json({
-                            "error": "Email or Password missing!",
-                            "timestamp": now
-                        });
-                    }
-                } catch (e) {
-                    if (e instanceof SyntaxError) {
-                        res.status(400).json({
-                            "error": "JSON missing or bad format!",
-                            "timestamp": now
-                        });
-                    }
-                }
-            });
+    const authorization = req.headers.authorization;
+    console.log(authorization);
+    if (authorization && authorization.split(" ") === "Basic") {
+        const decoded = Buffer.from(authorization.substring(6), 'base64').toString('ascii');
+        const [email, password] = decoded.split(":");
+        if (email && password) {
+            paco.secretariaVirtual(email, password)
+                .then(async page => {
+                    req.page = page;
+                    next();
+                });
+        }
     }
     else {
-        // whitelist /docs
-        if (req.url !== "/docs") {
-            res.status(400).json({
-                "error": "This API only works over POST Requests. To see documentation go to /docs.",
-                "timestamp": now
-            });
-        }
+        res.status(401).json({
+            "message": "Unauthorized access. Please use Basic Auth with your institutional email credentials.",
+            "timestamp": now
+        });
     }
 }
 

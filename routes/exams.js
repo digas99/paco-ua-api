@@ -4,7 +4,7 @@ const paco = require('../scrapers');
 const static = require('../static');
 const { handleResponse } = require('../responses');
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     if (!req.query["subjects"]) {
         handleResponse(req, res, async page => paco.exams(page, "#template_main > form tr"), {
             "url": static.EXAMS_URL,
