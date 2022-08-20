@@ -16,34 +16,34 @@ fs.readFile("./docs/paco-ua-api.yml", {encoding: 'utf8'}, (err,data) => {
     if (process.env.IP) formatted = data.replace(/http/g, 'https');
     else formatted = data.replace(/https/g, 'http');
     
-    fs.writeFile("./docs/paco-ua-api.yml", formatted, 'utf8', err =>{
+    fs.writeFile("./docs/paco-ua-api.yml", formatted, 'utf8', err => {
         if (err) return console.log(err);
+
+        // setup swagger docs
+        const swagger_options = {
+            definition: {
+                openapi: "3.0.3",
+                info: {
+                    title: "PACO-UA API",
+                    version: "0.0.1",
+                    description: "API for Portal Académico Online - Universidade de Aveiro. This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself. To see the written down documentation go to [https://github.com/digas99/paco-ua-api/tree/main/docs](https://github.com/digas99/paco-ua-api/tree/main/docs).",
+                    contact: {
+                        email: "diogo.correia99@ua.pt"
+                    }
+                },
+                servers: [
+                    {
+                        url: PROTOCOL+"://"+IP+":"+PORT,
+                    }
+                ]
+            },
+            apis: ["./routes/*.js", "./docs/paco-ua-api.yml"]
+        }
+
+        const swagger_specs = swaggerJsDoc(swagger_options);
+        app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
     });
 });
-
-// setup swagger docs
-const swagger_options = {
-    definition: {
-        openapi: "3.0.3",
-        info: {
-            title: "PACO-UA API",
-            version: "0.0.1",
-            description: "API for Portal Académico Online - Universidade de Aveiro. This API uses a headless browser to fetch data directly from [paco.ua.pt](https://paco.ua.pt), so its uptime and latency may be impacted by the website itself. To see the written down documentation go to [https://github.com/digas99/paco-ua-api/tree/main/docs](https://github.com/digas99/paco-ua-api/tree/main/docs).",
-            contact: {
-                email: "diogo.correia99@ua.pt"
-            }
-        },
-        servers: [
-            {
-                url: PROTOCOL+"://"+IP+":"+PORT,
-            }
-        ]
-    },
-    apis: ["./routes/*.js", "./docs/paco-ua-api.yml"]
-}
-
-const swagger_specs = swaggerJsDoc(swagger_options);
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
 
 // login and put secretaria virtual in req
 function login(req, res, next) {
