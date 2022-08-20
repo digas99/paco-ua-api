@@ -23,14 +23,17 @@ module.exports = {
     // Secretaria Virtual (login)
     // https://paco.ua.pt/secvirtual
     secretariaVirtual: async (email, password, headless=true) => {
-        const browser = await puppeteer.launch({
+        const puppeteer_options = {
             headless: headless,
-            executablePath: process.platform === "linux" ? "/usr/bin/google-chrome" : "",
+            executablePath: "/usr/bin/google-chrome",
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
             ],
-        });
+        }
+
+        if (process.env.PORT) delete puppeteer_options["executablePath"];
+        const browser = await puppeteer.launch(puppeteer_options);
         
         const page = await browser.newPage();
         
