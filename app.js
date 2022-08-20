@@ -8,8 +8,20 @@ const swaggerJsDoc = require('swagger-jsdoc');
 
 let PORT = process.env.PORT || static.PORT;
 let IP = process.env.IP || "127.0.0.1";
+let PROTOCOL = process.env.IP ? "https" : "http";
 
-// setup docs
+// adapt swagger security scheme to http or https depending on the IP
+fs.readFile("./docs/paco-ua-api.yml", {encoding: 'utf8'}, (err,data) => {
+    let formatted
+    if (process.env.IP) formatted = data.replace(/http/g, 'https');
+    else formatted = data.replace(/https/g, 'http');
+    
+    fs.writeFile("./docs/paco-ua-api.yml", formatted, 'utf8', err =>{
+        if (err) return console.log(err);
+    });
+});
+
+// setup swagger docs
 const swagger_options = {
     definition: {
         openapi: "3.0.3",
@@ -23,7 +35,7 @@ const swagger_options = {
         },
         servers: [
             {
-                url: IP+":"+PORT,
+                url: PROTOCOL+"://"+IP+":"+PORT,
             }
         ]
     },
