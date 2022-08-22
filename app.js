@@ -4,6 +4,7 @@ const fs = require('fs');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const cors = require('cors');
+const path = require('path');
 
 const paco = require('./scrapers');
 const static = require('./static');
@@ -14,10 +15,8 @@ let PORT = process.env.PORT || static.PORT;
 let IP = process.env.IP || "127.0.0.1";
 let PROTOCOL = process.env.IP ? "https" : "http";
 
-const path = require('path')
+// expose static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
-//app.use(express.static("public"));
 
 // setup swagger docs
 const swagger_options = {
