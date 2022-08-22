@@ -23,9 +23,16 @@ const setup = {
  *              content:
  *                  application/json:
  *                      schema:
- *                          type: array
- *                          items:
- *                              $ref: '#/components/schemas/Schedule'
+ *                          allOf:
+ *                              - $ref: '#/components/schemas/Schedule'
+ *                              - type: object
+ *                                properties:
+ *                                  school_year:
+ *                                      type: string
+ *                                      description: School year in the schedule
+ *                                  semester:
+ *                                      type: string
+ *                                      description: Semester in the schedule
  */
 
 router.get("/", async (req, res) => {  

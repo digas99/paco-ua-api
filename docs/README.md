@@ -15,7 +15,7 @@ Try and explore it with Swagger in **/docs**.
     - [ ] Make HTTP Requests to endpoints
 
 
-![logo](/images/paco-api-logo.png)
+![logo](/public/paco-api-logo.png)
 
 ## API Documentation
 

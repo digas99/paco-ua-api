@@ -1,0 +1,36 @@
+.auth-container h4 {
+    display: none
+}
+
+.swagger-ui > .topbar  {
+    background-color: #373737;
+    border-bottom: 5px solid;
+    border-image: linear-gradient(90deg, rgba(219,83,79,1) 70%, rgba(163,55,233,1) 100%) 1;
+    padding: 20px 0;
+}
+
+.topbar-wrapper > a {
+    margin: auto;
+}
+
+.swagger-ui .auth-container .wrapper:nth-of-type(1)::before {
+    content: 'Basic Auth';
+    font-weight: bold;
+  }
+
+.swagger-ui .auth-container .wrapper:nth-of-type(1) :first-child {
+    margin-top: 10px;
+}
+
+.swagger-ui .topbar a {
+    background-image: url(/public/paco-api-logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left: 70px;
+    max-width: unset;
+}
+
+.swagger-ui .wrapper {
+    padding: unset;
+}
+

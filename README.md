@@ -4,7 +4,7 @@
 
 This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
 
-![logo](/images/paco-api-logo-45.png)
+![logo](/public/paco-api-logo-45.png)
 
 ### [API Documentation](docs/README.md)
 

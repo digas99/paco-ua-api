@@ -14,6 +14,11 @@ let PORT = process.env.PORT || static.PORT;
 let IP = process.env.IP || "127.0.0.1";
 let PROTOCOL = process.env.IP ? "https" : "http";
 
+const path = require('path')
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+//app.use(express.static("public"));
+
 // setup swagger docs
 const swagger_options = {
     definition: {
@@ -28,15 +33,19 @@ const swagger_options = {
         },
         servers: [
             {
-                url: PROTOCOL+"://"+IP+":"+PORT,
+                url: PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT),
             }
-        ]
+        ],
     },
-    apis: ["./routes/*.js", "./docs/paco-ua-api.yml"]
+    apis: ["./routes/*.js", "./docs/paco-ua-api.yml"],
 }
 
 const swagger_specs = swaggerJsDoc(swagger_options);
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs));
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs, {
+    customSiteTitle: "PACO-UA API",
+    customCssUrl: "/public/swagger-ui-custom.css",
+    customfavIcon: "/public/paco-api-logo.png"
+}));
 
 // login and put secretaria virtual in req
 function login(req, res, next) {
