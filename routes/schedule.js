@@ -83,6 +83,8 @@ router.get("/subject/:subject", async (req, res) => {
                     };
             };
         }
+        
+        return {};
     }, req.params.subject);
 
     if (subjectData["url"]) {

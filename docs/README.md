@@ -9,7 +9,6 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
 ***Try and explore it with Swagger in [https://pacoua-api.pt/docs](https://pacoua-api.pt/docs)***  
 (explore the endpoints and make HTTP Requests)
 
-
 ## API Documentation
 
 1. [Make a HTTP Rrquest](#make-a-http-request)

@@ -11,9 +11,10 @@ const static = require('./static');
 
 const package = require('./package.json');
 
-let PORT = process.env.PORT || static.PORT;
-let IP = process.env.IP || "127.0.0.1";
-let PROTOCOL = process.env.IP ? "https" : "http";
+const PORT = process.env.PORT || static.PORT;
+const IP = process.env.IP || "127.0.0.1";
+const PROTOCOL = process.env.IP ? "https" : "http";
+const URL = PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT);
 
 // expose static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -32,7 +33,7 @@ const swagger_options = {
         },
         servers: [
             {
-                url: PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT),
+                url: URL,
             }
         ],
     },
@@ -69,12 +70,11 @@ function login(req, res, next) {
         }
 }
 
-// setup routes
 app.use(cors()); // cors middlware
 
 app.use(login); // middleware to automatically login upon every request
 
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).json({
         "message":"No data to show here!",
         "timestamp": new Date().toISOString()
@@ -82,6 +82,19 @@ app.post("/", (req, res) => {
 });
 
 //setup routes
-fs.readdir(static.ROUTES_DIR, (err, files) => files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTES_DIR+file.replace(".js", "")))));
+fs.readdir(static.ROUTES_DIR, (err, files) => {
+    files.forEach(file => app.use(`/${file.replace(".js", "")}`, require(static.ROUTES_DIR+file.replace(".js", ""))))
+
+    // middleware to handle 404 when nothing else responded
+    app.use((req, res, next) => {
+        res.status(404).json({
+            "message": `404 | Endpoint ${req.url} Not Found!`,
+            "url": URL+req.url,
+            "timestamp": new Date().toISOString()
+        });
+        
+        return;
+    });
+});
 
 app.listen(PORT, () => console.log('Node server running on port '+PORT));
