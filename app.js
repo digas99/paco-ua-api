@@ -30,14 +30,20 @@ const swagger_options = {
             version: package["version"],
             description: package["description"],
             contact: {
+                name: "Diogo Correia",
                 email: "diogo.correia99@ua.pt"
             }
         },
         servers: [
             {
                 url: URL,
+                description: "API Main Server"
             }
         ],
+        externalDocs: {
+            description: "Written down documentation",
+            url: "https://github.com/digas99/paco-ua-api/tree/main/docs/README.md"
+        }
     },
     apis: ["./routes/*.js", "./docs/paco-ua-api.yml"],
 }

@@ -69,7 +69,7 @@ components:
               type: object
               properties:
                   instalment:
-                      type: number
+                      type: integer
                       description: Payment partition of the year
                   value:
                       type: string
@@ -111,7 +111,7 @@ components:
               type: string
               description: Duration of the class in hours
             capacity:
-              type: number
+              type: integer
               description: Max number of students in the class
             class:
               type: string
@@ -137,22 +137,22 @@ components:
           type: object
           properties:
             cumulative:
-              type: number
+              type: integer
               description: Number of credits done so far, since the beginning
             done:
-              type: number
+              type: integer
               description: Number of credits done this year
             missing:
-              type: number
+              type: integer
               description: Number of credits not registered yet this year
             total:
-              type: number
+              type: integer
               description: Total Number of credits taken this year by the student
         enrollment_cumulative:
-          type: number
+          type: integer
           description: Number of years counting for the expiration, since the beginning
         coefficient:
-          type: number
+          type: integer
           description: Number defining the value of this year to the expiration
         type:
           type: string
