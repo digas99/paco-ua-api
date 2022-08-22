@@ -3,6 +3,7 @@ components:
     basicAuth:
       type: http
       scheme: basic
+      description: Fill the form with your institutional email credentials.
   schemas:
     PersonalData:
       type: object

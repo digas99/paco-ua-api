@@ -10,6 +10,7 @@ const setup = {
     "key": "expiration"
 }
 
+
 /**
  * @swagger
  * /expiration:

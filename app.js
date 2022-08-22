@@ -1,10 +1,13 @@
 const express = require('express')
 const app = express()
-const paco = require('./scrapers');
-const static = require('./static');
 const fs = require('fs');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const cors = require('cors');
+
+const paco = require('./scrapers');
+const static = require('./static');
+
 const package = require('./package.json');
 
 let PORT = process.env.PORT || static.PORT;
@@ -59,6 +62,8 @@ function login(req, res, next) {
 }
 
 // setup routes
+app.use(cors()); // cors middlware
+
 app.use(login); // middleware to automatically login upon every request
 
 app.post("/", (req, res) => {
