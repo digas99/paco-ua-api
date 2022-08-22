@@ -19,6 +19,8 @@ const URL = PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT);
 // expose static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+app.use(cors()); // cors middlware
+
 // setup swagger docs
 const swagger_options = {
     definition: {
@@ -47,6 +49,11 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swagger_specs, {
     customfavIcon: "/public/paco-api-logo.png"
 }));
 
+app.get("/", (req, res) => {
+    // temporarily redirect to /docs
+    res.redirect('/docs'); 
+});
+
 // login and put secretaria virtual in req
 function login(req, res, next) {
     const now = new Date().toISOString();
@@ -70,16 +77,7 @@ function login(req, res, next) {
         }
 }
 
-app.use(cors()); // cors middlware
-
 app.use(login); // middleware to automatically login upon every request
-
-app.get("/", (req, res) => {
-    res.status(200).json({
-        "message":"No data to show here!",
-        "timestamp": new Date().toISOString()
-    });
-});
 
 //setup routes
 fs.readdir(static.ROUTES_DIR, (err, files) => {
