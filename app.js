@@ -20,6 +20,7 @@ app.enable('trust proxy');
 
 // middleware to force https
 app.use((req, res, next) => {
+    // only force when in production and not secure
     if (process.env.PORT && !req.secure)
         res.redirect("https://"+ req.headers.host + req.url);
     

@@ -1,7 +1,3 @@
-.auth-container h4 {
-    display: none
-}
-
 .swagger-ui > .topbar  {
     background-color: #373737;
     border-bottom: 5px solid;
@@ -13,15 +9,6 @@
     margin: auto;
 }
 
-.swagger-ui .auth-container .wrapper:nth-of-type(1)::before {
-    content: 'Basic Auth';
-    font-weight: bold;
-  }
-
-.swagger-ui .auth-container .wrapper:nth-of-type(1) :first-child {
-    margin-top: 10px;
-}
-
 .swagger-ui .topbar a {
     background-image: url(/public/paco-api-logo.png);
     background-repeat: no-repeat;
@@ -30,8 +17,28 @@
     max-width: unset;
 }
 
-.swagger-ui .wrapper {
-    padding: 0 40px;
+/* AUTH-CONTAINER */
+
+.auth-container h4 {
+    display: none
+}
+
+.auth-container .wrapper:nth-of-type(1)::before {
+    content: 'Basic Auth*';
+    font-weight: bold;
+  }
+
+.auth-container .wrapper:nth-of-type(1) :first-child {
+    margin-top: 10px;
+}
+
+.auth-container .wrapper:nth-of-type(2) {
+    margin-top: 20px
+    ;
+}
+
+.auth-container .wrapper:nth-of-type(3) {
+    margin-bottom: 10px;
 }
 
 .auth-container .wrapper:nth-of-type(2) > label {
@@ -41,4 +48,13 @@
 .auth-container .wrapper:nth-of-type(2) > label::before {
     content: 'Institutional Email:';
     visibility: visible;
+}
+
+.auth-container > form > div:nth-child(1):after {
+    content: '* The method Basic Auth does NOT save any credentials. They are only used once to log into Secretaria Virtual through the UA ID Provider (idp.ua.pt). For more information, check the Github repository.';
+    font-size: 10px;
+}
+
+.auth-container .auth-btn-wrapper {
+    padding: 30px 0px 0px 0px;
 }
