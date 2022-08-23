@@ -145,7 +145,7 @@ module.exports = {
                         "code": line.children[0].innerText,
                         "name": line.children[1].innerText,
                         "completed_date": line.children[2].innerText,
-                        "grade": line.children[3].innerText
+                        "grade": Number(line.children[3].innerText)
                     }))};
             }
         });
@@ -160,9 +160,9 @@ module.exports = {
                     .map(line => ({
                         "code": line.children[0].innerText,
                         "name": line.children[1].innerText,
-                        "year": line.children[2].innerText,
-                        "semester": line.children[3].innerText,
-                        "ects": line.children[4].innerText,
+                        "year": Number(line.children[2].innerText),
+                        "semester": Number(line.children[3].innerText),
+                        "ects": Number(line.children[4].innerText),
                         "new": line.children[5].innerText == "Sim",
                         "started_date": line.children[7].innerText
                     }));
@@ -350,8 +350,8 @@ module.exports = {
                 const fetchSubject = elem => ({
                     "code": elem.children[1].innerText.replaceAll(/[\n\t]/g, ""),
                     "name": elem.children[2].innerText.replaceAll(/[\n\t]/g, ""),
-                    "year": elem.children[3].innerText.replaceAll(/[\n\t]/g, ""),
-                    "semester": elem.children[4].innerText.replaceAll(/[\n\t]/g, ""),
+                    "year": Number(elem.children[3].innerText.replaceAll(/[\n\t]/g, "")),
+                    "semester": Number(elem.children[4].innerText.replaceAll(/[\n\t]/g, "")),
                     "credits": parseInt(elem.children[5].innerText.replaceAll(/[\n\t]/g, "")),
                     "ects": parseInt(elem.children[6].innerText.replaceAll(/[\n\t]/g, "")),
                     "grade": Number(elem.children[7].innerText.replaceAll(/[\n\t]/g, ""))

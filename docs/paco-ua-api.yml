@@ -5,6 +5,62 @@ components:
       scheme: basic
       description: Fill the form with your institutional email credentials.
   schemas:
+    Address:
+      type: object
+      properties:
+        address:
+          type: string
+        place:
+          type: string
+        postal_code:
+          type: string
+    ContactData:
+      type: object
+      properties:
+        contact_data:
+          type: object
+          properties:
+            telephone:
+              type: string
+              description: Telephone number
+            mobile:
+              type: string
+              description: Mobile phone number
+            email:
+              type: string
+              description: Email address
+    Expiration:
+      type: object
+      properties:
+        school_year:
+          type: string
+        ects:
+          type: object
+          properties:
+            cumulative:
+              type: integer
+              description: Number of credits done so far, since the beginning
+            done:
+              type: integer
+              description: Number of credits done this year
+            missing:
+              type: integer
+              description: Number of credits not registered yet this year
+            total:
+              type: integer
+              description: Total Number of credits taken this year by the student
+        enrollment_cumulative:
+          type: integer
+          description: Number of years counting for the expiration, since the beginning
+        coefficient:
+          type: integer
+          description: Number defining the value of this year to the expiration
+        type:
+          type: string
+          description: Type of year in terms of counting for the expiration or not
+        state:
+          type: string
+          description: State of the expiration
     PersonalData:
       type: object
       properties:
@@ -38,57 +94,15 @@ components:
             gender:
               type: string
               description: Student's gender
-    ContactData:
+    Request:
       type: object
       properties:
-        contact_data:
-          type: object
-          properties:
-            telephone:
-              type: string
-              description: Telephone number
-            mobile:
-              type: string
-              description: Mobile phone number
-            email:
-              type: string
-              description: Email address
-    Address:
-      type: object
-      properties:
-        address:
+        date:
           type: string
-        place:
+          description: Date of when the request was submited
+        state:
           type: string
-        postal_code:
-          type: string
-    TuitionFee:
-      type: object
-      properties:
-          <year>:
-              type: object
-              properties:
-                  instalment:
-                      type: integer
-                      description: Payment partition of the year
-                  value:
-                      type: string
-                      description: Value in Euros of the instalment
-                  course-code:
-                      type: string
-                      description: Code representing the student's course
-                  payment:
-                      type: object
-                      properties:
-                          deadline:
-                              type: string
-                              description: Max date to pay the instalment
-                          paid:
-                              type: string
-                              description: Date of the payment
-                          status:
-                              type: string
-                              description: Status on the payment
+          description: State of the request
     Schedule:
       type: object
       properties:
@@ -119,59 +133,136 @@ components:
             room:
               type: string
               description: Room where the class takes place
-    Request:
+    Subject:
       type: object
       properties:
-        date:
+        code:
           type: string
-          description: Date of when the request was submited
-        state:
+          description: Subject code
+        name:
           type: string
-          description: State of the request
-    Expiration:
-      type: object
-      properties:
-        school_year:
-          type: string
+          description: Subject name
+        year:
+          type: integer
+          description: Academic year when the subject is taken
+        semester:
+          type: integer
+          description: Semester when the subject is taken
+        credits:
+          type: integer
         ects:
-          type: object
-          properties:
-            cumulative:
-              type: integer
-              description: Number of credits done so far, since the beginning
-            done:
-              type: integer
-              description: Number of credits done this year
-            missing:
-              type: integer
-              description: Number of credits not registered yet this year
-            total:
-              type: integer
-              description: Total Number of credits taken this year by the student
-        enrollment_cumulative:
           type: integer
-          description: Number of years counting for the expiration, since the beginning
-        coefficient:
+          description: Number of credits of the subject (European Credit Transfer and Accumulation System)
+        grade:
           type: integer
-          description: Number defining the value of this year to the expiration
-        type:
+          description: Student's grade on that subject
+    SubjectCurrent:
+      type: object
+      properties:
+        code:
           type: string
-          description: Type of year in terms of counting for the expiration or not
-        state:
+          description: Subject code
+        name:
           type: string
-          description: State of the expiration
+          description: Subject name
+        year:
+          type: integer
+          description: Academic year when the subject is taken
+        semester:
+          type: integer
+          description: Semester when the subject is taken
+        ects:
+          type: integer
+          description: Number of credits of the subject (European Credit Transfer and Accumulation System)
+        new:
+          type: boolean
+          description: First time taking this subject
+        started_date:
+          type: string
+          description: Date of initiation of the subject
+    SubjectHistory:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Subject code
+        name:
+          type: string
+          description: Subject name
+        completed_date:
+          type: string
+          description: Date of completion of the subject
+        grade:
+          type: integer
+          description: Student's grade on that subject
+    SubjectOptions:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Subject code
+        name:
+          type: string
+          description: Subject name
+        year:
+          type: integer
+          description: Academic year when the subject is taken
+        semester:
+          type: integer
+          description: Semester when the subject is taken
+        credits:
+          type: integer
+        ects:
+          type: integer
+          description: Number of credits of the subject (European Credit Transfer and Accumulation System)
+        grade:
+          type: integer
+          description: Student's grade on that subjects
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+    TuitionFee:
+      type: object
+      properties:
+          <year>:
+              type: object
+              properties:
+                  instalment:
+                      type: integer
+                      description: Payment partition of the year
+                  value:
+                      type: string
+                      description: Value in Euros of the instalment
+                  course-code:
+                      type: string
+                      description: Code representing the student's course
+                  payment:
+                      type: object
+                      properties:
+                          deadline:
+                              type: string
+                              description: Max date to pay the instalment
+                          paid:
+                              type: string
+                              description: Date of the payment
+                          status:
+                              type: string
+                              description: Status on the payment
 
 tags:
-  - name: PersonalData
-    description: Student's personal data
-  - name: TuitionFees
-    description: University tuition fees information
-  - name: Schedule
-    description: Schedule of subjects
-  - name: Requests
-    description: Requests to Reitoria - Universidade de Aveiro
   - name: Expiration
     description: Student's expiration situation
+  - name: PersonalData
+    description: Student's personal data
+  - name: Requests
+    description: Requests to Reitoria - Universidade de Aveiro
+  - name: Schedule
+    description: Schedule of subjects
+  - name: Subjects
+    description: Student's subjects
+  - name: TuitionFees
+    description: University tuition fees information
 
 security:
   - basicAuth: []

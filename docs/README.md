@@ -306,18 +306,18 @@ RESPONSE: 3.5s 🟢
             {
                 "code": "41951",
                 "name": "ANÁLISE DE SISTEMAS",
-                "year": "2",
-                "semester": "2",
-                "ects": "6",
+                "year": 2,
+                "semester": 2,
+                "ects": 6,
                 "new": true,
                 "started_date": "..."
             },
             {
                 "code": "41948",
                 "name": "ARQUITETURA DE COMPUTADORES I",
-                "year": "2",
-                "semester": "1",
-                "ects": "6",
+                "year": 2,
+                "semester": 1,
+                "ects": 6,
                 "new": true,
                 "started_date": "...",
                 "recurso": "..."
@@ -325,9 +325,9 @@ RESPONSE: 3.5s 🟢
             {
                 "code": "41952",
                 "name": "ARQUITETURA DE COMPUTADORES II",
-                "year": "2",
-                "semester": "2",
-                "ects": "6",
+                "year": 2,
+                "semester": 2,
+                "ects": 6,
                 "new": true,
                 "started_date": "..."
             },
@@ -424,8 +424,8 @@ This subjects with options are considered in the calculation of the **weighted m
             {
                 "code": "40338",
                 "name": "LABORATÓRIOS DE INFORMÁTICA",
-                "year": "1",
-                "semester": "0",
+                "year": 1,
+                "semester": 0,
                 "credits": 5,
                 "ects": 8,
                 "grade": "..."
@@ -433,8 +433,8 @@ This subjects with options are considered in the calculation of the **weighted m
             {
                 "code": "40332",
                 "name": "INTRODUÇÃO AOS SISTEMAS DIGITAIS",
-                "year": "1",
-                "semester": "1",
+                "year": 1,
+                "semester": 1,
                 "credits": 3,
                 "ects": 6,
                 "grade": "..."
@@ -443,8 +443,8 @@ This subjects with options are considered in the calculation of the **weighted m
             {
                 "code": "41994",
                 "name": "COMPETÊNCIAS TRANSFERÍVEIS II",
-                "year": "2",
-                "semester": "2",
+                "year": 2,
+                "semester": 2,
                 "credits": 3,
                 "ects": 6,
                 "grade": 0,
@@ -452,8 +452,8 @@ This subjects with options are considered in the calculation of the **weighted m
                     {
                         "code": "42294",
                         "name": "MICROCONTROLOLADORES E INTERAÇÃO COM SENSORES E ATUADORES",
-                        "year": "2",
-                        "semester": "2",
+                        "year": 2,
+                        "semester": 2,
                         "credits": 0,
                         "ects": 0,
                         "grade": 0
@@ -461,8 +461,8 @@ This subjects with options are considered in the calculation of the **weighted m
                     {
                         "code": "42296",
                         "name": "VISUALIZAÇÃO DE DADOS",
-                        "year": "2",
-                        "semester": "2",
+                        "year": 2,
+                        "semester": 2,
                         "credits": 0,
                         "ects": 0,
                         "grade": "..."
