@@ -14,7 +14,7 @@ This app is a personal project and has no affiliation with Universidade de Aveir
 
 1. [Setup](#setup)
 2. [Usage](#usage)
-3. [Progress](#progress)
+3. [Features](#features)
 
 ## Setup
 
@@ -125,16 +125,16 @@ If everything is correct, this should be the response:
 
 The same applies for all the other endpoints.
 
-## Progress
+## Features
 
-- [x] Dados Pessoais &nbsp;&nbsp;`GET /personal`
-- [x] Situação de prescrição &nbsp;&nbsp;`GET /expiration`
-- [x] Histórico Notas &nbsp;&nbsp;`GET /subjects/history`
-- [x] Disciplinas Inscritas &nbsp;&nbsp;`GET /subjects/current`
-- [x] Estados das Propinas &nbsp;&nbsp;`GET /tuition_fees`
-- [x] Plano Curricular &nbsp;&nbsp;`GET /subjects`
-- [x] Calendário de Exames do Aluno &nbsp;&nbsp;`GET /exams`
-- [x] Calendário de Exames por Disciplina &nbsp;&nbsp;`GET /exams?subjects=...`
-- [x] Apoio às Aulas &nbsp;&nbsp;`GET /classes`
-- [x] Horário &nbsp;&nbsp;`GET /schedule`
-- [x] Requerimentos &nbsp;&nbsp;```GET /requests```
+- Dados Pessoais &nbsp;&nbsp;`GET /personal`
+- Situação de prescrição &nbsp;&nbsp;`GET /expiration`
+- Histórico Notas &nbsp;&nbsp;`GET /subjects/history`
+- Disciplinas Inscritas &nbsp;&nbsp;`GET /subjects/current`
+- Estados das Propinas &nbsp;&nbsp;`GET /tuition_fees`
+- Plano Curricular &nbsp;&nbsp;`GET /subjects`
+- Calendário de Exames do Aluno &nbsp;&nbsp;`GET /exams`
+- Calendário de Exames por Disciplina &nbsp;&nbsp;`GET /exams?subjects=...`
+- Apoio às Aulas &nbsp;&nbsp;`GET /classes`
+- Horário &nbsp;&nbsp;`GET /schedule`
+- Requerimentos &nbsp;&nbsp;```GET /requests```
