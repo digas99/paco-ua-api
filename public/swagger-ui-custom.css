@@ -34,3 +34,7 @@
     padding: 0 40px;
 }
 
+.auth-container .wrapper:nth-of-type(2) > label::before {
+    content: 'Institutional Email:';
+    visibility: visible;
+}
