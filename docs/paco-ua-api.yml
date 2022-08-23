@@ -180,6 +180,12 @@ components:
         started_date:
           type: string
           description: Date of initiation of the subject
+        recurso:
+          type: string
+          description: Date of the "Recurso" Season
+        especial:
+          type: string
+          description: Date of the "Especial" Season
     SubjectHistory:
       type: object
       properties:

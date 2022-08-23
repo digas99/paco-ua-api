@@ -197,13 +197,13 @@ module.exports = {
                 if (scheduleInfoElem.childNodes.length == 1) {
                     const scheduleInfo = scheduleInfoElem.childNodes[0].wholeText;
                     data["school_year"] = scheduleInfo.split(" - ")[3],
-                    data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+                    data["semester"] = Number(scheduleInfo.split(" - ")[2].split("º")[0]);
                 }
                 // student schedule
                 else {
                     const scheduleInfo = scheduleInfoElem.childNodes[2].wholeText;
                     data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
-                    data["semester"] = scheduleInfo.split(" - ")[2].split("º")[0];
+                    data["semester"] = Number(scheduleInfo.split(" - ")[2].split("º")[0]);
                 }
 
                 // subjects

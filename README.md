@@ -36,7 +36,7 @@ docker run -p 8000:8000 --name pacoua-api pacoua-api
 
 ---
 
-(To run on a different port, change the value of the port on the left side (***8000***:8000) in the command above)
+(To run on a different port, change the value of the port on the left side (***8000***:8000) in the command above. The port on the right ride (8000:***8000***) has to always match the port in the file static.js)
 
 ### Setup the server locally manually:
 
@@ -115,7 +115,7 @@ If everything is correct, this should be the response:
             ...
         },
         "school_year": "2021/2022",
-        "semester": "1"
+        "semester": 1
     },
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",

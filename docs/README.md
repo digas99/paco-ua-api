@@ -913,7 +913,7 @@ RESPONSE: 5s 🟡
             ...
         },
         "school_year": "2021/2022",
-        "semester": "1"
+        "semester": 1
     },
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
@@ -941,7 +941,7 @@ RESPONSE: 4.5s 🟢
                     },
                     "start": "12h",
                     "duration": "1,5h",
-                    "capacity": "101",
+                    "capacity": 101,
                     "room": "ANF. IV"
                 },
                 {
@@ -951,7 +951,7 @@ RESPONSE: 4.5s 🟢
                     },
                     "start": "14,5h",
                     "duration": "2h",
-                    "capacity": "18",
+                    "capacity": 18,
                     "room": "04.2.16"
                 },
                 ...
@@ -965,14 +965,14 @@ RESPONSE: 4.5s 🟢
                     },
                     "start": "14h",
                     "duration": "2h",
-                    "capacity": "19",
+                    "capacity": 19,
                     "room": "04.3.30"
                 }
             ],
             ...
         },
         "school_year": "2021/2022",
-        "semester": "2"
+        "semester": 2
     },
     "url": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-210320212",
     "title": "Horário de REDES DE COMUNICAÇÕES II",

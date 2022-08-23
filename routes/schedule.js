@@ -31,7 +31,7 @@ const setup = {
  *                                      type: string
  *                                      description: School year in the schedule
  *                                  semester:
- *                                      type: string
+ *                                      type: integer
  *                                      description: Semester in the schedule
  */
 
