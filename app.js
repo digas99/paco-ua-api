@@ -16,6 +16,16 @@ const IP = process.env.IP || "127.0.0.1";
 const PROTOCOL = process.env.IP ? "https" : "http";
 const URL = PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT);
 
+app.enable('trust proxy');
+
+// middleware to force https
+app.use((req, res, next) => {
+    if (process.env.PORT && !req.secure)
+        res.redirect("https://"+ req.headers.host + req.url);
+    
+    next();
+});
+
 // expose static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
@@ -83,7 +93,8 @@ function login(req, res, next) {
         }
 }
 
-app.use(login); // middleware to automatically login upon every request
+// middleware to automatically login upon every request
+app.use(login);
 
 //setup routes
 fs.readdir(static.ROUTES_DIR, (err, files) => {
