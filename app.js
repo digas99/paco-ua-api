@@ -27,10 +27,14 @@ app.use((req, res, next) => {
     next();
 });
 
+// cors middleware
+app.use(cors({origin:true,credentials: true}));
+
+// enable CORS for preflight operations
+app.options('*', cors());
+
 // expose static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
-app.use(cors()); // cors middlware
 
 // setup swagger docs
 const swagger_options = {
