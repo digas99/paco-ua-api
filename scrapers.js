@@ -49,12 +49,28 @@ module.exports = {
         await page.type("#password", password);
 
         // submit
-        await page.click("#btnLogin");
+        const [response] = await Promise.all([
+            page.waitForNavigation({waitUntil: 'networkidle2'}),
+            page.click("#btnLogin")
+        ]);
 
-        await page.waitForNavigation({waitUntil: 'networkidle2'});
-        console.log("Welcome to Secretaria Virtual");
+        if (response == null)
+            await page.waitForNavigation({waitUntil: 'networkidle2'});
 
-        return page;
+        // if login was sucessfull
+        // Having the following into consideration:
+        // "In case of navigation to a different anchor or navigation due to History API usage, the navigation will resolve with null." or
+        // if there are multiple redirects, check if the last redirect has the key "expires" in the headers
+        if (response == null || response && response.headers().expires) {
+            console.log("Welcome to Secretaria Virtual");
+            return page;
+        }
+
+        // if login failed
+        page.browser().close();
+
+        console.log("Forbidden");
+        return null; 
     },
     // Dados Pessoais
     // https://paco.ua.pt/secvirtual/c_dadospess.asp

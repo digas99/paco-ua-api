@@ -1,3 +1,10 @@
+# [Changelog v1.0.2](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.2)
+Released on 04/09/2022
+
+## Content
+- Added Server Timeout (504) HTTP response to avoid crashing the app
+- Added Forbidden Access (403) when the credentials provided in the GET Requests header are wrong 
+
 # [Changelog v1.0.1](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.1)
 Released on 26/08/2022
 

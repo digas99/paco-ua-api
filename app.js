@@ -5,6 +5,7 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const cors = require('cors');
 const path = require('path');
+const puppeteer = require('puppeteer');
 
 const paco = require('./scrapers');
 const static = require('./static');
@@ -76,18 +77,35 @@ app.get("/", (req, res) => {
 });
 
 // login and put secretaria virtual in req
-function login(req, res, next) {
+async function login(req, res, next) {
     const now = new Date().toISOString();
     const authorization = req.headers.authorization;
     if (authorization && authorization.split(" ")[0] === "Basic") {
             const decoded = Buffer.from(authorization.substring(6), 'base64').toString('ascii');
             const [email, password] = decoded.split(":");
             if (email && password) {
-                paco.secretariaVirtual(email, password)
-                    .then(async page => {
-                        req.page = page;
-                        next();
-                    });
+                try {
+                    await paco.secretariaVirtual(email, password, false)
+                        .then(async page => {
+                            if (page) {
+                                req.page = page;
+                                next();
+                            }
+                            else {
+                                res.status(403).json({
+                                    "message": "Forbidden access. Please check your institutional email credentials.",
+                                    "timestamp": now
+                                });
+                            }
+                        });
+                } catch (e) {
+                    if (e instanceof puppeteer.errors.TimeoutError) {
+                        res.status(504).json({
+                            "message": "Server Error. Timeout.",
+                            "timestamp": now
+                        });
+                    }
+                }
             }
         }
         else {

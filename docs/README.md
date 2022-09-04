@@ -72,7 +72,7 @@ The result will have the following structure:
 }
 ```
 
-- If the credentials are missing (401):
+- If the credentials are missing (401) or wrong (403) or server timeout (504):
 ```json5
 // RESPONSE example
 {
