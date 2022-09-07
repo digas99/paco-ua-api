@@ -1,3 +1,9 @@
+# [Changelog v1.0.3](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.3)
+Released on 07/09/2022
+
+## Bug Fixes
+- Updated Schedule Parser to fix bug in the /schedule endpoint
+
 # [Changelog v1.0.2](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.2)
 Released on 04/09/2022
 

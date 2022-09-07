@@ -209,35 +209,57 @@ module.exports = {
             if (table) {
                 // info
                 const scheduleInfoElem = table.querySelector("tr").children[0];
+                let scheduleType; 
+
                 // subject schedule
                 if (scheduleInfoElem.childNodes.length == 1) {
+                    scheduleType = "subject";
                     const scheduleInfo = scheduleInfoElem.childNodes[0].wholeText;
                     data["school_year"] = scheduleInfo.split(" - ")[3],
                     data["semester"] = Number(scheduleInfo.split(" - ")[2].split("º")[0]);
                 }
                 // student schedule
                 else {
+                    scheduleType = "student";
                     const scheduleInfo = scheduleInfoElem.childNodes[2].wholeText;
                     data["school_year"] = scheduleInfo.split(" - ")[1].split("AnoLectivo: ")[1];
                     data["semester"] = Number(scheduleInfo.split(" - ")[2].split("º")[0]);
                 }
-
+    
                 // subjects
                 Array.from(table.querySelectorAll(".horario_turma")).forEach(elem => {
                     const titleData = elem.title.split("\n");
                     const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
-                    weekday.push({
-                        "subject": {
-                            "name": titleData[0],
-                            "abbrev": elem.childNodes[0].wholeText.split(" ")[0].replace("\n", "")
-                        },
-                        "start": titleData[2].split("INÍCIO: ")[1],
-                        "duration": titleData[3].split("DURAÇÃO: ")[1],
-                        "capacity": Number(titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0]),
-                        "class": elem.childNodes[0].wholeText.split(" ")[2],
-                        "room": elem.childNodes[4].wholeText.replace(/[()]/g, "")
-                    });
-                });    
+                    let subject = {};
+                    if (scheduleType === "subject") {
+                        subject = {
+                            "subject": {
+                                "name": titleData[0],
+                                "abbrev": titleData[0].split(" ").reduce((abbrev, string) => abbrev+=string.charAt(0), "")
+                            },
+                            "start": titleData[2].split("INÍCIO: ")[1],
+                            "duration": titleData[3].split("DURAÇÃO: ")[1],
+                            "capacity": Number(titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0]),
+                            "class": elem.childNodes[0].wholeText.replace(/[,(]/g, ""),
+                            "room": elem.childNodes[elem.childNodes.length-1].wholeText.replace(/[()]/g, "")
+                        }
+                    }
+                    else if (scheduleType === "student") {
+                        subject = {
+                            "subject": {
+                                "name": titleData[0],
+                                "abbrev": elem.childNodes[0].wholeText.split(" ")[0].replace("\n", "")
+                            },
+                            "start": titleData[2].split("INÍCIO: ")[1],
+                            "duration": titleData[3].split("DURAÇÃO: ")[1],
+                            "capacity": Number(titleData[4].split("LOTAÇÃO: ")[1].split(" alunos")[0]),
+                            "class": elem.childNodes[0].wholeText.split(" ")[2].replace(/[,(]/g, ""),
+                            "room": elem.childNodes[elem.childNodes.length-1].wholeText.replace(/[()]/g, "")
+                        }
+                    }
+                    
+                    weekday.push(subject);
+                }); 
             }
 
             return data;

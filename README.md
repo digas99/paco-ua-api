@@ -15,8 +15,9 @@ This app is a personal project and has no affiliation with Universidade de Aveir
 ### Table of Contents
 
 1. [Setup](#setup)
-2. [Usage](#usage)
-3. [Features](#features)
+1. [Usage](#usage)
+1. [Features](#features)
+1. [Apps](#apps)
 
 ## Setup
 
@@ -140,3 +141,11 @@ The same applies for all the other endpoints.
 - Apoio às Aulas &nbsp;&nbsp;`GET /classes`
 - Horário &nbsp;&nbsp;`GET /schedule`
 - Requerimentos &nbsp;&nbsp;```GET /requests```
+
+## Apps
+
+If you have an app that uses this API, feel free to contact me or make a pull request of this README with your app, obeying the table format bellow.
+
+| Logo | Name | Contributors | Description |
+| ----- | ----- | ----- | ----- |
+| <img width="32px" src="https://github.com/digas99/schedule-ua/blob/main/images/logo_32x32.png"></img> | SchedUA | [@digas99](https://github.com/digas99) | Browser Extension for easy access to your Schedule from Universidade de Aveiro. |
