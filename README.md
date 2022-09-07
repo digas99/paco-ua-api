@@ -148,4 +148,4 @@ If you have an app that uses this API, feel free to contact me or make a pull re
 
 | Logo | Name | Contributors | Description |
 | ----- | ----- | ----- | ----- |
-| <img width="32px" src="https://github.com/digas99/schedule-ua/blob/main/images/logo_32x32.png"></img> | SchedUA | [@digas99](https://github.com/digas99) | Browser Extension for easy access to your Schedule from Universidade de Aveiro. |
+| <img width="32px" src="https://github.com/digas99/schedule-ua/blob/main/images/logo_32x32.png"></img> | [SchedUA](https://github.com/digas99/schedule-ua) | [@digas99](https://github.com/digas99) | Browser Extension for easy access to your Schedule from Universidade de Aveiro. |
