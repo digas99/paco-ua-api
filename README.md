@@ -2,7 +2,7 @@
 
 ## API for Portal Académico Online - Universidade de Aveiro
 
-![Latest Release](https://img.shields.io/github/v/release/digas99/paco-ua-api?label=Latest%20Version)
+[![Latest Release](https://img.shields.io/github/v/release/digas99/paco-ua-api?label=Latest%20Version)](https://img.shields.io/github/v/release/digas99/paco-ua-api?label=Latest%20Version)
 
 This API uses [Puppeteer](https://pptr.dev/) to, through a headless browser, log in and scrape the page **Secretaria Virtual** from [paco.ua.pt](https://paco.ua.pt). The results are routed with [Express.js](https://expressjs.com/).
 

@@ -10,12 +10,56 @@ const setup = {
     "key": "subjects"
 }
 
+/**
+ * @swagger
+ * /classes:
+ *  get:
+ *      summary: Returns a list of the student's classes
+ *      tags: [Classes]
+ *      security:
+ *          - basicAuth: []
+ *      responses:
+ *          200:
+ *              description: List of of classes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/ClassSubject'
+ */
+
 router.get("/", async (req, res) => {
     if (!req.query["include"])
         handleResponse(req, res, paco.classes, setup);
     else if (req.query["include"] === "teachers")
         handleResponse(req, res, async page => paco.classes(page, true), setup);
 });
+
+/**
+ * @swagger
+ * /classes/{subject}:
+ *  get:
+ *      summary: Returns a list of the student's classes
+ *      tags: [Classes]
+ *      security:
+ *          - basicAuth: []
+ *      parameters:
+ *          - in: path
+ *            name: subject
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Subject code
+ *      responses:
+ *          200:
+ *              description: List of of classes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ClassSubject'
+ */
+
 
 router.get("/:subject", async (req, res) => {
     if (!req.query["include"])
@@ -24,7 +68,62 @@ router.get("/:subject", async (req, res) => {
         handleResponse(req, res, async page => paco.classes(page, true, req.params.subject), setup);
 });
 
+/**
+ * @swagger
+ * /classes/{subject}/program:
+ *  get:
+ *      summary: Returns a list of the student's classes
+ *      tags: [Classes]
+ *      security:
+ *          - basicAuth: []
+ *      parameters:
+ *          - in: path
+ *            name: subject
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Subject code
+ *      responses:
+ *          200:
+ *              description: List of of classes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ClassSubjectProgram'
+ */
+
 router.get("/:subject/program", classesProgram);
+
+/**
+ * @swagger
+ * /classes/{subject}/program/{section}:
+ *  get:
+ *      summary: Returns a list of the student's classes
+ *      tags: [Classes]
+ *      security:
+ *          - basicAuth: []
+ *      parameters:
+ *          - in: path
+ *            name: subject
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Subject code
+ *          - in: path
+ *            name: section
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Section from subject program
+ *      responses:
+ *          200:
+ *              description: List of of classes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ClassSubjectProgram'
+ */
+
 router.get("/:subject/program/:section", classesProgram);
 
 async function classesProgram (req, res) {

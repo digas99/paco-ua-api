@@ -267,24 +267,27 @@ module.exports = {
     },
     // Estado das Propinas
     // https://paco.ua.pt/secvirtual/c_estadoDasProprinas.asp
-    tuitionFees: async page => {
-        return await page.$$eval('#template_main .table_line:not(:nth-child(2))', lines => {
+    tuitionFees: async (page, years) => {
+        return await page.$$eval('#template_main .table_line:not(:nth-child(2))', (lines, years) => {
             if (lines) {
                 const data = {};
                 
-                // get years offset
-                const lastFeeYear = Number(lines[0].children[2].innerText);
-                const firstFeeYear = Number(lines[lines.length-4].children[2].innerText);
-                console.log(lastFeeYear, firstFeeYear);
-                for (let i=0; i<=(lastFeeYear-firstFeeYear); i++) {
-                    data[[firstFeeYear+i]] = [];
+                if (years)
+                    years.forEach(year => data[year] = []);
+                else {
+                    // get years offset
+                    const lastFeeYear = Number(lines[0].children[2].innerText);
+                    const firstFeeYear = Number(lines[lines.length-4].children[2].innerText);
+                    for (let i=0; i<=(lastFeeYear-firstFeeYear); i++) {
+                        data[[firstFeeYear+i]] = [];
+                    }
                 }
     
-                Array.from(lines).filter(line => line.children.length > 1)
+                Array.from(lines).filter(line => line.children.length > 1 && (!years ? true : years.includes(line.children[2].innerText)))
                     .sort((a, b) => Number(a.children[0].innerText.split("ª")[0]) - Number(b.children[0].innerText.split("ª")[0]))
                     .forEach(line => {
                         const year = data[line.children[2].innerText];
-                        year.push({
+                        const instalment = {
                             "instalment": Number(line.children[0].innerText.split("ª")[0]),
                             "value": line.children[1].innerText.split(" Euros")[0],
                             "course-code": line.children[3].innerText,
@@ -293,7 +296,12 @@ module.exports = {
                                 "paid": line.children[5].innerText,
                                 "status": line.children[6].innerText
                             }
-                        });
+                        };
+
+                        if (isNaN(instalment["instalment"] ))
+                            instalment["note"] = line.children[0].innerText;
+
+                            year.push(instalment);
                     });
                 
                 return {
@@ -301,7 +309,7 @@ module.exports = {
                     "last_updated": lines[lines.length-1].innerText.split("Última actualização: ")[1].replace("\n", "")
                 };
             }
-        });
+        }, years);
     },
     // Calendário de Exames do Aluno
     // https://paco.ua.pt/secvirtual/c_calendarioDeExames.asp

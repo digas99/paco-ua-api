@@ -29,8 +29,37 @@ const setup = {
  *                              $ref: '#/components/schemas/TuitionFee'
  */
 
+/**
+ * @swagger
+ * /tuition_fees?years={year}:
+ *  get:
+ *      summary: Returns a list of all tuition fees instalments for the specified year
+ *      tags: [TuitionFees]
+ *      security:
+ *          - basicAuth: []
+ *      parameters:
+ *          - in: query
+ *            name: years
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Years to show on the result
+ *      responses:
+ *          200:
+ *              description: List of tuition fees instalments
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/TuitionFee'
+ */
+
 router.get("/", async (req, res) => {
-    handleResponse(req, res, paco.tuitionFees, setup);
+    if (!req.query["years"])
+        handleResponse(req, res, paco.tuitionFees, setup);
+    else
+        handleResponse(req, res, async page => paco.tuitionFees(page, req.query["years"].split(",")), setup);
 });
 
 module.exports = router;

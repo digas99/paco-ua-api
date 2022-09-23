@@ -1,3 +1,10 @@
+# [Changelog v1.0.4](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.4)
+Released on 23/09/2022
+
+## Content
+- Possibility to filter endpoint /tuition_fees by year
+- Added Exams and Classes endpoints to swagger documentation
+
 # [Changelog v1.0.3](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.3)
 Released on 07/09/2022
 

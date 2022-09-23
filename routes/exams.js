@@ -4,6 +4,51 @@ const paco = require('../scrapers');
 const static = require('../static');
 const { handleResponse } = require('../responses');
 
+/**
+ * @swagger
+ * /exams:
+ *  get:
+ *      summary: Returns a list of the student's exams
+ *      tags: [Exams]
+ *      security:
+ *          - basicAuth: []
+ *      responses:
+ *          200:
+ *              description: List of of exams
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Exam'
+ */
+
+/**
+ * @swagger
+ * /exams?subjects={code}:
+ *  get:
+ *      summary: Returns a list of the student's exams
+ *      tags: [Exams]
+ *      security:
+ *          - basicAuth: []
+ *      parameters:
+ *          - in: query
+ *            name: subjects
+ *            schema:
+ *              type: integer
+ *            required: true
+ *            description: Code of the subject to get exams from
+ *      responses:
+ *          200:
+ *              description: List of of exams
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Exam'
+ */
+
 router.get("/", async (req, res) => {
     if (!req.query["subjects"]) {
         handleResponse(req, res, async page => paco.exams(page, "#template_main > form tr"), {

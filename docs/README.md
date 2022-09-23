@@ -350,6 +350,8 @@ RESPONSE: 3.5s 🟢
 RESPONSE: 3.5s 🟢
 
 ```GET /tuition_fees```
+```GET /tuition_fees/years=...```
+
 ```json5
 // RESPONSE example
 {

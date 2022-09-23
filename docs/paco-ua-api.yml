@@ -14,6 +14,58 @@ components:
           type: string
         postal_code:
           type: string
+    Class:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the class
+        type:
+          type: string
+          description: Type of the cass
+        summaries:
+          type: integer
+          description: Number of summaries released
+    ClassSubject:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code of the subject
+        name:
+          type: string
+          description: Name of the subject
+        urls:
+          type: object
+          properties:
+            elearning:
+              type: string
+              description: Elearning page of the subject
+            schedule:
+              type: string
+              description: PACO page with the schedule of the subject
+        classes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Class'  
+    ClassSubjectProgram:
+      type: object
+      properties:
+        learning_objectives:
+          type: object
+          $ref: '#/components/schemas/SubjectProgram'
+        program:
+          type: object
+          $ref: '#/components/schemas/SubjectProgram' 
+        teaching_methods:
+          type: object
+          $ref: '#/components/schemas/SubjectProgram' 
+        grading_method:
+          type: object
+          $ref: '#/components/schemas/SubjectProgram' 
+        bibliography:
+          type: object
+          $ref: '#/components/schemas/SubjectProgram' 
     ContactData:
       type: object
       properties:
@@ -29,6 +81,41 @@ components:
             email:
               type: string
               description: Email address
+    Exam:
+      type: object
+      properties:
+        subject:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Code of the subject
+            name:
+              type: string
+              description: Name of the subject
+        date:
+          type: string
+          description: Date of the exam
+        time:
+          type: string
+          description: Time of the beginning of the exam
+        room:
+          type: string
+          description: Room where the exam will take place
+        type:
+          type: string
+        season:
+          type: string
+          description: Season when the exams takes place
+        departmet:
+          type: string
+          description: University department where the exam is from
+        notes:
+          type: string
+          description: Comments on the exam
+        changes:
+          type: string
+          description: Changes to the exam information
     Expiration:
       type: object
       properties:
@@ -228,6 +315,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subject'
+    SubjectProgram:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: object
+          properties:
+            plain:
+              type: string
+              description: Plain text format
+            html:
+              type: string
+              description: HTML format
+            lines:
+              type: array
+              items:
+                type: string
+                description: Text divided by lines
     TuitionFee:
       type: object
       properties:
@@ -257,6 +363,10 @@ components:
                               description: Status on the payment
 
 tags:
+  - name: Classes
+    description: Student's classes
+  - name: Exams
+    description: Student's exams
   - name: Expiration
     description: Student's expiration situation
   - name: PersonalData
