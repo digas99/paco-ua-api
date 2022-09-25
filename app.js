@@ -17,6 +17,16 @@ const IP = process.env.IP || "127.0.0.1";
 const PROTOCOL = process.env.IP ? "https" : "http";
 const URL = PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT);
 
+/**
+ * Increase the max event listeners on a global scale
+ * to prevent this error.
+ *
+ * MaxListenersExceededWarning:
+ * Possible EventEmitter memory leak detected.
+ * Use emitter.setMaxListeners() to increase limit
+ */
+ require('events').EventEmitter.prototype._maxListeners = 25;
+
 app.enable('trust proxy');
 
 // middleware to force https

@@ -1,3 +1,9 @@
+# [Changelog v1.0.6](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.6)
+Released on 25/09/2022
+
+## Bug Fixes
+- Changed EventEmitter max listeners to prevent heroku from crashing server when multiple concurrent requests are made to the API
+
 # [Changelog v1.0.5](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.5)
 Released on 25/09/2022
 
