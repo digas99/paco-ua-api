@@ -200,6 +200,8 @@ module.exports = {
     // https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp
     schedule: async (page, selector) => {
         return await page.$eval(selector, table => {
+            const ignoredWords = ["o", "a", "os", "as", "de", "da", "do", "das", "dos", "e", "na", "no", "nas", "nos", "em"];
+
             const data = {
                 "schedule": {
                     "Segunda": [],"Terça": [],"Quarta": [],"Quinta": [],"Sexta": [],"Sábado": []
@@ -238,7 +240,7 @@ module.exports = {
                         subject = {
                             "subject": {
                                 "name": titleData[0],
-                                "abbrev": titleData[0].split(" ").reduce((abbrev, string) => abbrev+=string.charAt(0), "")
+                                "abbrev": titleData[0].split(" ").reduce((abbrev, string) => abbrev+=(!ignoredWords.includes(string.toLowerCase()) ? string.charAt(0) : ""), "")
                             },
                             "start": titleData[2].split("INÍCIO: ")[1],
                             "duration": titleData[3].split("DURAÇÃO: ")[1],

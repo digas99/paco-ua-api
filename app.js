@@ -24,8 +24,8 @@ const URL = PROTOCOL+"://"+IP+(process.env.PORT ? "" : ":"+PORT);
  * MaxListenersExceededWarning:
  * Possible EventEmitter memory leak detected.
  * Use emitter.setMaxListeners() to increase limit
- */
- require('events').EventEmitter.prototype._maxListeners = 25;
+*/
+require('events').EventEmitter.prototype._maxListeners = 25;
 
 app.enable('trust proxy');
 

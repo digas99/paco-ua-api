@@ -1,3 +1,9 @@
+# [Changelog v1.0.7](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.7)
+Released on 25/09/2022
+
+## Bug Fixes
+- Fixed the way the abbreviation of a subject is created when fetching the schedule of a specific subject
+
 # [Changelog v1.0.6](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.6)
 Released on 25/09/2022
 
