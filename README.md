@@ -80,7 +80,8 @@ If everything is correct, this should be the response:
                 {
                     "subject": {
                         "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
-                        "abbrev": "SIO"
+                        "abbrev": "SIO",
+                        "code": "42573"
                     },
                     "start": "9h",
                     "duration": "2h",
@@ -91,7 +92,8 @@ If everything is correct, this should be the response:
                 {
                     "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
-                        "abbrev": "AC-I"
+                        "abbrev": "AC-I",
+                        "code": "41948"
                     },
                     "start": "14h",
                     "duration": "1h",
@@ -105,7 +107,8 @@ If everything is correct, this should be the response:
                 {
                     "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
-                        "abbrev": "AC-I"
+                        "abbrev": "AC-I",
+                        "code": "41948"
                     },
                     "start": "9h",
                     "duration": "2h",

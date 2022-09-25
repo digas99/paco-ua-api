@@ -30,7 +30,6 @@ This API uses a headless browser to fetch data directly from [paco.ua.pt](https:
     1. [Include Teachers](#include-teachers)
     1. [Subject Program](#subject-program)
 1. [Horário](#horário) &nbsp;&nbsp;```GET /schedule```
-    1. [Subject Schedule](#subject-schedule)
 1. [Requerimentos](#requerimentos) &nbsp;&nbsp;```GET /requests``` 
 
 ---
@@ -868,6 +867,8 @@ RESPONSE: 4.5s 🟢
 RESPONSE: 5s 🟡
 
 ```GET /schedule```
+
+```GET /schedule/subject/<subject_code>```
 ```json5
 // RESPONSE example
 {
@@ -877,7 +878,8 @@ RESPONSE: 5s 🟡
                 {
                     "subject": {
                         "name": "SEGURANÇA INFORMÁTICA E NAS ORGANIZAÇÕES",
-                        "abbrev": "SIO"
+                        "abbrev": "SIO",
+                        "code": "42573"
                     },
                     "start": "9h",
                     "duration": "2h",
@@ -888,7 +890,8 @@ RESPONSE: 5s 🟡
                 {
                     "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
-                        "abbrev": "AC-I"
+                        "abbrev": "AC-I",
+                        "code": "41948"
                     },
                     "start": "14h",
                     "duration": "1h",
@@ -902,7 +905,8 @@ RESPONSE: 5s 🟡
                 {
                     "subject": {
                         "name": "ARQUITETURA DE COMPUTADORES I",
-                        "abbrev": "AC-I"
+                        "abbrev": "AC-I",
+                        "code": "41948"
                     },
                     "start": "9h",
                     "duration": "2h",
@@ -920,65 +924,6 @@ RESPONSE: 5s 🟡
     "url": "https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp",
     "title": "Horário",
     "timestamp": "2022-08-16T01:51:09.193Z"
-}
-```
-
-## Subject Schedule
-
-RESPONSE: 4.5s 🟢
-
-```GET /schedule/subject/<subject_code>```
-```json5
-// GET /schedule/subject/41949
-
-// RESPONSE example
-{
-    "data": {
-        "schedule": {
-            "Segunda": [
-                {
-                    "subject": {
-                        "name": "REDES DE COMUNICAÇÕES II",
-                        "abbrev": "T1"
-                    },
-                    "start": "12h",
-                    "duration": "1,5h",
-                    "capacity": 101,
-                    "room": "ANF. IV"
-                },
-                {
-                    "subject": {
-                        "name": "REDES DE COMUNICAÇÕES II",
-                        "abbrev": "P1"
-                    },
-                    "start": "14,5h",
-                    "duration": "2h",
-                    "capacity": 18,
-                    "room": "04.2.16"
-                },
-                ...
-            ],
-            "Terça": [],
-            "Quarta": [
-                {
-                    "subject": {
-                        "name": "REDES DE COMUNICAÇÕES II",
-                        "abbrev": "P5"
-                    },
-                    "start": "14h",
-                    "duration": "2h",
-                    "capacity": 19,
-                    "room": "04.3.30"
-                }
-            ],
-            ...
-        },
-        "school_year": "2021/2022",
-        "semester": 2
-    },
-    "url": "https://paco.ua.pt/secvirtual/horarios/desenho_horario.asp?tipo=1&value=-210320212",
-    "title": "Horário de REDES DE COMUNICAÇÕES II",
-    "timestamp": "2022-08-18T16:40:10.748Z"
 }
 ```
 

@@ -1,3 +1,9 @@
+# [Changelog v1.0.5](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.5)
+Released on 25/09/2022
+
+## Content
+- Added subjects codes to /schedule endpoint
+
 # [Changelog v1.0.4](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.4)
 Released on 23/09/2022
 

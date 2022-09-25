@@ -205,6 +205,9 @@ components:
                 abbrev:
                   type: string
                   description: Abbreviation of the name of the subject
+                code:
+                  type: string
+                  description: Code of the subject
             start:
               type: string
               description: Hour of the beginning of the class
