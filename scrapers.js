@@ -16,8 +16,8 @@ module.exports = {
                     delete result["size"];
                 response.status(200).json(success(result));
             })
-            .catch(err => response.status(500).json(error(err)))
-            .finally(() => secretariaVirtual.browser().close()); // close browser when everything is done
+            .catch(err => response.status(500).json(error(err)));
+            //.finally(() => secretariaVirtual.browser().close()); // close browser when everything is done
             
     },
     // Secretaria Virtual (login)
@@ -228,7 +228,10 @@ module.exports = {
                     data["semester"] = Number(scheduleInfo.split(" - ")[2].split("º")[0]);
 
                     // subjects list
-                    subjectsList = Array.from(new Set(Array.from(table.nextElementSibling.querySelectorAll("tr > td:nth-of-type(2)")).map(info => info.innerText.split(" (")[0].trim())));
+                    subjectsTable = table.nextElementSibling;
+                    while (subjectsTable && subjectsTable.tagName != "TABLE") subjectsTable = subjectsTable.nextElementSibling;
+                    
+                    subjectsList = Array.from(new Set(Array.from(subjectsTable.querySelectorAll("tr > td:nth-of-type(2)")).map(info => info.innerText.split(" (")[0].trim())));
                 }
     
                 // subjects
@@ -236,6 +239,7 @@ module.exports = {
                     const titleData = elem.title.split("\n");
                     const weekday = data["schedule"][titleData[1].split("DIA DA SEMANA: ")[1]];
                     let subject = {};
+                    console.log(subjectsList);
                     if (scheduleType === "subject") {
                         subject = {
                             "subject": {
@@ -265,6 +269,7 @@ module.exports = {
                     }
                     
                     weekday.push(subject);
+
                 }); 
             }
 

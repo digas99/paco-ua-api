@@ -1,3 +1,9 @@
+# [Changelog v1.0.8](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.8)
+Released on 14/01/2023
+
+## Bug Fixes
+- Fixed issue where schedule couldn't be fetched if there was a message with overlapping classes
+
 # [Changelog v1.0.7](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.7)
 Released on 25/09/2022
 

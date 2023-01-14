@@ -95,7 +95,7 @@ async function login(req, res, next) {
             const [email, password] = decoded.split(":");
             if (email && password) {
                 try {
-                    await paco.secretariaVirtual(email, password)
+                    await paco.secretariaVirtual(email, password, false)
                         .then(async page => {
                             if (page) {
                                 req.page = page;
