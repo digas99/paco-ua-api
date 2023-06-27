@@ -1,3 +1,12 @@
+# [Changelog v1.1.0](https://github.com/digas99/paco-ua-api/releases/tag/v1.1.0)
+Released on 27/06/2023
+
+## Content
+- Bypass of "Inquerito Pedagógico"
+
+## Bug Fixes
+- Improved the creation of the abbreviation of a subject when fetching the schedule of a specific subject
+
 # [Changelog v1.0.8](https://github.com/digas99/paco-ua-api/releases/tag/v1.0.8)
 Released on 14/01/2023
 

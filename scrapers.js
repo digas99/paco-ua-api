@@ -49,13 +49,24 @@ module.exports = {
         await page.type("#password", password);
 
         // submit
-        const [response] = await Promise.all([
+        let [response] = await Promise.all([
             page.waitForNavigation({waitUntil: 'networkidle2'}),
             page.click("#btnLogin")
         ]);
 
         if (response == null)
             await page.waitForNavigation({waitUntil: 'networkidle2'});
+
+        
+        // bypass inquerito pedagogico
+        const pageUrl = await page.url();
+        if (pageUrl.toLowerCase().includes("inquerito")) {
+            console.log("Inquerito");
+            [response] = await Promise.all([
+                page.click("#InqueritoTarde"),
+                page.waitForNavigation({waitUntil: 'networkidle2'})
+            ]);
+        }
 
         // if login was sucessfull
         // Having the following into consideration:
@@ -200,7 +211,7 @@ module.exports = {
     // https://paco.ua.pt/secvirtual/horarios/c_horario_aluno.asp
     schedule: async (page, selector) => {
         return await page.$eval(selector, table => {
-            const ignoredWords = ["o", "a", "os", "as", "de", "da", "do", "das", "dos", "e", "na", "no", "nas", "nos", "em"];
+            const ignoredWords = ["o", "a", "os", "as", "de", "da", "do", "das", "dos", "e", "na", "no", "nas", "nos", "em", "para", "com", "à", "às", "pela", "pelo", "pelas", "pelos", "por", "sobre", "sob", "entre"];
 
             const data = {
                 "schedule": {
@@ -244,7 +255,7 @@ module.exports = {
                         subject = {
                             "subject": {
                                 "name": titleData[0],
-                                "abbrev": titleData[0].split(" ").reduce((abbrev, string) => abbrev+=(!ignoredWords.includes(string.toLowerCase()) ? string.charAt(0) : ""), "")
+                                "abbrev": titleData[0].split(/[ ,\-]/).reduce((abbrev, string) => abbrev+=(!ignoredWords.includes(string.toLowerCase()) ? string.charAt(0) : ""), "")
                             },
                             "start": titleData[2].split("INÍCIO: ")[1],
                             "duration": titleData[3].split("DURAÇÃO: ")[1],
